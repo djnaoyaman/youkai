@@ -122,28 +122,23 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // --- パララックス演出（江戸のイメージ画像）：transformで動かすので全デバイスで安定動作 ---
-  // セクションが画面に入ってから出るまでの間に、画像の上端から下端までを確実に一度は見せる
+  // --- パララックス演出（江戸のイメージ画像）：画像は常に全体表示（トリミングしない）。
+  //     コンテナ全体をわずかに上下ドリフトさせることで視差を作る。transformで動かすので全デバイスで安定動作 ---
   var parallaxImgs = document.querySelectorAll('.parallax-img');
   if (parallaxImgs.length) {
     var pTicking = false;
     var updateParallax = function(){
       var winH = window.innerHeight;
       parallaxImgs.forEach(function(img){
-        var container = img.parentElement;
-        var rect = container.getBoundingClientRect();
+        var rect = img.getBoundingClientRect();
         if (rect.bottom < -300 || rect.top > winH + 300) { return; }
         if (reduce) { img.style.transform = 'translateY(0)'; return; }
-        // 画像の実際の高さと入れ物の高さの差（＝動かせる範囲）をpxで算出
-        var overflowPx = img.offsetHeight - container.offsetHeight;
-        var maxOffset = Math.max(overflowPx / 2, 40);
-        // セクションが画面下端から現れてから、画面上端を抜けきるまでの進行度（0〜1）
-        var totalTravel = winH + rect.height;
-        var traveled = winH - rect.top;
-        var progress = traveled / totalTravel;
-        progress = Math.max(0, Math.min(1, progress));
-        // progress 0→1 を、画像の最上部が見える状態→最下部が見える状態へ、そのままリニアに対応させる
-        var offset = maxOffset - progress * (maxOffset * 2);
+        // 画面中央からのズレ（-1〜1）を、ゆるやかなドリフト量に変換する（画像は切らず、位置だけ揺らす）
+        var center = rect.top + rect.height / 2;
+        var progress = (center - winH / 2) / (winH / 2 + rect.height / 2);
+        progress = Math.max(-1, Math.min(1, progress));
+        var maxDrift = 34;
+        var offset = progress * maxDrift;
         img.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
       });
       pTicking = false;

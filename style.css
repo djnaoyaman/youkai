@@ -307,12 +307,14 @@ nav.topnav .brand:hover{opacity:0.65;}
 .lx-section{padding:70px 0 20px; border-top:1px solid var(--ink);}
 
 /* --- FEATURED：百物語・近現代妖怪を琥珀色で特別扱い --- */
-/* --- パララックス演出：全デバイス対応（background-attachment:fixedは使わず、JSでtransform制御） --- */
-.parallax-section{position:relative; height:min(66vh, 620px); min-height:280px; overflow:hidden; margin:56px 0; background:#1a1a1a;}
-.parallax-img{position:absolute; top:-38%; left:0; width:100%; height:176%; object-fit:cover; will-change:transform; transform:translateY(0); display:block;}
+/* --- パララックス演出：画像は常に全体表示（トリミングなし・拡縮のみ）。
+     コンテナは画像自身の縦横比に委ね、動きはブロック全体をわずかにドリフトさせることで作る。
+     background-attachment:fixedは使わず、JSでtransform制御（全デバイス対応）。 --- */
+.parallax-section{position:relative; overflow:visible; margin:84px 0; will-change:transform;}
+.parallax-img{display:block; width:100%; height:auto; will-change:transform; transform:translateY(0);}
 .parallax-caption{position:absolute; left:0; right:0; bottom:0; padding:16px clamp(20px,5vw,48px); background:linear-gradient(to top, rgba(0,0,0,0.6), transparent); color:#F5EDE0; font-size:11px; letter-spacing:0.04em;}
 @media (max-width:600px){
-  .parallax-section{height:min(50vh, 420px); margin:36px 0;}
+  .parallax-section{margin:56px 0;}
   .parallax-caption{font-size:10px; padding:12px clamp(16px,4vw,24px);}
 }
 @media (prefers-reduced-motion: reduce){
