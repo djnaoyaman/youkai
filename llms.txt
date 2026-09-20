@@ -17,6 +17,12 @@
 - 縄文・弥生 妖怪原型クロニクル: https://djnaoyaman.github.io/youkai/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
 - 全国天狗マップ: https://djnaoyaman.github.io/youkai/tengu-map.html — 八大天狗・四十八天狗を山・都道府県別に調べたもの
 - 小泉八雲と妖怪: https://djnaoyaman.github.io/youkai/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
+- 妖怪研究者マップ: https://djnaoyaman.github.io/youkai/researchers-map.html — 柳田國男・井上円了・折口信夫・宮田登・小松和彦の5名の学説の対立・継承関係を編者が総評したページ
+- 柳田國男と妖怪: https://djnaoyaman.github.io/youkai/yanagita-kunio.html — 神の零落論、遠野物語の著者の生涯と著作年表
+- 井上円了と妖怪学: https://djnaoyaman.github.io/youkai/inoue-enryo.html — 偽怪・誤怪・仮怪・真怪の4分類、妖怪学の創始者の生涯
+- 折口信夫と妖怪: https://djnaoyaman.github.io/youkai/origuchi-shinobu.html — まれびと論、来訪神の背景となった学説
+- 宮田登と妖怪: https://djnaoyaman.github.io/youkai/miyata-noboru.html — 境界論、妖怪の出現場所の整理
+- 小松和彦と妖怪: https://djnaoyaman.github.io/youkai/komatsu-kazuhiko.html — 妖怪現象・存在・表象の三段階論、現役の妖怪学第一人者
 - 山と妖怪: https://djnaoyaman.github.io/youkai/yama-yokai.html — 山の神信仰・山言葉・マタギの作法・天狗倒しなど
 - 妖怪と職業: https://djnaoyaman.github.io/youkai/shokugyo-yokai.html — 猟師・鍛冶屋・漁師など職業別の妖怪と禁忌
 - 妖怪と宗教: https://djnaoyaman.github.io/youkai/shukyo-yokai.html — 神道・仏教・陰陽道と妖怪の関わり
