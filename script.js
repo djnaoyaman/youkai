@@ -4,9 +4,11 @@ document.addEventListener('DOMContentLoaded', function(){
   revealEls.forEach(function(el, i){
     el.style.transitionDelay = Math.min(i * 35, 420) + 'ms';
   });
+  var revealTextEls = document.querySelectorAll('.reveal-text');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) {
     revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+    revealTextEls.forEach(function(el){ el.classList.add('is-visible'); });
     return;
   }
   var io = new IntersectionObserver(function(entries){
@@ -18,6 +20,72 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }, {threshold: 0.08, rootMargin: '0px 0px -30px 0px'});
   revealEls.forEach(function(el){ io.observe(el); });
+  // 段落テキストは、ページ読み込み時の一律ディレイを与えず、
+  // スクロールして実際に画面に入ってきたタイミングだけで、少しずつ立ち現れるようにする
+  var ioText = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        ioText.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+  revealTextEls.forEach(function(el){ ioText.observe(el); });
+
+  // --- タイプライター演出：スクロールで画面に入ったら、1行ずつ実際に打っていく ---
+  var twBlocks = document.querySelectorAll('.tw-block');
+  if (twBlocks.length) {
+    twBlocks.forEach(function(block){
+      var lines = Array.prototype.slice.call(block.querySelectorAll('.tw-line'));
+      var originals = lines.map(function(el){ return el.innerHTML; });
+      if (!reduce) { lines.forEach(function(el){ el.innerHTML = ''; }); }
+      block.__twLines = lines;
+      block.__twOriginals = originals;
+    });
+    var runTypewriter = function(block){
+      var lines = block.__twLines, originals = block.__twOriginals, li = 0;
+      var typeLine = function(){
+        if (li >= lines.length) { return; }
+        var el = lines[li], html = originals[li], i = 0, built = '';
+        var step = function(){
+          if (i >= html.length) {
+            el.innerHTML = built;
+            li++;
+            setTimeout(typeLine, 260);
+            return;
+          }
+          if (html[i] === '<') {
+            var close = html.indexOf('>', i);
+            if (close === -1) { close = html.length - 1; }
+            built += html.slice(i, close + 1);
+            i = close + 1;
+          } else {
+            built += html[i];
+            i++;
+          }
+          el.innerHTML = built + '<span class="tw-cursor"></span>';
+          setTimeout(step, 26 + Math.random() * 30);
+        };
+        step();
+      };
+      typeLine();
+    };
+    if (reduce || !('IntersectionObserver' in window)) {
+      twBlocks.forEach(function(block){
+        block.__twLines.forEach(function(el, idx){ el.innerHTML = block.__twOriginals[idx]; });
+      });
+    } else {
+      var ioType = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            runTypewriter(entry.target);
+            ioType.unobserve(entry.target);
+          }
+        });
+      }, {threshold: 0.2, rootMargin: '0px 0px -60px 0px'});
+      twBlocks.forEach(function(block){ ioType.observe(block); });
+    }
+  }
 
   // --- ぬるりと戻るボタン ---
   var topBtn = document.getElementById('yokai-top-btn');

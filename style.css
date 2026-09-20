@@ -255,6 +255,23 @@ footer.sitefoot{text-align:left; font-size:12px; color:var(--ink-soft); margin-t
 
 .reveal{opacity:0; transform:translateY(18px); transition:opacity 0.6s cubic-bezier(.2,.7,.3,1), transform 0.6s cubic-bezier(.2,.7,.3,1);}
 .reveal.is-visible{opacity:1; transform:translateY(0);}
+
+/* --- reveal-text：本文の段落が、スクロールごとに妖怪のようにゆっくり立ち現れる演出 --- */
+.reveal-text{
+  opacity:0; filter:blur(5px); transform:translateY(14px);
+  transition:opacity 0.85s cubic-bezier(.16,.84,.44,1), filter 0.85s cubic-bezier(.16,.84,.44,1), transform 0.85s cubic-bezier(.16,.84,.44,1);
+}
+.reveal-text.is-visible{opacity:1; filter:blur(0); transform:translateY(0);}
+@media (prefers-reduced-motion: reduce){
+  .reveal-text{opacity:1 !important; filter:none !important; transform:none !important; transition:none !important;}
+}
+
+/* --- タイプライター演出：カーソルの点滅 --- */
+.tw-cursor{display:inline-block; width:2px; height:1em; background:var(--hanko); margin-left:2px; vertical-align:text-bottom; animation:tw-blink 0.85s step-end infinite;}
+@keyframes tw-blink{0%,50%{opacity:1;} 50.01%,100%{opacity:0;}}
+.tw-line{min-height:1.4em;}
+li.tw-line{min-height:auto;}
+
 .cover{animation:coverIn 0.8s cubic-bezier(.2,.7,.3,1) both;}
 @keyframes coverIn{from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);}}
 .stamp{animation:stampIn 0.55s cubic-bezier(.34,1.56,.64,1) 0.35s both;}
@@ -376,6 +393,7 @@ nav.topnav .brand:hover{opacity:0.65;}
 .lx-do .lx-dodont-title{color:var(--ink);}
 .lx-dont .lx-dodont-title{color:var(--hanko);}
 .lx-dodont ul{margin:0; padding-left:1.1em; font-size:14px; line-height:2;}
+.lx-dodont li.tw-line:empty{list-style:none;}
 
 @media (max-width:600px){
   .lx-dodont{grid-template-columns:1fr;}
