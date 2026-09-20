@@ -3,7 +3,7 @@
   --paper:#FAFAF7; --ink:#111111; --ink-soft:#6B6B66;
   --indigo:#111111; --hanko:#C1272D; --line:#DDDBD3;
 }
-/* --- 創作コンテンツ（百物語・現代妖怪）専用の配色：琥珀色で最重要コンテンツを識別 --- */
+/* --- 創作コンテンツ（百物語・近現代妖怪）専用の配色：琥珀色で最重要コンテンツを識別 --- */
 body.creative-work{
   --hanko:#B8722C; --paper:#FBF7EF;
 }
@@ -110,7 +110,51 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .stub-box .tag{font-size:11px; color:var(--ink-soft); letter-spacing:0.15em; text-transform:uppercase;}
 .stub-box h1{font-family:'Noto Serif JP', serif; font-size:26px; margin:10px 0 4px;}
 footer.sitefoot{text-align:left; font-size:12px; color:var(--ink-soft); margin-top:60px; padding-top:24px; border-top:1px solid var(--ink); letter-spacing:0.02em;}
-.site-credit{text-align:left; font-size:11px; color:var(--ink-soft); margin-top:28px; letter-spacing:0.05em;}
+.site-footer-bottom{border-top:1px solid var(--ink); margin-top:60px; padding-top:22px;}
+.footer-brand{display:block; font-family:'Noto Serif JP', serif; font-weight:700; font-size:15px; letter-spacing:0.01em; transition:opacity 0.2s ease;}
+.footer-brand:hover{opacity:0.6;}
+.site-credit{text-align:left; font-size:11px; color:var(--ink-soft); margin-top:8px; letter-spacing:0.05em;}
+
+/* --- ぬるりと戻るボタン：妖怪的な演出 --- */
+.yokai-top-btn{
+  position:fixed; right:18px; bottom:22px; z-index:80;
+  width:50px; height:50px; border-radius:50%;
+  border:2px solid var(--hanko); background:var(--paper);
+  color:var(--hanko); font-size:19px; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:translateY(18px) scale(0.8);
+  pointer-events:none;
+  transition:opacity 0.4s ease, transform 0.5s cubic-bezier(.34,1.56,.64,1), background 0.25s ease, color 0.25s ease;
+  box-shadow:0 4px 16px rgba(0,0,0,0.14);
+}
+.yokai-top-btn.is-visible{opacity:0.92; transform:translateY(0) scale(1); pointer-events:auto;}
+.yokai-top-btn:hover{background:var(--hanko); color:var(--paper); opacity:1;}
+.yokai-top-btn.is-nurori{animation:nurori-wobble 0.65s ease-in-out;}
+@keyframes nurori-wobble{
+  0%{border-radius:50%; transform:translateY(0) scale(1,1) rotate(0deg);}
+  22%{border-radius:60% 40% 55% 45%; transform:translateY(-5px) scale(1.12,0.86) rotate(-8deg);}
+  46%{border-radius:40% 60% 45% 55%; transform:translateY(3px) scale(0.9,1.14) rotate(7deg);}
+  70%{border-radius:55% 45% 60% 40%; transform:translateY(-2px) scale(1.05,0.95) rotate(-4deg);}
+  100%{border-radius:50%; transform:translateY(0) scale(1,1) rotate(0deg);}
+}
+@media (prefers-reduced-motion: reduce){
+  .yokai-top-btn{transition:opacity 0.2s ease;}
+  .yokai-top-btn.is-nurori{animation:none;}
+}
+@media print{
+  .yokai-top-btn{display:none;}
+}
+
+/* --- 本文中のリンクを常にハイライト（コンテンツか、リンクかを明確に） --- */
+.record-body a, .pref-intro a, .stance-box a, .omake dd a, .profile-page a,
+.lx-body a, .tl-body a, .arc-note a, .record-footer a, .stub-box a {
+  color:var(--hanko); text-decoration:underline; text-decoration-color:currentColor;
+  text-underline-offset:3px; font-weight:500;
+}
+.record-body a:hover, .pref-intro a:hover, .stance-box a:hover, .omake dd a:hover, .profile-page a:hover,
+.lx-body a:hover, .tl-body a:hover, .arc-note a:hover, .record-footer a:hover, .stub-box a:hover {
+  text-decoration-thickness:2px;
+}
 
 @media (max-width:600px){
   .omake dl{grid-template-columns:1fr; gap:2px 0;}
@@ -224,7 +268,6 @@ a.pref-card:hover, a.map-tile:hover, a.hub-card:hover{background:rgba(193,39,45,
 .entry-row a{position:relative;}
 .entry-row a .entry-name{transition:color 0.2s ease;}
 .entry-row{transition:background 0.25s ease;}
-.entry-row:hover{background:rgba(193,39,45,0.03);}
 nav.topnav .brand{transition:opacity 0.2s ease;}
 nav.topnav .brand:hover{opacity:0.65;}
 .omake dd, .record-body p{transition:color 0.2s ease;}
@@ -240,7 +283,19 @@ nav.topnav .brand:hover{opacity:0.65;}
 
 .lx-section{padding:70px 0 20px; border-top:1px solid var(--ink);}
 
-/* --- FEATURED：百物語・現代妖怪を琥珀色で特別扱い --- */
+/* --- FEATURED：百物語・近現代妖怪を琥珀色で特別扱い --- */
+/* --- パララックス演出：全デバイス対応（background-attachment:fixedは使わず、JSでtransform制御） --- */
+.parallax-section{position:relative; height:min(66vh, 620px); min-height:280px; overflow:hidden; margin:56px 0; background:#1a1a1a;}
+.parallax-img{position:absolute; top:-38%; left:0; width:100%; height:176%; object-fit:cover; will-change:transform; transform:translateY(0); display:block;}
+.parallax-caption{position:absolute; left:0; right:0; bottom:0; padding:16px clamp(20px,5vw,48px); background:linear-gradient(to top, rgba(0,0,0,0.6), transparent); color:#F5EDE0; font-size:11px; letter-spacing:0.04em;}
+@media (max-width:600px){
+  .parallax-section{height:min(50vh, 420px); margin:36px 0;}
+  .parallax-caption{font-size:10px; padding:12px clamp(16px,4vw,24px);}
+}
+@media (prefers-reduced-motion: reduce){
+  .parallax-img{transform:none !important;}
+}
+
 .feature-creative{margin-top:56px; padding:40px clamp(24px,5vw,48px); background:#2A2118; border:1px solid #2A2118;}
 .feature-creative-label{font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#D99A4E; font-weight:700; margin-bottom:22px;}
 .feature-creative-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:0; border-top:1px solid rgba(217,154,78,0.35);}
@@ -344,3 +399,52 @@ nav.topnav .brand:hover{opacity:0.65;}
 @media (max-width:460px){
   .nav-columns{grid-template-columns:1fr;}
 }
+
+/* --- 百物語：前後の話ナビゲーション --- */
+.kaidan-prevnext{display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--ink); margin-top:30px;}
+.kaidan-prevnext-link{display:flex; flex-direction:column; gap:6px; padding:20px 24px; border-right:1px solid var(--line); transition:background 0.2s ease;}
+.kaidan-next{text-align:right; align-items:flex-end;}
+.kaidan-next{border-right:none;}
+.kaidan-prevnext-link:not(.is-disabled):hover{background:rgba(184,114,44,0.06);}
+.kaidan-prevnext-dir{font-size:11px; color:var(--hanko); letter-spacing:0.08em; font-weight:700;}
+.kaidan-prevnext-link.is-disabled .kaidan-prevnext-dir{color:var(--ink-soft);}
+.kaidan-prevnext-title{font-family:'Noto Serif JP', serif; font-weight:700; font-size:15px; color:var(--ink);}
+.kaidan-prevnext-link.is-disabled .kaidan-prevnext-title{color:var(--ink-soft);}
+@media (max-width:600px){
+  .kaidan-prevnext{grid-template-columns:1fr;}
+  .kaidan-prevnext-link{border-right:none; border-bottom:1px solid var(--line);}
+  .kaidan-next{text-align:left; align-items:flex-start; border-bottom:none;}
+}
+
+/* --- 百物語：全99夜一覧（現在地ハイライト） --- */
+.kaidan-alllist-title{font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-soft); margin:40px 0 10px;}
+.kaidan-alllist{display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line); max-height:420px; overflow-y:auto;}
+.kaidan-alllist-row{display:flex; flex-direction:column; gap:2px; padding:10px 12px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-size:12.5px; transition:background 0.15s ease;}
+a.kaidan-alllist-row:hover{background:rgba(184,114,44,0.06);}
+.kaidan-alllist-yowa{color:var(--ink-soft); font-size:10.5px;}
+.kaidan-alllist-name{font-family:'Noto Serif JP', serif; overflow-wrap:anywhere;}
+.kaidan-alllist-row.is-current{background:var(--hanko); position:sticky; top:0; z-index:1;}
+.kaidan-alllist-row.is-current .kaidan-alllist-yowa, .kaidan-alllist-row.is-current .kaidan-alllist-name{color:#FBF7EF;}
+.kaidan-alllist-now{font-size:9.5px; letter-spacing:0.05em; color:#FBF7EF; opacity:0.85; margin-top:2px;}
+@media (max-width:600px){
+  .kaidan-alllist{grid-template-columns:repeat(2,1fr); max-height:360px;}
+}
+
+/* --- 佐藤雅彦スタイル：フラット・リダクティブな日本地図・図解 --- */
+:root{ --sato-green:#E3F452; }
+.sato-map-wrap{margin:24px 0 20px; text-align:center;}
+.sato-map{width:100%; max-width:420px; height:auto;}
+.sato-map-land path, .sato-map-land rect{fill:var(--sato-green); stroke:var(--ink); stroke-width:4;}
+.sato-map-dots circle{fill:var(--ink); stroke:var(--paper); stroke-width:3;}
+.sato-map-dots text{font-size:26px; font-family:'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight:700; fill:var(--ink);}
+.sato-map-note{font-size:11px; color:var(--ink-soft); margin-top:10px;}
+
+.sato-diagram-wrap{margin:26px 0 30px;}
+.sato-diagram{width:100%; height:auto; display:block;}
+.sato-diagram .sd-bg{fill:none;}
+.sato-diagram .sd-shape{fill:var(--sato-green); stroke:var(--ink); stroke-width:5; stroke-linejoin:round;}
+.sato-diagram .sd-line{fill:none; stroke:var(--ink); stroke-width:5; stroke-linecap:round; stroke-linejoin:round;}
+.sato-diagram .sd-dot{fill:var(--ink);}
+.sato-diagram .sd-label{font-family:'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight:900; font-size:22px; fill:var(--ink); letter-spacing:0.02em;}
+.sato-diagram .sd-label-2l{font-size:19px;}
+.sato-diagram .sd-sub{font-family:'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight:400; font-size:15px; fill:var(--ink-soft);}

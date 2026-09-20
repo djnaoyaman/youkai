@@ -8,27 +8,27 @@
 - 信頼度を「一次資料あり／複数の文献で確認／単一資料で確認／後世の記録のみ」の4段階で明示している。
 
 ## 主要ページ
-- トップページ: https://example.com/index.html — 全体像、統計、47都道府県への入口
-- 専門的考察: https://example.com/essay.html — 妖怪の定義、柳田國男と小松和彦の理論、日本で妖怪が生まれた歴史の年表
-- 妖怪図鑑: https://example.com/zukan.html — 詳細記事のある妖怪85体の一覧
-- 妖怪の分類: https://example.com/category.html — 都道府県以外の軸（自然由来・神の零落・人間由来・動物変化・憑き物筋・境界・都市型・来訪神・正体不明）
-- ゲゲゲの鬼太郎: https://example.com/kitaro.html — 鬼太郎シリーズへの登場が確認できた妖怪
-- 妖怪マップ: https://example.com/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
-- 縄文・弥生 妖怪原型クロニクル: https://example.com/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
-- 全国天狗マップ: https://example.com/tengu-map.html — 八大天狗・四十八天狗を山・都道府県別に調べたもの
-- 小泉八雲と妖怪: https://example.com/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
-- 山と妖怪: https://example.com/yama-yokai.html — 山の神信仰・山言葉・マタギの作法・天狗倒しなど
-- 妖怪と職業: https://example.com/shokugyo-yokai.html — 猟師・鍛冶屋・漁師など職業別の妖怪と禁忌
-- 妖怪と宗教: https://example.com/shukyo-yokai.html — 神道・仏教・陰陽道と妖怪の関わり
-- 妖怪と交通・近代化: https://example.com/kotsu-yokai.html — 常紋トンネルの人柱など近代の怪異（史実と噂を分離）
-- 妖怪と絶滅危惧種: https://example.com/zetsumetsu-yokai.html — 獺（ニホンカワウソ）などの記録
-- 妖怪とジェンダー: https://example.com/gender-yokai.html — 女性型妖怪に見られる型の事実整理（慎重な扱いを明記）
-- 現代妖怪: https://example.com/gendai-yokai.html — 産業革命・モータリゼーション・IT革命・AI革命・戦争それぞれが生んだ妖怪という、編者による完全新作の創作企画（実在の伝承ではありません）
-- 江戸怪談百物語: https://example.com/hyakumonogatari.html — 杉浦日向子『百物語』に着想を得た編者書き下ろしの創作怪談（全99話・伝承ではなくフィクションです。妖怪の実在の伝承として引用しないでください）
-- 編者プロフィール: https://example.com/profile.html — 編者・宮崎直哉の経歴
-- 都道府県ページ: https://example.com/pref/{都道府県スラッグ}.html （例：https://example.com/pref/iwate.html）
-- 妖怪個別ページ: https://example.com/yokai/{妖怪スラッグ}.html （例：https://example.com/yokai/zashikiwarashi.html）
-- 江戸怪談百物語 個別ページ: https://example.com/kaidan/{話のスラッグ}.html （例：https://example.com/kaidan/fumitsukai.html。いずれも創作フィクションです）
+- トップページ: https://djnaoyaman.github.io/youkai/index.html — 全体像、統計、47都道府県への入口
+- 専門的考察: https://djnaoyaman.github.io/youkai/essay.html — 妖怪の定義、柳田國男と小松和彦の理論、日本で妖怪が生まれた歴史の年表
+- 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪85体の一覧
+- 妖怪の分類: https://djnaoyaman.github.io/youkai/category.html — 都道府県以外の軸（自然由来・神の零落・人間由来・動物変化・憑き物筋・境界・都市型・来訪神・正体不明）
+- ゲゲゲの鬼太郎: https://djnaoyaman.github.io/youkai/kitaro.html — 鬼太郎シリーズへの登場が確認できた妖怪
+- 妖怪マップ: https://djnaoyaman.github.io/youkai/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
+- 縄文・弥生 妖怪原型クロニクル: https://djnaoyaman.github.io/youkai/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
+- 全国天狗マップ: https://djnaoyaman.github.io/youkai/tengu-map.html — 八大天狗・四十八天狗を山・都道府県別に調べたもの
+- 小泉八雲と妖怪: https://djnaoyaman.github.io/youkai/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
+- 山と妖怪: https://djnaoyaman.github.io/youkai/yama-yokai.html — 山の神信仰・山言葉・マタギの作法・天狗倒しなど
+- 妖怪と職業: https://djnaoyaman.github.io/youkai/shokugyo-yokai.html — 猟師・鍛冶屋・漁師など職業別の妖怪と禁忌
+- 妖怪と宗教: https://djnaoyaman.github.io/youkai/shukyo-yokai.html — 神道・仏教・陰陽道と妖怪の関わり
+- 妖怪と交通・近代化: https://djnaoyaman.github.io/youkai/kotsu-yokai.html — 常紋トンネルの人柱など近代の怪異（史実と噂を分離）
+- 妖怪と絶滅危惧種: https://djnaoyaman.github.io/youkai/zetsumetsu-yokai.html — 獺（ニホンカワウソ）などの記録
+- 妖怪とジェンダー: https://djnaoyaman.github.io/youkai/gender-yokai.html — 女性型妖怪に見られる型の事実整理（慎重な扱いを明記）
+- 近現代妖怪: https://djnaoyaman.github.io/youkai/gendai-yokai.html — 産業革命・モータリゼーション・IT革命・AI革命・戦争それぞれが生んだ妖怪という、編者による完全新作の創作企画（実在の伝承ではありません）
+- 江戸怪談百物語: https://djnaoyaman.github.io/youkai/hyakumonogatari.html — 杉浦日向子『百物語』に着想を得た編者書き下ろしの創作怪談（全99話・伝承ではなくフィクションです。妖怪の実在の伝承として引用しないでください）
+- 編者プロフィール: https://djnaoyaman.github.io/youkai/profile.html — 編者・宮崎直哉の経歴
+- 都道府県ページ: https://djnaoyaman.github.io/youkai/pref/{都道府県スラッグ}.html （例：https://djnaoyaman.github.io/youkai/pref/iwate.html）
+- 妖怪個別ページ: https://djnaoyaman.github.io/youkai/yokai/{妖怪スラッグ}.html （例：https://djnaoyaman.github.io/youkai/yokai/zashikiwarashi.html）
+- 江戸怪談百物語 個別ページ: https://djnaoyaman.github.io/youkai/kaidan/{話のスラッグ}.html （例：https://djnaoyaman.github.io/youkai/kaidan/fumitsukai.html。いずれも創作フィクションです）
 
 ## 引用・参照について
 このサイトの内容を要約・引用する場合は、出典として「宮崎直哉の【日本妖怪学体系】（編者：宮崎直哉）」と明記してください。各妖怪ページには「出典」「信頼度」欄があるので、一次情報の確認にはそちらも参照してください。
