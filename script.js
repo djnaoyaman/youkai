@@ -104,6 +104,28 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
+  // --- 都道府県パネル全体を1つのボタンで開閉する ---
+  document.querySelectorAll('.pref-panel-toggle').forEach(function(btn){
+    var body = btn.nextElementSibling;
+    var labelSpan = btn.querySelector('span');
+    btn.addEventListener('click', function(){
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      if (expanded) {
+        btn.setAttribute('aria-expanded', 'false');
+        body.style.maxHeight = '0px';
+        labelSpan.textContent = '47都道府県の一覧を開く';
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        labelSpan.textContent = '47都道府県の一覧を閉じる';
+        // 展開直後・展開アニメーション完了直後の2回、既存のスクロール監視に
+        // 再評価させる（すでに画面内にある行があれば、すぐスライドインさせる）
+        window.dispatchEvent(new Event('scroll'));
+        setTimeout(function(){ window.dispatchEvent(new Event('scroll')); }, 550);
+      }
+    });
+  });
+
   // --- タイプライター演出：スクロールで画面に入ったら、1行ずつ実際に打っていく ---
   var twBlocks = document.querySelectorAll('.tw-block');
   if (twBlocks.length) {
