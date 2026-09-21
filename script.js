@@ -32,6 +32,24 @@ document.addEventListener('DOMContentLoaded', function(){
   }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
   revealTextEls.forEach(function(el){ ioText.observe(el); });
 
+  // --- region-slide：都道府県の地方ブロックが、左右交互から入ってくる演出 ---
+  var slideEls = document.querySelectorAll('.region-slide');
+  if (slideEls.length) {
+    if (reduce || !('IntersectionObserver' in window)) {
+      slideEls.forEach(function(el){ el.classList.add('is-visible'); });
+    } else {
+      var ioSlide = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            ioSlide.unobserve(entry.target);
+          }
+        });
+      }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+      slideEls.forEach(function(el){ ioSlide.observe(el); });
+    }
+  }
+
   // --- タイプライター演出：スクロールで画面に入ったら、1行ずつ実際に打っていく ---
   var twBlocks = document.querySelectorAll('.tw-block');
   if (twBlocks.length) {

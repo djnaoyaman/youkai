@@ -17,6 +17,8 @@
 - 縄文・弥生 妖怪原型クロニクル: https://djnaoyaman.github.io/youkai/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
 - 全国天狗マップ: https://djnaoyaman.github.io/youkai/tengu-map.html — 八大天狗・四十八天狗を山・都道府県別に調べたもの
 - 小泉八雲と妖怪: https://djnaoyaman.github.io/youkai/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
+- 寺田寅彦と妖怪: https://djnaoyaman.github.io/youkai/terada-torahiko.html — 物理学者が妖怪を科学的に説明しながらもその存在意義を認めた随筆「化物の進化」（妖怪研究者ではなく隣接する視点として）
+- 水木しげると妖怪: https://djnaoyaman.github.io/youkai/mizuki-shigeru.html — 『ゲゲゲの鬼太郎』作者。妖怪の絵姿を決定づけた漫画家・妖怪研究家（妖怪研究者ではなく隣接する視点として）
 - 妖怪研究者マップ: https://djnaoyaman.github.io/youkai/researchers-map.html — 柳田國男・井上円了・折口信夫・宮田登・小松和彦の5名の学説の対立・継承関係を編者が総評したページ
 - 柳田國男と妖怪: https://djnaoyaman.github.io/youkai/yanagita-kunio.html — 神の零落論、遠野物語の著者の生涯と著作年表
 - 井上円了と妖怪学: https://djnaoyaman.github.io/youkai/inoue-enryo.html — 偽怪・誤怪・仮怪・真怪の4分類、妖怪学の創始者の生涯
