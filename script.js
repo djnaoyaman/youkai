@@ -70,6 +70,40 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
+  // --- lx-case-fly：How we think の各行が、右から左へ時間差で入ってくる演出 ---
+  // transition-delayをインラインで持たせているので、is-visible付与のタイミングは
+  // 全行まとめてでよい（実際の視覚的なズレはCSSのdelayが担う）。
+  var flyEls = Array.prototype.slice.call(document.querySelectorAll('.lx-case-fly'));
+  if (flyEls.length) {
+    if (reduce) {
+      flyEls.forEach(function(el){ el.classList.add('is-visible'); });
+    } else {
+      var checkFlyEls = function(){
+        var winH = window.innerHeight;
+        flyEls = flyEls.filter(function(el){
+          var rect = el.getBoundingClientRect();
+          if (rect.top < winH - 60 && rect.bottom > 0) {
+            el.classList.add('is-visible');
+            return false;
+          }
+          return true;
+        });
+        if (!flyEls.length) {
+          window.removeEventListener('scroll', onFlyScroll);
+        }
+      };
+      var flyTicking = false;
+      var onFlyScroll = function(){
+        if (!flyTicking) {
+          flyTicking = true;
+          requestAnimationFrame(function(){ checkFlyEls(); flyTicking = false; });
+        }
+      };
+      checkFlyEls();
+      window.addEventListener('scroll', onFlyScroll, {passive:true});
+    }
+  }
+
   // --- タイプライター演出：スクロールで画面に入ったら、1行ずつ実際に打っていく ---
   var twBlocks = document.querySelectorAll('.tw-block');
   if (twBlocks.length) {
