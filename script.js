@@ -46,6 +46,21 @@ document.addEventListener('DOMContentLoaded', function(){
       var checkSlideEls = function(){
         var winH = window.innerHeight;
         slideEls = slideEls.filter(function(el){
+          // アコーディオン（.pref-panel-body）の中にある要素は、親がまだ
+          // 十分に開いていない（max-heightが要素自身の相対位置に届いていない）
+          // 場合、getBoundingClientRectが「クリップされる前の、あたかも
+          // 見えているかのような位置」を返してしまうため、そのままでは
+          // 画面内と誤判定されてしまう。祖先の実際の開閉状態を先に確認する。
+          var panelBody = el.closest('.pref-panel-body');
+          if (panelBody) {
+            var panelRect = panelBody.getBoundingClientRect();
+            var elRect0 = el.getBoundingClientRect();
+            // 要素の相対位置（パネル開始点からの距離）が、パネルの実際の
+            // 表示高さ（クリップ後）を超えている間は、まだ「実際には見えていない」
+            if (elRect0.top - panelRect.top >= panelRect.height) {
+              return true; // まだ監視対象として残す
+            }
+          }
           var rect = el.getBoundingClientRect();
           // 要素の「素の」上端位置は、水平transformの影響を受けない（縦方向のみのオフセットのため）
           if (rect.top < winH - 40 && rect.bottom > 0) {
@@ -70,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   }
 
-  // --- lx-case-fly：How we think の各行が、右から左へ時間差で入ってくる演出 ---
+  // --- card-place：カードが一枚一枚、上から置かれるように現れる演出 ---
   // transition-delayをインラインで持たせているので、is-visible付与のタイミングは
-  // 全行まとめてでよい（実際の視覚的なズレはCSSのdelayが担う）。
-  var flyEls = Array.prototype.slice.call(document.querySelectorAll('.lx-case-fly'));
+  // まとめてでよい（実際の視覚的なズレはCSSのdelayが担う）。
+  var flyEls = Array.prototype.slice.call(document.querySelectorAll('.card-place'));
   if (flyEls.length) {
     if (reduce) {
       flyEls.forEach(function(el){ el.classList.add('is-visible'); });
@@ -118,10 +133,14 @@ document.addEventListener('DOMContentLoaded', function(){
         btn.setAttribute('aria-expanded', 'true');
         body.style.maxHeight = body.scrollHeight + 'px';
         labelSpan.textContent = '47都道府県の一覧を閉じる';
-        // 展開直後・展開アニメーション完了直後の2回、既存のスクロール監視に
-        // 再評価させる（すでに画面内にある行があれば、すぐスライドインさせる）
-        window.dispatchEvent(new Event('scroll'));
-        setTimeout(function(){ window.dispatchEvent(new Event('scroll')); }, 550);
+        // 注：ここでscrollイベントを発火させて全体を再評価すると、
+        // max-height:0で隠れている要素も「レイアウト上の位置」自体は
+        // 既に確定しているため（overflow:hiddenは見た目だけを隠す）、
+        // ビューポートが広い場合、北陸あたりまで一気に「画面内」と
+        // 判定されてしまう。そのため、展開時は最初の1件（北海道）だけを
+        // 直接発火させ、残りは実際のスクロールに委ねる。
+        var firstSlide = body.querySelector('.region-slide');
+        if (firstSlide) firstSlide.classList.add('is-visible');
       }
     });
   });
