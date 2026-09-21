@@ -16,6 +16,7 @@
 - 妖怪マップ: https://djnaoyaman.github.io/youkai/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
 - 縄文・弥生 妖怪原型クロニクル: https://djnaoyaman.github.io/youkai/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
 - 全国天狗マップ: https://djnaoyaman.github.io/youkai/tengu-map.html — 八大天狗・四十八天狗を山・都道府県別に調べたもの
+- 天狗巡り紀行: https://djnaoyaman.github.io/youkai/tengu-junrei.html — 実際に訪れた天狗の山について書く連作エッセイ。第1回は太郎坊（富士山）: https://djnaoyaman.github.io/youkai/tengu-junrei-01-tarobo.html
 - 小泉八雲と妖怪: https://djnaoyaman.github.io/youkai/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
 - 寺田寅彦と妖怪: https://djnaoyaman.github.io/youkai/terada-torahiko.html — 物理学者が妖怪を科学的に説明しながらもその存在意義を認めた随筆「化物の進化」（妖怪研究者ではなく隣接する視点として）
 - 水木しげると妖怪: https://djnaoyaman.github.io/youkai/mizuki-shigeru.html — 『ゲゲゲの鬼太郎』作者。妖怪の絵姿を決定づけた漫画家・妖怪研究家（妖怪研究者ではなく隣接する視点として）

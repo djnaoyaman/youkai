@@ -101,6 +101,11 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .kt-badge-movie{border-color:var(--hanko); color:var(--hanko);}
 .kt-cat-title{font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--hanko); margin:44px 0 4px; text-transform:uppercase;}
 .kt-existing-row{border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px;}
+
+/* --- 私と天狗：動画埋め込み（レスポンシブ16:9） --- */
+.fujitengu-videos{display:flex; flex-direction:column; gap:24px; margin:20px 0 40px;}
+.fujitengu-video-wrap{position:relative; width:100%; padding-top:56.25%; background:#000;}
+.fujitengu-video-wrap iframe{position:absolute; top:0; left:0; width:100%; height:100%; border:0;}
 .kt-existing-row .entry-row{padding-top:16px; padding-bottom:0; min-height:auto;}
 .kt-existing-row .pref-intro p{padding-bottom:0;}
 .entry-row:hover{padding-left:10px; background:rgba(193,39,45,0.03);}
@@ -482,7 +487,7 @@ a.kaidan-alllist-row:hover{background:rgba(184,114,44,0.06);}
 /* --- 佐藤雅彦スタイル：フラット・リダクティブな日本地図・図解 --- */
 :root{ --sato-green:#E3F452; }
 .sato-map-wrap{margin:24px 0 20px; text-align:center;}
-.sato-map{width:100%; max-width:420px; height:auto;}
+.sato-map{width:100%; max-width:700px; height:auto;}
 .sato-map-land path, .sato-map-land rect{fill:var(--sato-green); stroke:var(--ink); stroke-width:4;}
 .sato-map-dots circle{fill:var(--ink); stroke:var(--paper); stroke-width:3;}
 .sato-map-dots text{font-size:26px; font-family:'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight:700; fill:var(--ink);}
