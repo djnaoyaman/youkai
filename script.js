@@ -33,20 +33,40 @@ document.addEventListener('DOMContentLoaded', function(){
   revealTextEls.forEach(function(el){ ioText.observe(el); });
 
   // --- region-slide：都道府県の地方ブロックが、左右交互から入ってくる演出 ---
-  var slideEls = document.querySelectorAll('.region-slide');
+  // 注：この要素は初期状態でtransformにより画面外（左右）にずらしてある。
+  // IntersectionObserverは見た目上の矩形（transform込み）で交差判定するため、
+  // 画面外にずらした状態だと「垂直位置は画面内でも水平にズレていて交差しない」と
+  // 判定され続け、発火しなくなってしまう。そのため、ここは垂直位置だけを見る
+  // 手動のスクロール判定に切り替えている。
+  var slideEls = Array.prototype.slice.call(document.querySelectorAll('.region-slide'));
   if (slideEls.length) {
-    if (reduce || !('IntersectionObserver' in window)) {
+    if (reduce) {
       slideEls.forEach(function(el){ el.classList.add('is-visible'); });
     } else {
-      var ioSlide = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            ioSlide.unobserve(entry.target);
+      var checkSlideEls = function(){
+        var winH = window.innerHeight;
+        slideEls = slideEls.filter(function(el){
+          var rect = el.getBoundingClientRect();
+          // 要素の「素の」上端位置は、水平transformの影響を受けない（縦方向のみのオフセットのため）
+          if (rect.top < winH - 40 && rect.bottom > 0) {
+            el.classList.add('is-visible');
+            return false; // 発火済みなので以後の監視対象から外す
           }
+          return true;
         });
-      }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
-      slideEls.forEach(function(el){ ioSlide.observe(el); });
+        if (!slideEls.length) {
+          window.removeEventListener('scroll', onSlideScroll);
+        }
+      };
+      var slideTicking = false;
+      var onSlideScroll = function(){
+        if (!slideTicking) {
+          slideTicking = true;
+          requestAnimationFrame(function(){ checkSlideEls(); slideTicking = false; });
+        }
+      };
+      checkSlideEls();
+      window.addEventListener('scroll', onSlideScroll, {passive:true});
     }
   }
 

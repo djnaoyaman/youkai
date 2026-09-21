@@ -11,7 +11,7 @@ body.creative-work nav.topnav{border-bottom:2px solid var(--hanko);}
 body.creative-work .cover-eyebrow, body.creative-work .region-title::before{color:var(--hanko);}
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
-html,body{margin:0;padding:0;}
+html,body{margin:0;padding:0; overflow-x:hidden;}
 body{
   background:var(--paper);
   color:var(--ink); font-family:'Noto Sans JP', sans-serif; line-height:1.9; -webkit-font-smoothing:antialiased;
@@ -273,14 +273,10 @@ footer.sitefoot{text-align:left; font-size:12px; color:var(--ink-soft); margin-t
 }
 
 /* --- region-slide：都道府県の各地方ブロックが、スクロールごとに左右交互から入ってくる演出 --- */
-.region-slide{opacity:0; transition:opacity 0.75s cubic-bezier(.16,.84,.44,1), transform 0.75s cubic-bezier(.16,.84,.44,1);}
-.region-slide.slide-left{transform:translateX(-70px);}
-.region-slide.slide-right{transform:translateX(70px);}
+.region-slide{opacity:0; transition:opacity 0.9s cubic-bezier(.16,.84,.44,1), transform 0.9s cubic-bezier(.16,.84,.44,1);}
+.region-slide.slide-left{transform:translateX(-100vw);}
+.region-slide.slide-right{transform:translateX(100vw);}
 .region-slide.is-visible{opacity:1; transform:translateX(0);}
-@media (max-width:700px){
-  .region-slide.slide-left{transform:translateX(-32px);}
-  .region-slide.slide-right{transform:translateX(32px);}
-}
 @media (prefers-reduced-motion: reduce){
   .region-slide{opacity:1 !important; transform:none !important; transition:none !important;}
 }

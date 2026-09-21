@@ -10,7 +10,7 @@
 ## 主要ページ
 - トップページ: https://djnaoyaman.github.io/youkai/index.html — 全体像、統計、47都道府県への入口
 - 専門的考察: https://djnaoyaman.github.io/youkai/essay.html — 妖怪の定義、柳田國男と小松和彦の理論、日本で妖怪が生まれた歴史の年表
-- 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪85体の一覧
+- 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪86体の一覧
 - 妖怪の分類: https://djnaoyaman.github.io/youkai/category.html — 都道府県以外の軸（自然由来・神の零落・人間由来・動物変化・憑き物筋・境界・都市型・来訪神・正体不明）
 - ゲゲゲの鬼太郎: https://djnaoyaman.github.io/youkai/kitaro.html — 鬼太郎シリーズへの登場が確認できた妖怪
 - 妖怪マップ: https://djnaoyaman.github.io/youkai/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
@@ -19,6 +19,7 @@
 - 小泉八雲と妖怪: https://djnaoyaman.github.io/youkai/hearn.html — ラフカディオ・ハーンの生涯と、代表作『怪談』が再話した妖怪（ろくろ首・雪女・むじな等）との関わり。著作の年表つき
 - 寺田寅彦と妖怪: https://djnaoyaman.github.io/youkai/terada-torahiko.html — 物理学者が妖怪を科学的に説明しながらもその存在意義を認めた随筆「化物の進化」（妖怪研究者ではなく隣接する視点として）
 - 水木しげると妖怪: https://djnaoyaman.github.io/youkai/mizuki-shigeru.html — 『ゲゲゲの鬼太郎』作者。妖怪の絵姿を決定づけた漫画家・妖怪研究家（妖怪研究者ではなく隣接する視点として）
+- 佐々木喜善と妖怪: https://djnaoyaman.github.io/youkai/sasaki-kizen.html — 柳田國男『遠野物語』の語り手。紫波郡昔話等の採録者（妖怪研究者ではなく隣接する視点として）
 - 妖怪研究者マップ: https://djnaoyaman.github.io/youkai/researchers-map.html — 柳田國男・井上円了・折口信夫・宮田登・小松和彦の5名の学説の対立・継承関係を編者が総評したページ
 - 柳田國男と妖怪: https://djnaoyaman.github.io/youkai/yanagita-kunio.html — 神の零落論、遠野物語の著者の生涯と著作年表
 - 井上円了と妖怪学: https://djnaoyaman.github.io/youkai/inoue-enryo.html — 偽怪・誤怪・仮怪・真怪の4分類、妖怪学の創始者の生涯
