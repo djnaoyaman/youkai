@@ -100,6 +100,9 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .kt-badge{font-size:10px; padding:2px 7px; border-radius:9px; border:1px solid var(--line); color:var(--ink-soft); font-weight:700; letter-spacing:0.01em; white-space:nowrap;}
 .kt-badge-movie{border-color:var(--hanko); color:var(--hanko);}
 .kt-cat-title{font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--hanko); margin:44px 0 4px; text-transform:uppercase;}
+.kt-existing-row{border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px;}
+.kt-existing-row .entry-row{padding-top:16px; padding-bottom:0; min-height:auto;}
+.kt-existing-row .pref-intro p{padding-bottom:0;}
 .entry-row:hover{padding-left:10px; background:rgba(193,39,45,0.03);}
 .entry-name{font-family:'Noto Serif JP', serif; font-weight:700; font-size:17px; overflow-wrap:anywhere;}
 .entry-kana{font-size:11px; color:var(--ink-soft); margin-left:8px;}
