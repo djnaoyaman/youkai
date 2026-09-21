@@ -123,6 +123,15 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .stamp{position:absolute; top:clamp(20px,5vw,26px); right:0; width:clamp(48px,12vw,60px);height:clamp(48px,12vw,60px); border:1.5px solid var(--hanko); border-radius:50%;
   color:var(--hanko); display:flex; align-items:center; justify-content:center; text-align:center;
   font-family:'Noto Sans JP', sans-serif; font-weight:700; font-size:9.5px; line-height:1.25; transform:none; opacity:0.9;}
+.stamp-green{border-color:#2E7D46; color:#2E7D46;}
+.stamp-blue{border-color:#2B5FA8; color:#2B5FA8;}
+.stamp-yellow{border-color:#B58900; color:#B58900;}
+.stamp-orange{border-color:#B4571E; color:#B4571E;}
+.stamp-gray{border-color:#767676; color:#767676;}
+.stamp-purple{border-color:#7B4B94; color:#7B4B94;}
+.rel-legend-row{display:flex; align-items:center; gap:20px; padding:16px 4px; border-bottom:1px solid var(--line);}
+.rel-legend-stamp{position:static !important; flex:0 0 auto; animation:none !important; opacity:1 !important; width:70px; height:70px; font-size:11px;}
+.rel-legend-text{font-size:14px; line-height:1.7;}
 .record-body{padding:22px 0 10px; font-size:16px;}
 .record-body p{margin:0 0 20px;}
 .omake{margin:22px 0 30px; border-top:none; border-left:2px solid var(--line); padding:4px 0 4px 20px;}

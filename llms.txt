@@ -12,6 +12,7 @@
 - 専門的考察: https://djnaoyaman.github.io/youkai/essay.html — 妖怪の定義、柳田國男と小松和彦の理論、日本で妖怪が生まれた歴史の年表
 - 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪105体の一覧
 - 妖怪の分類: https://djnaoyaman.github.io/youkai/category.html — 都道府県以外の軸（自然由来・神の零落・人間由来・動物変化・憑き物筋・境界・都市型・来訪神・正体不明）
+- 信頼度について: https://djnaoyaman.github.io/youkai/reliability.html — 妖怪図鑑の信頼度スタンプ（一次資料あり・複数資料で確認・単一資料・後世の記録・出典不明・創作の6段階）が何を意味するかの説明。伝承と創作の切り分けの方針もここに明記
 - ゲゲゲの鬼太郎: https://djnaoyaman.github.io/youkai/kitaro.html — 鬼太郎シリーズへの登場が確認できた妖怪
 - 妖怪マップ: https://djnaoyaman.github.io/youkai/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
 - 縄文・弥生 妖怪原型クロニクル: https://djnaoyaman.github.io/youkai/chronicle.html — 文字のなかった時代の史実と、そこから妖怪を生む人間の感覚がどう育ったかという編者独自の仮説（史実と仮説を明確に分離）
