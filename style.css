@@ -440,6 +440,31 @@ nav.topnav .brand:hover{opacity:0.65;}
   .card-place{opacity:1 !important; transform:none !important; transition:none !important;}
 }
 
+/* --- 近現代妖怪：一覧のカードグリッド。時代ごとに色帯を変える --- */
+.gendai-era-block{margin:36px 0;}
+.gendai-era-header{display:flex; align-items:baseline; gap:10px; margin-bottom:18px; padding-bottom:10px; border-bottom:2px solid var(--ink);}
+.gendai-era-name{font-family:'Noto Serif JP', serif; font-size:22px; font-weight:900;}
+.gendai-era-count{font-size:12px; color:var(--ink-soft);}
+.gendai-card-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:16px;}
+.gendai-card{
+  display:flex; flex-direction:column; gap:6px; text-decoration:none; color:var(--ink);
+  padding:20px 18px; border:1px solid var(--line); background:var(--paper); position:relative; overflow:hidden;
+  transition:opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.gendai-card::before{content:""; position:absolute; top:0; left:0; width:100%; height:4px;}
+.gendai-card.era-sangyou::before{background:#8B6F47;}
+.gendai-card.era-motor::before{background:#5C6B73;}
+.gendai-card.era-it::before{background:#2B7A78;}
+.gendai-card.era-shokuba::before{background:#B4571E;}
+.gendai-card.era-ningen::before{background:#A6425A;}
+.gendai-card.era-minna::before{background:#3E7CA6;}
+.gendai-card.era-ai::before{background:#7B4B94;}
+.gendai-card.era-war::before{background:#5C5346;}
+.gendai-card:hover{box-shadow:0 10px 26px rgba(0,0,0,0.13); border-color:var(--hanko); transform:translateY(-3px);}
+.gendai-card-name{font-family:'Noto Serif JP', serif; font-weight:900; font-size:17px; margin-top:4px;}
+.gendai-card-kana{font-size:10.5px; color:var(--ink-soft);}
+.gendai-card-lede{font-size:12.5px; color:var(--ink-soft); line-height:1.6; margin-top:2px;}
+
 /* --- Other things：行を積み重ねるリスト形式（Aとは差別化） --- */
 .lx-list{border-top:1px solid var(--ink); margin-top:8px;}
 .lx-list-row{display:flex; align-items:center; gap:24px; padding:26px 4px; border-bottom:1px solid var(--line); transition:padding-left 0.2s ease, background 0.2s ease;}
