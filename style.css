@@ -440,6 +440,43 @@ nav.topnav .brand:hover{opacity:0.65;}
   .card-place{opacity:1 !important; transform:none !important; transition:none !important;}
 }
 
+/* --- 大妖怪：特に警戒すべき8体の特別扱い --- */
+.daiyokai-block{margin:34px 0 44px; padding:28px clamp(18px,4vw,34px); background:#1E1B18; color:#EDE6D6;}
+.daiyokai-header{border-bottom:1px solid rgba(237,230,214,0.3); padding-bottom:14px; margin-bottom:18px;}
+.daiyokai-tag{display:block; font-size:10.5px; letter-spacing:0.18em; color:#C85A5A; font-weight:700;}
+.daiyokai-title{font-family:'Noto Serif JP', serif; font-size:clamp(24px,6vw,34px); font-weight:900; margin:8px 0 0; color:#EDE6D6;}
+.daiyokai-lead p{font-size:14px; line-height:1.85; margin:0 0 14px; color:rgba(237,230,214,0.88);}
+.daiyokai-lead strong{color:#EDE6D6; font-weight:700;}
+.daiyokai-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:14px; margin-top:22px;}
+.daiyokai-card{display:flex; flex-direction:column; gap:7px; text-decoration:none; padding:18px 16px;
+  border:1px solid rgba(237,230,214,0.28); background:rgba(237,230,214,0.04); color:#EDE6D6;
+  transition:border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;}
+.daiyokai-card:hover{border-color:#C85A5A; background:rgba(200,90,90,0.09); transform:translateY(-2px);}
+.daiyokai-card-head{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;}
+.daiyokai-card-name{font-family:'Noto Serif JP', serif; font-weight:900; font-size:17px;}
+.daiyokai-card-kana{font-size:10px; color:rgba(237,230,214,0.6);}
+.daiyokai-card-era{font-size:10.5px; color:#C85A5A;}
+.daiyokai-card-warn{font-size:12.5px; line-height:1.7; color:rgba(237,230,214,0.82);}
+/* 一覧カード上の大妖怪バッジ */
+.gendai-card.is-daiyokai{border-color:var(--hanko); border-width:1.5px;}
+.gendai-dai-badge{display:inline-block; align-self:flex-start; font-size:9.5px; font-weight:700; letter-spacing:0.08em;
+  color:#fff; background:#8B2020; padding:2px 7px; margin-bottom:2px;}
+/* 個別ページの大妖怪スタンプ・警告 */
+.stamp-dai{border-color:#8B2020 !important; color:#8B2020 !important; font-weight:900;}
+.daiyokai-warn-box{margin:26px 0; padding:22px clamp(18px,4vw,26px); background:#1E1B18; color:#EDE6D6;}
+.daiyokai-warn-title{font-size:11px; letter-spacing:0.16em; color:#C85A5A; font-weight:700; margin-bottom:12px;}
+.daiyokai-warn-box p{font-size:14px; line-height:1.85; margin:0 0 12px; color:rgba(237,230,214,0.9);}
+.daiyokai-warn-box p:last-child{margin-bottom:0;}
+.daiyokai-warn-def strong{color:#F0A0A0;}
+
+/* --- 近現代妖怪：検索・絞り込みUI --- */
+.gendai-search-wrap{margin:28px 0 36px; padding:22px clamp(18px,4vw,28px); background:var(--paper-alt,#F3EEE2); border:1px solid var(--line);}
+.gendai-search-input{width:100%; box-sizing:border-box; padding:13px 15px; font-size:16px; font-family:inherit; border:1.5px solid var(--ink); background:var(--paper); color:var(--ink); border-radius:0;}
+.gendai-search-input:focus{outline:2px solid var(--hanko); outline-offset:-1px;}
+.gendai-search-filters{margin-top:12px;}
+.gendai-search-filters select{width:100%; padding:11px 13px; font-size:14px; font-family:inherit; border:1px solid var(--line); background:var(--paper); color:var(--ink);}
+.gendai-search-count{font-size:12px; color:var(--ink-soft); margin-top:13px;}
+
 /* --- 近現代妖怪：一覧のカードグリッド。時代ごとに色帯を変える --- */
 .gendai-era-block{margin:36px 0;}
 .gendai-era-header{display:flex; align-items:baseline; gap:10px; margin-bottom:18px; padding-bottom:10px; border-bottom:2px solid var(--ink);}
@@ -458,6 +495,12 @@ nav.topnav .brand:hover{opacity:0.65;}
 .gendai-card.era-shokuba::before{background:#B4571E;}
 .gendai-card.era-ningen::before{background:#A6425A;}
 .gendai-card.era-minna::before{background:#3E7CA6;}
+.gendai-card.era-inehoshii::before{background:#4E8B5A;}
+.gendai-card.era-kurashi::before{background:#A67C52;}
+.gendai-card.era-gakkou::before{background:#7A8B3E;}
+.gendai-card.era-okane::before{background:#9C7B2E;}
+.gendai-card.era-karada::before{background:#B05A7A;}
+.gendai-card.era-tabi::before{background:#3E8B8B;}
 .gendai-card.era-ai::before{background:#7B4B94;}
 .gendai-card.era-war::before{background:#5C5346;}
 .gendai-card:hover{box-shadow:0 10px 26px rgba(0,0,0,0.13); border-color:var(--hanko); transform:translateY(-3px);}
