@@ -10,7 +10,7 @@
 ## 主要ページ
 - トップページ: https://djnaoyaman.github.io/youkai/index.html — 全体像、統計、47都道府県への入口
 - 専門的考察: https://djnaoyaman.github.io/youkai/essay.html — 妖怪の定義、柳田國男と小松和彦の理論、日本で妖怪が生まれた歴史の年表
-- 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪96体の一覧
+- 妖怪図鑑: https://djnaoyaman.github.io/youkai/zukan.html — 詳細記事のある妖怪105体の一覧
 - 妖怪の分類: https://djnaoyaman.github.io/youkai/category.html — 都道府県以外の軸（自然由来・神の零落・人間由来・動物変化・憑き物筋・境界・都市型・来訪神・正体不明）
 - ゲゲゲの鬼太郎: https://djnaoyaman.github.io/youkai/kitaro.html — 鬼太郎シリーズへの登場が確認できた妖怪
 - 妖怪マップ: https://djnaoyaman.github.io/youkai/map.html — 台帳登録のみの妖怪を地方別に探すインデックス
