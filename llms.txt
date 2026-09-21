@@ -34,7 +34,7 @@
 - 妖怪と交通・近代化: https://djnaoyaman.github.io/youkai/kotsu-yokai.html — 常紋トンネルの人柱など近代の怪異（史実と噂を分離）
 - 妖怪と絶滅危惧種: https://djnaoyaman.github.io/youkai/zetsumetsu-yokai.html — 獺（ニホンカワウソ）などの記録
 - 妖怪とジェンダー: https://djnaoyaman.github.io/youkai/gender-yokai.html — 女性型妖怪に見られる型の事実整理（慎重な扱いを明記）
-- 近現代妖怪: https://djnaoyaman.github.io/youkai/gendai-yokai.html — 産業革命・モータリゼーション・IT革命・AI革命・戦争それぞれが生んだ妖怪という、編者による完全新作の創作企画（実在の伝承ではありません）
+- 近現代妖怪: https://djnaoyaman.github.io/youkai/gendai-yokai.html — 編者による完全新作の創作企画（実在の伝承ではありません）。産業革命・モータリゼーション・IT革命・AI革命・戦争という時代の転換点が生んだ妖怪と、職場にいる妖怪・人と人の関係を邪魔する妖怪・みんなの場所にいる妖怪という日常の場が生んだ妖怪、計47体。各妖怪の個別ページは https://djnaoyaman.github.io/youkai/gendai/ 以下にある
 - 江戸怪談百物語: https://djnaoyaman.github.io/youkai/hyakumonogatari.html — 杉浦日向子『百物語』に着想を得た編者書き下ろしの創作怪談（全99話・伝承ではなくフィクションです。妖怪の実在の伝承として引用しないでください）
 - 編者プロフィール: https://djnaoyaman.github.io/youkai/profile.html — 編者・一見坊（本名・宮崎直哉）の経歴
 - 都道府県ページ: https://djnaoyaman.github.io/youkai/pref/{都道府県スラッグ}.html （例：https://djnaoyaman.github.io/youkai/pref/iwate.html）
