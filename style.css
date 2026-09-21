@@ -487,11 +487,9 @@ a.kaidan-alllist-row:hover{background:rgba(184,114,44,0.06);}
 /* --- 佐藤雅彦スタイル：フラット・リダクティブな日本地図・図解 --- */
 :root{ --sato-green:#E3F452; }
 .sato-map-wrap{margin:24px 0 20px; text-align:center;}
-.sato-map{width:100%; max-width:1000px; height:auto;}
+.sato-map{width:100%; max-width:600px; height:auto;}
 .sato-map-land path, .sato-map-land rect{fill:var(--sato-green); stroke:var(--ink); stroke-width:4;}
 .sato-map-dots circle{fill:var(--hanko); stroke:var(--paper); stroke-width:2;}
-.sato-map-dots text{font-size:20px; font-family:'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; font-weight:700; fill:var(--ink);}
-.tg-leader{stroke:var(--ink-soft); stroke-width:1.2; stroke-dasharray:3,3; opacity:0.6;}
 .sato-map-note{font-size:11px; color:var(--ink-soft); margin-top:10px;}
 
 .sato-diagram-wrap{margin:26px 0 30px;}
