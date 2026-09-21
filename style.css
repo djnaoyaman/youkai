@@ -89,6 +89,17 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .pref-intro p{margin:0 0 14px;}
 
 .entry-row{display:grid; grid-template-columns:1fr auto; gap:10px 14px; align-items:baseline; padding:16px 4px; border-bottom:1px solid var(--line); min-height:44px; transition:padding-left 0.2s ease;}
+
+/* --- ゲゲゲの鬼太郎キャラクター：TV各期・映画の出演バッジ --- */
+.kt-row{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:16px 4px; border-bottom:1px solid var(--line);}
+.kt-main{flex:1 1 auto;}
+.kt-name{font-family:'Noto Serif JP', serif; font-weight:700; font-size:16px;}
+.kt-kana{font-size:11px; color:var(--ink-soft); margin-left:8px;}
+.kt-desc{font-size:13px; color:var(--ink-soft); margin-top:4px; line-height:1.7;}
+.kt-badges{display:flex; gap:4px; flex-wrap:wrap; flex:0 0 auto; max-width:180px; justify-content:flex-end;}
+.kt-badge{font-size:10px; padding:2px 7px; border-radius:9px; border:1px solid var(--line); color:var(--ink-soft); font-weight:700; letter-spacing:0.01em; white-space:nowrap;}
+.kt-badge-movie{border-color:var(--hanko); color:var(--hanko);}
+.kt-cat-title{font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--hanko); margin:44px 0 4px; text-transform:uppercase;}
 .entry-row:hover{padding-left:10px; background:rgba(193,39,45,0.03);}
 .entry-name{font-family:'Noto Serif JP', serif; font-weight:700; font-size:17px; overflow-wrap:anywhere;}
 .entry-kana{font-size:11px; color:var(--ink-soft); margin-left:8px;}
