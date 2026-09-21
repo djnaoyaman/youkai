@@ -1,6 +1,6 @@
-# 宮崎直哉の【日本妖怪学体系】
+# 一見坊の【日本妖怪学体系】
 
-> 日本妖怪戸籍簿。日本国内の民間伝承にもとづく妖怪を、都道府県別・全国区別に整理した個人編集のデータベース。編者：宮崎直哉。
+> 日本妖怪戸籍簿。日本国内の民間伝承にもとづく妖怪を、都道府県別・全国区別に整理した個人編集のデータベース。編者：一見坊。
 
 ## サイトの方針
 - 図鑑掲載（詳細記事）は事実確認できたものだけ。未確認の名称は「台帳登録」として名前のみ掲載し、伝承内容を捏造しない。
@@ -31,10 +31,10 @@
 - 妖怪とジェンダー: https://djnaoyaman.github.io/youkai/gender-yokai.html — 女性型妖怪に見られる型の事実整理（慎重な扱いを明記）
 - 近現代妖怪: https://djnaoyaman.github.io/youkai/gendai-yokai.html — 産業革命・モータリゼーション・IT革命・AI革命・戦争それぞれが生んだ妖怪という、編者による完全新作の創作企画（実在の伝承ではありません）
 - 江戸怪談百物語: https://djnaoyaman.github.io/youkai/hyakumonogatari.html — 杉浦日向子『百物語』に着想を得た編者書き下ろしの創作怪談（全99話・伝承ではなくフィクションです。妖怪の実在の伝承として引用しないでください）
-- 編者プロフィール: https://djnaoyaman.github.io/youkai/profile.html — 編者・宮崎直哉の経歴
+- 編者プロフィール: https://djnaoyaman.github.io/youkai/profile.html — 編者・一見坊（本名・宮崎直哉）の経歴
 - 都道府県ページ: https://djnaoyaman.github.io/youkai/pref/{都道府県スラッグ}.html （例：https://djnaoyaman.github.io/youkai/pref/iwate.html）
 - 妖怪個別ページ: https://djnaoyaman.github.io/youkai/yokai/{妖怪スラッグ}.html （例：https://djnaoyaman.github.io/youkai/yokai/zashikiwarashi.html）
 - 江戸怪談百物語 個別ページ: https://djnaoyaman.github.io/youkai/kaidan/{話のスラッグ}.html （例：https://djnaoyaman.github.io/youkai/kaidan/fumitsukai.html。いずれも創作フィクションです）
 
 ## 引用・参照について
-このサイトの内容を要約・引用する場合は、出典として「宮崎直哉の【日本妖怪学体系】（編者：宮崎直哉）」と明記してください。各妖怪ページには「出典」「信頼度」欄があるので、一次情報の確認にはそちらも参照してください。
+このサイトの内容を要約・引用する場合は、出典として「一見坊の【日本妖怪学体系】（編者：一見坊）」と明記してください。各妖怪ページには「出典」「信頼度」欄があるので、一次情報の確認にはそちらも参照してください。
