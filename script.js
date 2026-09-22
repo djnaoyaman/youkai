@@ -1,5 +1,36 @@
 
 document.addEventListener('DOMContentLoaded', function(){
+  // --- フッターのひとこと：来訪の回数で言葉が変わる ---
+  // 妖怪は人につくのではなく場所につくが、このサイトだけは来た人を覚えている。
+  (function(){
+    var el = document.getElementById('siteCatch');
+    if (!el) return;
+    var words = [
+      '今日から妖怪やる人がうらやましい',
+      '今日も妖怪やる人がうらやましい',
+      'どうだ！妖怪楽しいだろう！？',
+      'あなたの妖怪が知りたい'
+    ];
+    var n = 1;
+    try {
+      var key = 'yokai_visits';
+      var last = localStorage.getItem('yokai_last_day');
+      var today = new Date().toDateString();
+      n = parseInt(localStorage.getItem(key) || '0', 10);
+      // 同じ日に何ページ見ても1回として数える（回遊で増えないように）
+      if (last !== today) {
+        n = n + 1;
+        localStorage.setItem(key, String(n));
+        localStorage.setItem('yokai_last_day', today);
+      }
+      if (n < 1) n = 1;
+    } catch (e) {
+      n = 1; // プライベートモード等でlocalStorageが使えない場合は初回の言葉のまま
+    }
+    var idx = n >= 4 ? 3 : (n - 1);
+    el.textContent = words[idx];
+  })();
+
   var revealEls = document.querySelectorAll('.reveal');
   revealEls.forEach(function(el, i){
     el.style.transitionDelay = Math.min(i * 35, 420) + 'ms';

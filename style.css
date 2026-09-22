@@ -184,6 +184,8 @@ header.cover{padding:clamp(56px,12vw,110px) clamp(24px,6vw,64px) 44px; text-alig
 .stub-box h1{font-family:'Noto Serif JP', serif; font-size:26px; margin:10px 0 4px;}
 footer.sitefoot{text-align:left; font-size:12px; color:var(--ink-soft); margin-top:60px; padding-top:24px; border-top:1px solid var(--ink); letter-spacing:0.02em;}
 .site-footer-bottom{border-top:1px solid var(--ink); margin-top:60px; padding-top:22px;}
+.site-catch{font-family:'Noto Serif JP', serif; font-size:clamp(15px,3.6vw,18px); font-weight:700;
+  color:var(--ink); margin:14px 0 10px; letter-spacing:0.02em;}
 .footer-brand{display:block; font-family:'Noto Serif JP', serif; font-weight:700; font-size:15px; letter-spacing:0.01em; transition:opacity 0.2s ease;}
 .footer-brand:hover{opacity:0.6;}
 .site-credit{text-align:left; font-size:11px; color:var(--ink-soft); margin-top:8px; letter-spacing:0.05em;}
