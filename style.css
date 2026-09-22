@@ -9,6 +9,44 @@ body.creative-work{
 }
 body.creative-work nav.topnav{border-bottom:2px solid var(--hanko);}
 body.creative-work .cover-eyebrow, body.creative-work .region-title::before{color:var(--hanko);}
+
+/* --- 創作（江戸怪談百物語・近現代妖怪）の本文は明朝体にする --- */
+/* 台帳＝事実の記録はゴシック、創作＝物語は明朝、と書体で役割を分ける。
+   明朝は縦画と横画の太細があるため、長い物語文を続けて読むのに向いている。 */
+body.creative-work .record-body,
+body.creative-work .record-lede,
+body.creative-work .pref-intro p,
+body.creative-work .kaidan-note-text{
+  font-family:'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  line-height:2.0;
+  letter-spacing:0.02em;
+}
+body.creative-work .record-body p{font-size:16.5px;}
+body.creative-work .record-lede{font-weight:400;}
+
+/* 記録の断片（図録、第一図。／葉の色、青。など）は地の文と機能が違うので、
+   小さく・字間を開けて・左に罫を立て、見出しとして読ませる。 */
+.kaidan-rec-line{
+  font-family:'Noto Sans JP', sans-serif !important;
+  font-size:11.5px !important; letter-spacing:0.14em; line-height:1.7 !important;
+  color:var(--ink-soft); margin:26px 0 8px !important; padding-left:12px;
+  border-left:2px solid var(--hanko);
+}
+body.creative-work .kaidan-rec-line{font-family:'Noto Sans JP', sans-serif !important;}
+
+/* 書簡（手紙）は地の文と声が違うので、紙を一枚置いたように枠で囲んで分離する */
+.kaidan-letter{
+  margin:26px 0; padding:20px clamp(16px,4vw,26px);
+  background:rgba(184,114,44,0.06); border:1px solid rgba(184,114,44,0.3);
+}
+.kaidan-letter-tag{
+  display:block; font-family:'Noto Sans JP', sans-serif; font-size:10.5px;
+  letter-spacing:0.16em; color:var(--hanko); font-weight:700; margin-bottom:10px;
+}
+.kaidan-letter p{margin:0 !important; text-indent:1em;}
+@media (max-width:600px){
+  body.creative-work .record-body p{font-size:16px; line-height:1.95;}
+}
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
 html,body{margin:0;padding:0; overflow-x:hidden;}
