@@ -35,6 +35,14 @@ document.addEventListener('DOMContentLoaded', function(){
   revealEls.forEach(function(el, i){
     el.style.transitionDelay = Math.min(i * 35, 420) + 'ms';
   });
+  // 創作ページのリード文にも、本文と同じ「じわり」を効かせる
+  var ledeEl = document.querySelector('body.creative-work .record-lede');
+  if (ledeEl) ledeEl.classList.add('reveal-text');
+  // 創作の本文は、同じ画面に複数段落が入っても一斉に出さず、少しずつ時間をずらす
+  var creativeParas = document.querySelectorAll('body.creative-work .record-body .reveal-text');
+  creativeParas.forEach(function(el, i){
+    el.style.transitionDelay = Math.min(i * 90, 540) + 'ms';
+  });
   var revealTextEls = document.querySelectorAll('.reveal-text');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) {

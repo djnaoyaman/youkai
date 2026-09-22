@@ -362,6 +362,26 @@ footer.sitefoot{text-align:left; font-size:12px; color:var(--ink-soft); margin-t
   .reveal-text{opacity:1 !important; filter:none !important; transform:none !important; transition:none !important;}
 }
 
+/* --- 創作（百物語・近現代妖怪）の本文は、より深く沈んだところから、ゆっくり浮かび上がる --- */
+/* 台帳は情報を読みに来る場所なので素早く出す。創作は物語に入ってもらう場所なので、
+   にじむように現れる時間をとる。灯りの中に文字が浮かぶ感じを狙っている。 */
+body.creative-work .record-body .reveal-text,
+body.creative-work .record-lede{
+  filter:blur(9px); transform:translateY(20px);
+  transition:opacity 1.6s cubic-bezier(.22,.61,.36,1), filter 1.6s cubic-bezier(.22,.61,.36,1), transform 1.6s cubic-bezier(.22,.61,.36,1);
+}
+body.creative-work .record-body .reveal-text.is-visible,
+body.creative-work .record-lede.is-visible{
+  filter:blur(0); transform:translateY(0);
+}
+/* 記録の断片・書簡は、地の文よりわずかに遅れて現れる */
+body.creative-work .kaidan-rec-line{transition-delay:0.15s;}
+body.creative-work .kaidan-letter{transition-delay:0.2s;}
+@media (prefers-reduced-motion: reduce){
+  body.creative-work .record-body .reveal-text,
+  body.creative-work .record-lede{filter:none !important; transform:none !important; transition:none !important;}
+}
+
 /* --- region-slide：都道府県の各地方ブロックが、スクロールごとに左右交互から入ってくる演出 --- */
 .region-slide{opacity:0; transition:opacity 0.9s cubic-bezier(.16,.84,.44,1), transform 0.9s cubic-bezier(.16,.84,.44,1);}
 .region-slide.slide-left{transform:translateX(-100vw);}
