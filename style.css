@@ -12,10 +12,11 @@ body.creative-work .cover-eyebrow, body.creative-work .region-title::before{colo
 
 /* --- 創作（江戸怪談百物語・近現代妖怪）の本文は明朝体にする --- */
 /* 台帳＝事実の記録はゴシック、創作＝物語は明朝、と書体で役割を分ける。
-   明朝は縦画と横画の太細があるため、長い物語文を続けて読むのに向いている。 */
+   明朝は縦画と横画の太細があるため、長い物語文を続けて読むのに向いている。
+   ただし pref-intro（編者が企画の意図を説明する地の文）は創作ではないので、
+   台帳側と同じゴシックのまま残す。 */
 body.creative-work .record-body,
 body.creative-work .record-lede,
-body.creative-work .pref-intro p,
 body.creative-work .kaidan-note-text{
   font-family:'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
   line-height:2.0;
