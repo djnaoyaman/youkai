@@ -74,7 +74,7 @@
 <div class="stance-box">
 <div class="stance-title">このページについて</div>
 <p class="reveal-text">近現代妖怪の<a href="gendai/joriko.html">常利己（じょうりこ）</a>が生まれる過程を、計算で追うページ。毎年の選択を四十年積み重ねると、何が増えて何が消えるのかを見る。</p>
-<p class="reveal-text"><strong>これは証明ではない。</strong>人の選択が四十年後にどういう人格を生むかを数式で証明した研究は存在しない。数理学・物理学・宗教・哲学から借りた考え方を組み合わせた、ひとつのモデルである。前提が変われば結果も変わる。</p>
+<p class="reveal-text"><strong>これは証明ではない。</strong>ただし、根拠にした研究は実在するものに絞った。ハーバード大学が1938年から85年以上続けている成人発達研究、2023年にPNASに発表された所得と幸福の論文、ダンバー数の研究などである。それらの知見を組み合わせて作ったモデルだが、この形で人生を計算した研究は存在しない。</p>
 </div>
 
 <div class="jrk-sim">
@@ -83,18 +83,40 @@
     <input type="range" id="jrkRate" min="0" max="100" value="50" step="5">
     <div class="jrk-rate-view"><span id="jrkRateVal">50</span>%</div>
     <div class="jrk-rate-desc" id="jrkRateDesc">半々。</div>
-    <label class="jrk-check"><input type="checkbox" id="jrkCrash"> 60歳で失脚する（資産65%減・地位75%減）</label>
+
+    <div class="jrk-opts">
+      <div class="jrk-opt-row">
+        <span class="jrk-opt-label">働き方</span>
+        <div class="jrk-radio">
+          <label><input type="radio" name="jrkCareer" value="employee" checked> 一生サラリーマン</label>
+          <label><input type="radio" name="jrkCareer" value="founder"> 自分で事業をやる</label>
+        </div>
+      </div>
+      <div class="jrk-opt-row" id="jrkWinRow">
+        <span class="jrk-opt-label">事業での大きな成功</span>
+        <div class="jrk-radio" id="jrkWins">
+          <label><input type="radio" name="jrkWin" value="0" checked> 0回</label>
+          <label><input type="radio" name="jrkWin" value="1"> 1回</label>
+          <label><input type="radio" name="jrkWin" value="3"> 3回</label>
+          <label><input type="radio" name="jrkWin" value="5"> 5回</label>
+        </div>
+      </div>
+      <label class="jrk-check"><input type="checkbox" id="jrkCrash"> 60歳で失脚する（資産65%減・地位75%減）</label>
+    </div>
   </div>
 
   <div class="jrk-result">
     <div class="jrk-age">25歳 → 65歳（40年）</div>
     <div class="jrk-grid">
-      <div class="jrk-cell"><div class="jrk-label">社内の地位</div><div class="jrk-val" id="jrkRank">-</div><div class="jrk-sub">1.0 から</div></div>
       <div class="jrk-cell"><div class="jrk-label">資産</div><div class="jrk-val" id="jrkWealth">-</div><div class="jrk-sub">300万から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">社会的な地位</div><div class="jrk-val" id="jrkRank">-</div><div class="jrk-sub">1.0 から</div></div>
       <div class="jrk-cell"><div class="jrk-label">周囲からの信頼</div><div class="jrk-val" id="jrkTrust">-</div><div class="jrk-sub">1.00 から</div></div>
-      <div class="jrk-cell"><div class="jrk-label">損得なしの友人</div><div class="jrk-val" id="jrkPure">-</div><div class="jrk-sub">16人から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">損得なしの友人</div><div class="jrk-val" id="jrkPure">-</div><div class="jrk-sub">15人から</div></div>
       <div class="jrk-cell"><div class="jrk-label">お金でつながる友人</div><div class="jrk-val" id="jrkMoney">-</div><div class="jrk-sub">4人から</div></div>
-      <div class="jrk-cell jrk-cell-key"><div class="jrk-label">話を最後まで聞いてくれる人</div><div class="jrk-val" id="jrkListeners">-</div><div class="jrk-sub">16人から</div></div>
+      <div class="jrk-cell jrk-cell-key"><div class="jrk-label">話を最後まで聞いてくれる人</div><div class="jrk-val" id="jrkListeners">-</div><div class="jrk-sub">5人から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">人生の自律性<span class="jrk-note">PNAS 2023</span></div><div class="jrk-val" id="jrkAutonomy">-</div><div class="jrk-sub">0〜1.00</div></div>
+      <div class="jrk-cell"><div class="jrk-label">幸福度<span class="jrk-note">PNAS 2023 / 自己決定理論</span></div><div class="jrk-val" id="jrkHappy">-</div><div class="jrk-sub">0〜1.00</div></div>
+      <div class="jrk-cell jrk-cell-key2"><div class="jrk-label">80歳時点の健康<span class="jrk-note">ハーバード成人発達研究</span></div><div class="jrk-val" id="jrkHealth">-</div><div class="jrk-sub">0〜1.00</div></div>
     </div>
     <div class="jrk-verdict" id="jrkVerdict"></div>
   </div>
@@ -114,21 +136,36 @@
 <div class="region-title">計算して分かったこと</div>
 <div class="pref-intro">
 <p class="reveal-text">数字を並べる。</p>
-<p class="reveal-text"><strong>資産は、利己率に比例して増え続ける。</strong>利己率0%で約4,900万、100%で約13,100万。2.7倍の差がつく。</p>
-<p class="reveal-text"><strong>地位は、途中で伸びが止まる。</strong>利己率60%を超えると、そこから先はほとんど動かない。8.7から9.6まで、0.9しか変わらない。</p>
-<p class="reveal-text"><strong>お金でつながる友人は、増え続ける。</strong>利己率0%で6.7人、100%で16.6人。資産が増えるほど増える。</p>
-<p class="reveal-text"><strong>損得なしの友人は、ある点で消える。</strong>利己率40%で22.7人、50%で15.6人、60%で2.2人、70%でゼロ。</p>
-<p class="reveal-text">この二つを合計すると、友人の総数はあまり変わらない。利己率0%で34人、100%で17人。半分になるが、ゼロにはならない。<strong>数だけ見れば、そこそこ友人がいる状態が続く。</strong></p>
-<p class="reveal-text"><strong>話を最後まで聞いてくれる人は、消える。</strong>利己率0%で21.3人、40%で11.9人、50%で5.3人、60%で0.2人。損得なしの友人にしか、この役は務まらない。</p>
+<p class="reveal-text"><strong>資産は、利己率に比例して増え続ける。</strong>サラリーマンで利己率0%なら約4,900万、100%なら約13,100万。事業で五回成功して利己率85%なら、約22億になる。</p>
+<p class="reveal-text"><strong>ただし幸福度は、資産に比例しない。</strong>事業で五回成功して利己率85%の人の幸福度は0.57。一方、三回成功で利己率20%の人は0.85である。資産は前者が22億、後者が3.6億。<strong>資産六分の一で、幸福度は一・五倍になる。</strong></p>
+<p class="reveal-text"><strong>80歳時点の健康に、資産は影響しない。</strong>利己率85%で回すと、事業の成功が0回でも5回でも、健康は0.22で変わらない。ハーバード大学の研究が示した「50歳時点の人間関係の満足度が、80歳時点の健康を最もよく予測する」という知見を、この計算に入れているためである。</p>
+<p class="reveal-text"><strong>起業家は、自律性が高く出る。</strong>サラリーマンの自律性が0.71〜0.82に対し、起業家は1.00に張り付く。2023年のPNAS論文が、所得と幸福の関係の74%が「自分の人生をコントロールできている感覚」で説明されると報告している。この項を入れると、起業家の幸福度はサラリーマンより高くなる。利己率85%でも、0.46対0.42である。</p>
+<p class="reveal-text"><strong>事業の成功が増えると、損得なしの友人は減る。</strong>利己率50%の場合、成功0回で11.5人、3回で6.3人。この計算では、事業の大きな成功ごとに信頼が少し減るようにしてある。拡大は、関係を<ruby>犠牲<rt>ぎせい</rt></ruby>にしがちである。</p>
 </div>
 
 <div class="region-title">失脚させると、何が起きるか</div>
 <div class="pref-intro">
-<p class="reveal-text">上のチェックボックスを入れると、60歳で資産が65%減り、地位が75%下がる。定年、あるいは失脚である。</p>
-<p class="reveal-text"><strong>利己率85%の人が失脚した場合。</strong>お金でつながる友人が13.8人から9.9人に減る。損得なしの友人は、失脚の前からゼロである。話を聞いてくれる人も、ゼロのまま変わらない。失う前から、失うものがない。</p>
-<p class="reveal-text"><strong>利己率20%の人が同じ失脚を経験した場合。</strong>お金でつながる友人は7.9人から6.4人に減る。だが損得なしの友人は23.8人から24.1人へ、わずかに増える。そして話を聞いてくれる人が、17.9人から22.1人に増える。</p>
-<p class="reveal-text">増える理由は一つである。地位が下がったことで、周囲が本音を言うようになるからだ。この計算では、地位が上がるほど本音を言われなくなる（忖度が働く）という項を入れている。地位が下がれば、その逆が起きる。</p>
+<p class="reveal-text">チェックボックスを入れると、60歳で資産が65%減り、地位が75%下がる。</p>
+<p class="reveal-text"><strong>利己率85%の人</strong>。お金でつながる友人が減る。損得なしの友人は、失脚の前からゼロである。失う前から、失うものがない。</p>
+<p class="reveal-text"><strong>利己率20%の人</strong>。お金でつながる友人は減るが、損得なしの友人は変わらない。そして話を聞いてくれる人が増える。地位が下がったことで、周囲が本音を言うようになるからである。</p>
 <p class="reveal-text">失脚は、計算上は不幸な出来事である。ただし利己率の低い人にとっては、話を聞いてもらえる人が増える出来事でもある。</p>
+</div>
+
+<div class="region-title">根拠にした研究</div>
+<div class="pref-intro">
+<p class="reveal-text"><strong>ハーバード成人発達研究</strong>（Harvard Study of Adult Development, 1938年〜）。724人の男性とその家族・子孫を85年以上追跡している、世界最長の縦断研究である。現在の責任者ロバート・ウォールディンガーは、この研究の最も明確な結論をこう述べている。良い人間関係が、人を幸福で健康に保つ。</p>
+<p class="reveal-text">この研究で特に重要なのが、次の発見である。50歳時点でのコレステロール値は、80歳時点の健康をあまり予測しなかった。最もよく予測したのは、<strong>50歳時点で人間関係にどれだけ満足していたか</strong>だった。また、80歳になった参加者が語った最大の後悔は「働きすぎて、大切な人と過ごす時間が足りなかった」というものだった。孤独は、喫煙や過度の飲酒と同程度の健康リスクを持つとも報告されている。</p>
+<p class="reveal-text">この計算では、80歳時点の健康を、50歳時点の関係満足度から算出している。資産や地位は、この値にほとんど影響しない。</p>
+
+<p class="reveal-text"><strong>Killingsworth, Kahneman &amp; Mellers, PNAS (2023)</strong>「Income and emotional well-being: A conflict resolved」。2010年のカーネマンとディートンの研究は、幸福が年収7.5万ドルで頭打ちになると報告した。2021年のキリングスワースの研究は、頭打ちはないと報告した。矛盾する結果を出した研究者同士が組んで検証した結果が、この論文である。</p>
+<p class="reveal-text">結論は、大多数の人において幸福は log(所得) で上昇を続け、頭打ちにはならない。ただし、もともと不幸な下位20%は年10万ドルで頭打ちになる。そして最も重要な発見は、<strong>所得と幸福の関係の74%が、たった一つの質問で説明されたこと</strong>である。「自分の人生をどの程度コントロールできていると感じるか」。つまり効いているのは富そのものではなく、富がもたらす自律性である。</p>
+<p class="reveal-text">この計算では、幸福度を log(資産) で算出し、さらに自律性で重み付けしている。起業家の自律性を高く設定しているのは、この知見に従ったためである。</p>
+
+<p class="reveal-text"><strong>デシとライアンの自己決定理論</strong>（Self-Determination Theory）。人の幸福には三つの心理的欲求が必要とされる。自律性、有能感、関係性である。この計算の幸福度は、この三つの合成として組んでいる。配分は関係性0.44、資産0.26、自律性0.16、有能感0.14とした。ハーバード研究が関係性を最重要としているため、そこを最も重くしてある。</p>
+
+<p class="reveal-text"><strong>ロビン・ダンバーのダンバー数</strong>（1992年）。人が安定した社会関係を維持できる人数の上限は約150人。そのうち親しい友人は約15人、親密な関係は約5人とされる。この計算では、損得なしの友人を15人、話を聞いてくれる人を5人を基準に上限を設けている。資産がいくら増えても、無限には増えない。</p>
+
+<p class="reveal-text"><strong>起業の生存率に関する各国統計</strong>。新規事業の5年生存率は約50%、10年で約30%とされる。また連続起業家の成功確率は初回起業家より高いことが示されている（Gompers et al., Harvard Business School, 2010）。この計算では、起業家の平均リターンを高く設定する代わりに、定期的な損失を入れている。</p>
 </div>
 
 <div class="region-title">計算モデルの中身</div>
@@ -137,13 +174,10 @@
 
 <p class="reveal-text"><strong>地位</strong>：毎年、利己率に応じて上がる。ただし信頼が低いと伸びが鈍る。数理学の<strong>ナッシュ均衡</strong>を借りている。各人が自分にとって最適な手だけを選び続けると、全体としては最適でない点に落ち着く。利己率100%でも地位が9.6で止まるのは、これを反映したためである。</p>
 
-<p class="reveal-text"><strong>資産</strong>：地位に連動する。利己率が高いほど、取り分の係数が上がる。</p>
+<p class="reveal-text"><strong>信頼</strong>：物理学の<strong>熱力学第二法則</strong>を骨格にしている。閉じた系の秩序は、外からエネルギーを入れない限り減り続ける。この計算では、信頼を何もしなければ減る量として扱っている。相手を立てる行為が、外から入るエネルギーである。<strong>イリヤ・プリゴジン</strong>の散逸構造論が下敷きになっている。生命や組織は、外部とエネルギーを交換し続けることで秩序を保っている。交換を止めれば崩れる。</p>
+<p class="reveal-text">さらに、信頼が0.5を下回ると減り方が1.35倍に加速する。<strong>ロバート・アクセルロッド</strong>の反復囚人のジレンマの知見で、裏切りの累積は非線形に効く。</p>
 
-<p class="reveal-text"><strong>信頼</strong>：物理学の<strong>熱力学第二法則</strong>を骨格にしている。閉じた系の秩序は、外からエネルギーを入れない限り減り続ける。この計算では、信頼を何もしなければ減る量として扱っている。相手を立てる行為が、外から入るエネルギーである。<strong>イリヤ・プリゴジン</strong>の散逸構造論が、この考え方の下敷きになっている。生命や組織は、外部とエネルギーを交換し続けることで秩序を保っている。交換を止めれば崩れる。</p>
-<p class="reveal-text">さらに、信頼が0.5を下回ると減り方が1.35倍に加速する。数理学の<strong>ロバート・アクセルロッド</strong>による反復囚人のジレンマの知見で、裏切りの累積は非線形に効く。</p>
-
-<p class="reveal-text"><strong>友人を二つに分けた理由</strong>：<strong>アリストテレス</strong>『ニコマコス倫理学』の友愛の三分類を借りている。友愛には、利益による友愛、快楽による友愛、徳による友愛の三つがあり、前二つは目的が消えれば終わる。持続するのは徳による友愛だけである。</p>
-<p class="reveal-text">この計算では、<strong>お金でつながる友人</strong>を資産の平方根に比例させた。資産が増えるほど増えるが、増え方は鈍る。<strong>損得なしの友人</strong>は信頼に連動させ、信頼が0.75を下回ると離れ始め、一度離れたら戻らないようにした。</p>
+<p class="reveal-text"><strong>友人を二つに分けた理由</strong>：<strong>アリストテレス</strong>『ニコマコス倫理学』の友愛の三分類を借りている。友愛には、利益による友愛、快楽による友愛、徳による友愛の三つがあり、前二つは目的が消えれば終わる。持続するのは徳による友愛だけである。お金でつながる友人は資産の平方根に比例させ、損得なしの友人は信頼に連動させた。後者は一度離れたら戻らない。</p>
 
 <p class="reveal-text"><strong>話を最後まで聞いてくれる人</strong>：<strong>マルティン・ブーバー</strong>『我と汝』を借りている。関係には、相手を人格として向き合う「我-汝」と、相手を手段として扱う「我-それ」の二種類がある。この項目は我-汝の関係にある人の数として定義してあり、お金でつながる友人はここに数えない。さらに地位が上がるほど本音を言われなくなる係数を掛けている。</p>
 
@@ -153,7 +187,8 @@
 </div>
 
 <footer class="sitefoot">
-  このシミュレーションは編者が作成したモデルであり、学術的に検証されたものではありません。引用した理論はいずれも実在しますが、それらをこの形で組み合わせて人生を計算した研究は存在しません。思考の道具として使ってください。
+  このシミュレーションは編者が作成したモデルであり、学術的に検証されたものではありません。引用した研究はいずれも実在しますが、それらをこの形で組み合わせて人生を計算した研究は存在しません。思考の道具として使ってください。<br>
+  主要な参照：Waldinger &amp; Schulz『The Good Life』(2023)／Killingsworth, Kahneman &amp; Mellers, PNAS 120(10), 2023／Deci &amp; Ryan, Self-Determination Theory／Dunbar, Journal of Human Evolution 22(6), 1992／Axelrod『The Evolution of Cooperation』(1984)
 </footer>
 
 <div class="site-footer-bottom">
