@@ -209,8 +209,8 @@ var note = document.getElementById('pmodeNote');
 var hint = document.getElementById('pmodeHint');
 var _isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
 var modes = {
-'default': {name:'誰もいない',
-note:'今は誰も憑いていない。普通に読める。',
+'default': {name:'退散した',
+note:'追い払った。普通に読める。ただし、また来る。',
 hint:''},
 'kamaitachi': {name:'鎌鼬（かまいたち）',
 note:'文字が斜めに切られている。切断面が横にずれているので、上下を目で繋いで読むことになる。',
@@ -234,7 +234,7 @@ hint:'読んでいるあいだ、こちらも見られています'},
 note:'姿を見せずに砂を撒いてくる。文字の上に砂がかかって読みにくい。払えば落ちる。',
 hint:'砂のかかった段落をタップまたはマウスで触れると払えます'}
 };
-var order = ['default','kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','sunakake'];
+var order = ['kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','sunakake'];
 function buildKama(){
 Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li'), function(el){
 if (el.dataset.kamaDone) return;
@@ -337,30 +337,20 @@ b.setAttribute('aria-pressed', b.getAttribute('data-pmode') === mode ? 'true' : 
 var m = modes[mode];
 if (note) {
 note.textContent = (mode === 'default')
-? m.note + '（このページには、訪れるたびに違う妖怪がいます）'
-: '今このページには' + m.name + 'がいます。' + m.note;
+? m.note + '（このページには、訪れるたびに違う妖怪が憑きます）'
+: '今このページには' + m.name + 'が憑いています。' + m.note;
 }
 if (hint) {
 hint.textContent = m.hint;
 }
 var rv = document.getElementById('pmodeReveal');
-if (remember) {
-try { localStorage.setItem('yokai_pmode', mode); } catch (e) {}
 }
-}
-var saved = null, prev = null;
-try {
-saved = localStorage.getItem('yokai_pmode');
-prev = localStorage.getItem('yokai_pmode_prev');
-} catch (e) {}
-var pick;
-if (saved) {
-pick = saved;   // 前回ボタンで選んだ読ませ方を覚えている
-} else {
+var prev = null;
+try { prev = localStorage.getItem('yokai_pmode_prev'); } catch (e) {}
 var pool = order.filter(function(m){ return m !== prev; });
-pick = pool[Math.floor(Math.random() * pool.length)];
+if (!pool.length) pool = order;
+var pick = pool[Math.floor(Math.random() * pool.length)];
 try { localStorage.setItem('yokai_pmode_prev', pick); } catch (e) {}
-}
 apply(pick, false);
 Array.prototype.forEach.call(bar.querySelectorAll('.pmode-btn'), function(b){
 b.addEventListener('click', function(){
