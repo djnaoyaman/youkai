@@ -111,12 +111,13 @@
       <div class="jrk-cell"><div class="jrk-label">資産</div><div class="jrk-val" id="jrkWealth">-</div><div class="jrk-sub">300万から</div></div>
       <div class="jrk-cell"><div class="jrk-label">社会的な地位</div><div class="jrk-val" id="jrkRank">-</div><div class="jrk-sub">1.0 から</div></div>
       <div class="jrk-cell"><div class="jrk-label">周囲からの信頼</div><div class="jrk-val" id="jrkTrust">-</div><div class="jrk-sub">1.00 から</div></div>
-      <div class="jrk-cell"><div class="jrk-label">損得なしの友人</div><div class="jrk-val" id="jrkPure">-</div><div class="jrk-sub">15人から</div></div>
-      <div class="jrk-cell"><div class="jrk-label">お金でつながる友人</div><div class="jrk-val" id="jrkMoney">-</div><div class="jrk-sub">4人から</div></div>
-      <div class="jrk-cell jrk-cell-key"><div class="jrk-label">話を最後まで聞いてくれる人</div><div class="jrk-val" id="jrkListeners">-</div><div class="jrk-sub">5人から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">本音を言える友人<span class="jrk-note">徳による友愛</span></div><div class="jrk-val" id="jrkTrue">-</div><div class="jrk-sub">8人から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">楽しいからの友人<span class="jrk-note">快楽による友愛</span></div><div class="jrk-val" id="jrkFun">-</div><div class="jrk-sub">10人から</div></div>
+      <div class="jrk-cell"><div class="jrk-label">お金でつながる友人<span class="jrk-note">利益による友愛</span></div><div class="jrk-val" id="jrkMoney">-</div><div class="jrk-sub">4人から</div></div>
+      <div class="jrk-cell jrk-cell-key"><div class="jrk-label">話を最後まで聞いてくれる人</div><div class="jrk-val" id="jrkListeners">-</div><div class="jrk-sub">5人から（上限5人）</div></div>
       <div class="jrk-cell"><div class="jrk-label">人生の自律性<span class="jrk-note">PNAS 2023</span></div><div class="jrk-val" id="jrkAutonomy">-</div><div class="jrk-sub">0〜1.00</div></div>
       <div class="jrk-cell"><div class="jrk-label">幸福度<span class="jrk-note">PNAS 2023 / 自己決定理論</span></div><div class="jrk-val" id="jrkHappy">-</div><div class="jrk-sub">0〜1.00</div></div>
-      <div class="jrk-cell jrk-cell-key2"><div class="jrk-label">80歳時点の健康<span class="jrk-note">ハーバード成人発達研究</span></div><div class="jrk-val" id="jrkHealth">-</div><div class="jrk-sub">0〜1.00</div></div>
+      <div class="jrk-cell jrk-cell-key2"><div class="jrk-label">80歳時点の健康<span class="jrk-note">ハーバード成人発達研究</span></div><div class="jrk-val" id="jrkHealth">-</div><div class="jrk-sub">関係の質で決まる</div></div>
     </div>
     <div class="jrk-verdict" id="jrkVerdict"></div>
   </div>
@@ -126,7 +127,8 @@
     <svg class="jrk-chart" id="jrkChart" viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="地位・損得なしの友人・お金でつながる友人・話を聞いてくれる人の推移"></svg>
     <div class="jrk-legend">
       <span class="jrk-lg jrk-lg-rank">地位</span>
-      <span class="jrk-lg jrk-lg-friends">損得なしの友人</span>
+      <span class="jrk-lg jrk-lg-friends">本音を言える友人</span>
+      <span class="jrk-lg jrk-lg-fun">楽しいからの友人</span>
       <span class="jrk-lg jrk-lg-money">お金でつながる友人</span>
       <span class="jrk-lg jrk-lg-listeners">話を聞いてくれる人</span>
     </div>
@@ -137,10 +139,12 @@
 <div class="pref-intro">
 <p class="reveal-text">数字を並べる。</p>
 <p class="reveal-text"><strong>資産は、利己率に比例して増え続ける。</strong>サラリーマンで利己率0%なら約4,900万、100%なら約13,100万。事業で五回成功して利己率85%なら、約22億になる。</p>
-<p class="reveal-text"><strong>ただし幸福度は、資産に比例しない。</strong>事業で五回成功して利己率85%の人の幸福度は0.57。一方、三回成功で利己率20%の人は0.85である。資産は前者が22億、後者が3.6億。<strong>資産六分の一で、幸福度は一・五倍になる。</strong></p>
-<p class="reveal-text"><strong>80歳時点の健康に、資産は影響しない。</strong>利己率85%で回すと、事業の成功が0回でも5回でも、健康は0.22で変わらない。ハーバード大学の研究が示した「50歳時点の人間関係の満足度が、80歳時点の健康を最もよく予測する」という知見を、この計算に入れているためである。</p>
-<p class="reveal-text"><strong>起業家は、自律性が高く出る。</strong>サラリーマンの自律性が0.71〜0.82に対し、起業家は1.00に張り付く。2023年のPNAS論文が、所得と幸福の関係の74%が「自分の人生をコントロールできている感覚」で説明されると報告している。この項を入れると、起業家の幸福度はサラリーマンより高くなる。利己率85%でも、0.46対0.42である。</p>
-<p class="reveal-text"><strong>事業の成功が増えると、損得なしの友人は減る。</strong>利己率50%の場合、成功0回で11.5人、3回で6.3人。この計算では、事業の大きな成功ごとに信頼が少し減るようにしてある。拡大は、関係を<ruby>犠牲<rt>ぎせい</rt></ruby>にしがちである。</p>
+<p class="reveal-text"><strong>友人の総数は、ほとんど変わらない。</strong>利己率0%で33人、50%で27人、100%で20人。減るが、半分にもならない。</p>
+<p class="reveal-text"><strong>ただし、内訳が完全に入れ替わる。</strong>利己率0%では、本音を言える友人15人・楽しいからの友人11.6人・お金でつながる友人6.7人。利己率100%では、本音を言える友人0人・楽しいからの友人3.8人・お金でつながる友人16.6人。<strong>総数はほぼ同じで、中身だけが逆転している。</strong></p>
+<p class="reveal-text"><strong>三つの層は、消える順番が違う。</strong>先に減るのは本音を言える友人である。利己率40%で13.2人、50%で6.2人、60%でゼロ。楽しいからの友人は、それより粘る。利己率60%でも6.1人、100%でも3.8人残る。お金でつながる友人は、最後まで増え続ける。</p>
+<p class="reveal-text"><strong>話を最後まで聞いてくれる人は、本音を言える友人の中からしか出てこない。</strong>利己率50%で1.4人、60%でゼロ。この計算では上限を5人に設定している。ダンバー数の研究で、親密な関係を維持できる上限が約5人とされているためである。</p>
+<p class="reveal-text"><strong>幸福度は資産に比例しない。</strong>事業で五回成功して利己率85%の人の幸福度は0.57。三回成功で利己率20%の人は1.00に届く。資産は前者が22億、後者が3.6億である。</p>
+<p class="reveal-text"><strong>80歳時点の健康に、資産は影響しない。</strong>利己率85%で回すと、事業の成功が0回でも5回でも、健康は0.20で変わらない。</p>
 </div>
 
 <div class="region-title">失脚させると、何が起きるか</div>
@@ -163,7 +167,7 @@
 
 <p class="reveal-text"><strong>デシとライアンの自己決定理論</strong>（Self-Determination Theory）。人の幸福には三つの心理的欲求が必要とされる。自律性、有能感、関係性である。この計算の幸福度は、この三つの合成として組んでいる。配分は関係性0.44、資産0.26、自律性0.16、有能感0.14とした。ハーバード研究が関係性を最重要としているため、そこを最も重くしてある。</p>
 
-<p class="reveal-text"><strong>ロビン・ダンバーのダンバー数</strong>（1992年）。人が安定した社会関係を維持できる人数の上限は約150人。そのうち親しい友人は約15人、親密な関係は約5人とされる。この計算では、損得なしの友人を15人、話を聞いてくれる人を5人を基準に上限を設けている。資産がいくら増えても、無限には増えない。</p>
+<p class="reveal-text"><strong>ロビン・ダンバーのダンバー数</strong>（1992年）。人が安定した社会関係を維持できる人数の上限は約150人。この150人は入れ子の階層になっており、親密圏が約5人、親しい友人が約15人、友人が約50人、知人が約150人とされる。この計算では、この階層をそのまま上限に使っている。本音を言える友人と楽しいからの友人は15人、お金でつながる友人は50人、話を最後まで聞いてくれる人は5人が上限である。資産がいくら増えても、無限には増えない。</p>
 
 <p class="reveal-text"><strong>起業の生存率に関する各国統計</strong>。新規事業の5年生存率は約50%、10年で約30%とされる。また連続起業家の成功確率は初回起業家より高いことが示されている（Gompers et al., Harvard Business School, 2010）。この計算では、起業家の平均リターンを高く設定する代わりに、定期的な損失を入れている。</p>
 </div>
@@ -177,7 +181,9 @@
 <p class="reveal-text"><strong>信頼</strong>：物理学の<strong>熱力学第二法則</strong>を骨格にしている。閉じた系の秩序は、外からエネルギーを入れない限り減り続ける。この計算では、信頼を何もしなければ減る量として扱っている。相手を立てる行為が、外から入るエネルギーである。<strong>イリヤ・プリゴジン</strong>の散逸構造論が下敷きになっている。生命や組織は、外部とエネルギーを交換し続けることで秩序を保っている。交換を止めれば崩れる。</p>
 <p class="reveal-text">さらに、信頼が0.5を下回ると減り方が1.35倍に加速する。<strong>ロバート・アクセルロッド</strong>の反復囚人のジレンマの知見で、裏切りの累積は非線形に効く。</p>
 
-<p class="reveal-text"><strong>友人を二つに分けた理由</strong>：<strong>アリストテレス</strong>『ニコマコス倫理学』の友愛の三分類を借りている。友愛には、利益による友愛、快楽による友愛、徳による友愛の三つがあり、前二つは目的が消えれば終わる。持続するのは徳による友愛だけである。お金でつながる友人は資産の平方根に比例させ、損得なしの友人は信頼に連動させた。後者は一度離れたら戻らない。</p>
+<p class="reveal-text"><strong>友人を三つに分けた理由</strong>：<strong>アリストテレス</strong>『ニコマコス倫理学』第八巻の友愛の三分類に従っている。友愛には、利益による友愛、快楽による友愛、徳による友愛の三つがある。アリストテレスは前二つを「付帯的な友愛」と呼び、その目的が消えれば終わると書いた。持続するのは徳による友愛だけで、かつそれは稀であるとした。</p>
+<p class="reveal-text">この計算では、<strong>お金でつながる友人</strong>（利益による友愛）を資産の平方根に連動させた。増え続けるが、ダンバー数の「友人」層である50人を上限にしている。<strong>楽しいからの友人</strong>（快楽による友愛）は、地位と信頼の両方に緩やかに連動させた。地位が上がれば誘われる回数は増えるが、信頼を失えば消える。ただし徳による友愛ほど急激には減らない。飲み仲間や趣味の仲間は、多少嫌な相手でも付き合いが続くことがある。<strong>本音を言える友人</strong>（徳による友愛）は信頼だけに連動させ、一度離れたら戻らないようにした。</p>
+<p class="reveal-text">三つに分けた結果、見え方が変わった。<strong>友人の総数はあまり減らない。</strong>利己率100%でも20人いる。ただし、その内訳が完全に入れ替わっている。数を数えるだけでは、この変化は見えない。</p>
 
 <p class="reveal-text"><strong>話を最後まで聞いてくれる人</strong>：<strong>マルティン・ブーバー</strong>『我と汝』を借りている。関係には、相手を人格として向き合う「我-汝」と、相手を手段として扱う「我-それ」の二種類がある。この項目は我-汝の関係にある人の数として定義してあり、お金でつながる友人はここに数えない。さらに地位が上がるほど本音を言われなくなる係数を掛けている。</p>
 

@@ -209,7 +209,8 @@ var winRow = document.getElementById('jrkWinRow');
 var el = {
 val: document.getElementById('jrkRateVal'), desc: document.getElementById('jrkRateDesc'),
 rank: document.getElementById('jrkRank'), wealth: document.getElementById('jrkWealth'),
-trust: document.getElementById('jrkTrust'), pure: document.getElementById('jrkPure'),
+trust: document.getElementById('jrkTrust'),
+ftrue: document.getElementById('jrkTrue'), fun: document.getElementById('jrkFun'),
 money: document.getElementById('jrkMoney'), listeners: document.getElementById('jrkListeners'),
 autonomy: document.getElementById('jrkAutonomy'), happy: document.getElementById('jrkHappy'),
 health: document.getElementById('jrkHealth'), verdict: document.getElementById('jrkVerdict'),
@@ -225,7 +226,7 @@ return r ? parseInt(r.value, 10) : 0;
 }
 function simulate(r, founder, bigWins, doCrash){
 var rank = 1.0, wealth = 300.0, trust = 1.0;
-var fMoney = 4.0, fPure = 15.0;
+var fMoney = 4.0, fFun = 10.0, fTrue = 8.0;
 var winYears = [];
 if (founder && bigWins > 0) {
 for (var i = 0; i < bigWins; i++) {
@@ -251,17 +252,19 @@ wealth += rank * base;
 var entropy = r * 0.045;
 if (trust < 0.5) { entropy *= 1.35; }
 trust = Math.max(0, Math.min(1, trust - entropy + (1 - r) * 0.020));
-fMoney = Math.min(4.0 + Math.sqrt(wealth) * 0.11 * (0.35 + r * 0.65), 135);
-if (trust < 0.75) { fPure -= (0.75 - trust) * 2.3; }
-fPure += (1 - r) * 0.28;
-fPure = Math.max(0, Math.min(fPure, 15));
-var listeners = fPure * trust * (1 / (1 + rank * 0.055));
-listeners = Math.min(listeners, 5 + fPure * 0.7);
+fMoney = Math.min(4.0 + Math.sqrt(wealth) * 0.11 * (0.35 + r * 0.65), 50);
+var funTarget = (8.0 + rank * 0.8) * (0.25 + trust * 0.75);
+fFun += (funTarget - fFun) * 0.18;
+fFun = Math.max(0, Math.min(fFun, 15));
+if (trust < 0.78) { fTrue -= (0.78 - trust) * 1.9; }
+fTrue += (1 - r) * 0.22;
+fTrue = Math.max(0, Math.min(fTrue, 15));
+var listeners = Math.min(fTrue * trust * (1 / (1 + rank * 0.14)), 5);
 var autonomy;
 if (founder) { autonomy = Math.min(1, 0.55 + rank * 0.03 + Math.log(Math.max(wealth,1))/Math.LN10 * 0.06); }
 else         { autonomy = Math.min(1, 0.25 + rank * 0.045 + Math.log(Math.max(wealth,1))/Math.LN10 * 0.04); }
 if (doCrash && y >= 35) { autonomy *= 0.7; }
-var relatedness = Math.min(1, listeners / 12);
+var relatedness = Math.min(1, listeners / 4.5);
 var competence = Math.min(1, rank / 9);
 var moneyTerm = Math.log(Math.max(wealth,100) / 100) / Math.LN10 / 3.2;
 var happiness = moneyTerm * 0.26 * (0.4 + autonomy * 0.6)
@@ -269,11 +272,11 @@ var happiness = moneyTerm * 0.26 * (0.4 + autonomy * 0.6)
 happiness = Math.max(0, Math.min(1, happiness));
 if (age === 50) { relSat50 = relatedness; }
 log.push({age: age, rank: rank, wealth: wealth, trust: trust,
-fMoney: fMoney, fPure: fPure, listeners: listeners,
+fMoney: fMoney, fFun: fFun, fTrue: fTrue, listeners: listeners,
 autonomy: autonomy, happiness: happiness});
 }
 var rs = (relSat50 === null) ? 0 : relSat50;
-var health = 0.22 + rs * 0.62 + log[log.length-1].trust * 0.16;
+var health = 0.20 + rs * 0.58 + log[log.length-1].trust * 0.14;
 log.forEach(function(d){ d.health = health; });
 return log;
 }
@@ -289,7 +292,7 @@ return '一度も譲らなかった場合。';
 function verdict(d, log, doCrash){
 var oku = (d.wealth / 10000).toFixed(1);
 var s = '65歳時点。資産' + oku + '億、地位' + d.rank.toFixed(1) + '、信頼' + d.trust.toFixed(2) + '。';
-s += '損得なしの友人' + d.fPure.toFixed(1) + '人、お金でつながる友人' + d.fMoney.toFixed(1) + '人、';
+s += '本音を言える友人' + d.fTrue.toFixed(1) + '人、楽しいからの友人' + d.fFun.toFixed(1) + '人、お金でつながる友人' + d.fMoney.toFixed(1) + '人、';
 s += '話を最後まで聞いてくれる人' + d.listeners.toFixed(1) + '人。';
 s += '幸福度' + d.happiness.toFixed(2) + '、80歳時点の健康' + d.health.toFixed(2) + '。';
 if (doCrash) {
@@ -324,7 +327,8 @@ s += '<text class="jrk-tick" x="' + (pad.l - 6) + '" y="' + (yP(v) + 3).toFixed(
 });
 s += '<path class="jrk-line-rank" d="' + path('rank', yR) + '"/>';
 s += '<path class="jrk-line-money" d="' + path('fMoney', yP) + '"/>';
-s += '<path class="jrk-line-friends" d="' + path('fPure', yP) + '"/>';
+s += '<path class="jrk-line-fun" d="' + path('fFun', yP) + '"/>';
+s += '<path class="jrk-line-friends" d="' + path('fTrue', yP) + '"/>';
 s += '<path class="jrk-line-listeners" d="' + path('listeners', yP) + '"/>';
 el.chart.innerHTML = s;
 }
@@ -339,7 +343,8 @@ el.desc.textContent = describe(pct);
 el.rank.textContent = d.rank.toFixed(1);
 el.wealth.textContent = Math.round(d.wealth).toLocaleString() + '万';
 el.trust.textContent = d.trust.toFixed(2);
-el.pure.textContent = d.fPure.toFixed(1) + '人';
+el.ftrue.textContent = d.fTrue.toFixed(1) + '人';
+el.fun.textContent = d.fFun.toFixed(1) + '人';
 el.money.textContent = d.fMoney.toFixed(1) + '人';
 el.listeners.textContent = d.listeners.toFixed(1) + '人';
 el.autonomy.textContent = d.autonomy.toFixed(2);
