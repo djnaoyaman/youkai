@@ -230,11 +230,11 @@ hint:'薄くなった段落をタップまたはマウスで触れると戻り�
 'mokumokuren': {name:'目目連（もくもくれん）',
 note:'文字の隙間から、無数の目が見ている。読んでいる側が見られている。',
 hint:'読んでいるあいだ、こちらも見られています'},
-'hakushi': {name:'白紙',
-note:'何も書かれていないように見える。どの妖怪の仕業かは分かっていない。',
-hint:'文字を選択（ドラッグ）するか、上の「あきらめて読む」を押すと読めます'}
+'sunakake': {name:'砂かけ婆（すなかけばば）',
+note:'姿を見せずに砂を撒いてくる。文字の上に砂がかかって読みにくい。払えば落ちる。',
+hint:'砂のかかった段落をタップまたはマウスで触れると払えます'}
 };
-var order = ['default','kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','hakushi'];
+var order = ['default','kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','sunakake'];
 function buildKama(){
 Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li'), function(el){
 if (el.dataset.kamaDone) return;
@@ -252,13 +252,21 @@ el.appendChild(wrap);
 });
 }
 function buildYanari(){
-Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li, h2, h3'), function(el){
+var els = Array.prototype.slice.call(
+page.querySelectorAll('p:not(.pmode-hint), li, h2, h3'), 0, 30);
+els.forEach(function(el){
 if (el.dataset.yanariDone) return;
 el.dataset.yanariDone = '1';
 var sp = document.createElement('span');
 sp.className = 'yanari-in';
 while (el.firstChild) sp.appendChild(el.firstChild);
 el.appendChild(sp);
+});
+}
+function buildSuna(){
+var els = page.querySelectorAll('p:not(.pmode-hint), li');
+Array.prototype.forEach.call(els, function(el, i){
+if (i % 2 === 0) el.classList.add('suna');
 });
 }
 function buildWall(){
@@ -311,6 +319,9 @@ el.classList.remove('is-shown');
 Array.prototype.forEach.call(page.querySelectorAll('.nuri-wall'), function(el){
 el.classList.remove('nuri-wall', 'is-broken');
 });
+Array.prototype.forEach.call(page.querySelectorAll('.suna'), function(el){
+el.classList.remove('suna', 'is-brushed');
+});
 }
 function apply(mode, remember){
 if (!modes[mode]) mode = 'default';
@@ -319,6 +330,7 @@ page.setAttribute('data-pmode', mode);
 if (mode === 'kamaitachi') buildKama();
 if (mode === 'nurikabe') buildWall();
 if (mode === 'yanari') buildYanari();
+if (mode === 'sunakake') buildSuna();
 Array.prototype.forEach.call(bar.querySelectorAll('.pmode-btn'), function(b){
 b.setAttribute('aria-pressed', b.getAttribute('data-pmode') === mode ? 'true' : 'false');
 });
@@ -332,18 +344,6 @@ if (hint) {
 hint.textContent = m.hint;
 }
 var rv = document.getElementById('pmodeReveal');
-if (mode === 'hakushi') {
-if (!rv) {
-rv = document.createElement('button');
-rv.type = 'button'; rv.id = 'pmodeReveal'; rv.className = 'pmode-btn';
-rv.textContent = 'あきらめて読む';
-rv.addEventListener('click', function(){ page.classList.add('is-revealed'); });
-bar.insertBefore(rv, note);
-}
-rv.style.display = '';
-} else if (rv) {
-rv.style.display = 'none';
-}
 if (remember) {
 try { localStorage.setItem('yokai_pmode', mode); } catch (e) {}
 }
@@ -381,6 +381,16 @@ if (!el || !page.contains(el)) return;
 var top = el;
 while (top.parentNode && top.parentNode !== page) top = top.parentNode;
 top.classList.toggle('is-shown');
+});
+page.addEventListener('click', function(ev){
+if (page.getAttribute('data-pmode') !== 'sunakake') return;
+var el = ev.target.closest('.suna');
+if (!el) return;
+el.classList.add('is-brushed');
+var wait = 8000 + Math.random() * 8000;
+setTimeout(function(){
+if (page.getAttribute('data-pmode') === 'sunakake') el.classList.remove('is-brushed');
+}, wait);
 });
 page.addEventListener('click', function(ev){
 if (page.getAttribute('data-pmode') !== 'nurikabe') return;
