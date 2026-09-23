@@ -207,6 +207,7 @@ var bar = document.getElementById('pmodeBar');
 if (!page || !bar) return;
 var note = document.getElementById('pmodeNote');
 var hint = document.getElementById('pmodeHint');
+var _isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
 var modes = {
 'default': {name:'誰もいない',
 note:'今は誰も憑いていない。普通に読める。',
@@ -216,22 +217,22 @@ note:'文字が斜めに切られている。切断面が横にずれている�
 hint:'文字が切られています。切り口で上下がずれています'},
 'nurikabe': {name:'塗り壁（ぬりかべ）',
 note:'段落の先に壁が立って、続きが読めない。壁に触れると崩れる。柳田國男の記録では、壁の下の方を棒で叩くと消えるという。',
-hint:'灰色の壁に触れると崩れます'},
+hint:'灰色の壁をタップまたはマウスで触れると崩れます'},
 'kitsunebi': {name:'狐火（きつねび）',
 note:'闇の中。読もうとした箇所だけに火がともる。',
-hint:'読みたい段落に触れると、そこだけ火がともります'},
+hint:'読みたい段落をタップまたはマウスで触れると、そこだけ火がともります'},
 'yanari': {name:'家鳴（やなり）',
 note:'小鬼が家を揺すっている。文字が絶えず細かく震える。触れているあいだだけ止まる。',
-hint:'揺れが気になる段落に触れると、その段落だけ止まります'},
+hint:'揺れが気になる段落をタップまたはマウスで触れると、その段落だけ止まります'},
 'akaname': {name:'垢嘗（あかなめ）',
 note:'文字が舐められて、ほとんど消えている。触れると戻る。',
-hint:'薄くなった段落に触れると戻ります'},
+hint:'薄くなった段落をタップまたはマウスで触れると戻ります'},
 'mokumokuren': {name:'目目連（もくもくれん）',
 note:'文字の隙間から、無数の目が見ている。読んでいる側が見られている。',
 hint:'読んでいるあいだ、こちらも見られています'},
 'hakushi': {name:'白紙',
 note:'何も書かれていないように見える。どの妖怪の仕業かは分かっていない。',
-hint:'文字を選択（ドラッグ）するか、上のボタンを押すと読めます'}
+hint:'文字を選択（ドラッグ）するか、上の「あきらめて読む」を押すと読めます'}
 };
 var order = ['default','kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','hakushi'];
 function buildKama(){
@@ -250,14 +251,52 @@ el.innerHTML = '';
 el.appendChild(wrap);
 });
 }
-function buildWall(){
-var ps = page.querySelectorAll('p:not(.pmode-hint), ul, ol');
-Array.prototype.forEach.call(ps, function(el, i){
-if (i % 3 === 1) el.classList.add('nuri-wall');
+function buildYanari(){
+Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li, h2, h3'), function(el){
+if (el.dataset.yanariDone) return;
+el.dataset.yanariDone = '1';
+var sp = document.createElement('span');
+sp.className = 'yanari-in';
+while (el.firstChild) sp.appendChild(el.firstChild);
+el.appendChild(sp);
 });
+}
+function buildWall(){
+var cands = [];
+Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li'), function(el){
+var txt = (el.textContent || '').trim();
+if (txt.length < 40) return;              // 短い行は一行で終わり、右が空く
+var cs = window.getComputedStyle(el);
+var lh = parseFloat(cs.lineHeight);
+if (!lh || isNaN(lh)) lh = parseFloat(cs.fontSize) * 1.8;
+var h = el.getBoundingClientRect().height;
+if (h < lh * 1.8) return;                 // 二行に届かないものは除く
+cands.push(el);
+});
+var step = Math.max(1, Math.floor(cands.length / 3));
+for (var i = 0; i < cands.length; i += step) {
+cands[i].classList.add('nuri-wall');
+if (page.querySelectorAll('.nuri-wall').length >= 3) break;
+}
+if (!page.querySelector('.nuri-wall')) {
+var longest = null, max = 0;
+Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint)'), function(el){
+var n = (el.textContent || '').length;
+if (n > max) { max = n; longest = el; }
+});
+if (longest) longest.classList.add('nuri-wall');
+}
 }
 function clearTricks(){
 page.classList.remove('is-revealed');
+Array.prototype.forEach.call(page.querySelectorAll('.yanari-in'), function(sp){
+var host = sp.parentNode;
+if (host) {
+while (sp.firstChild) host.insertBefore(sp.firstChild, sp);
+host.removeChild(sp);
+delete host.dataset.yanariDone;
+}
+});
 Array.prototype.forEach.call(page.querySelectorAll('.kama-wrap'), function(w){
 var base = w.querySelector('.kama-base');
 var host = w.parentNode;
@@ -279,6 +318,7 @@ clearTricks();
 page.setAttribute('data-pmode', mode);
 if (mode === 'kamaitachi') buildKama();
 if (mode === 'nurikabe') buildWall();
+if (mode === 'yanari') buildYanari();
 Array.prototype.forEach.call(bar.querySelectorAll('.pmode-btn'), function(b){
 b.setAttribute('aria-pressed', b.getAttribute('data-pmode') === mode ? 'true' : 'false');
 });
@@ -288,7 +328,9 @@ note.textContent = (mode === 'default')
 ? m.note + '（このページには、訪れるたびに違う妖怪がいます）'
 : '今このページには' + m.name + 'がいます。' + m.note;
 }
-if (hint) hint.textContent = m.hint;
+if (hint) {
+hint.textContent = m.hint;
+}
 var rv = document.getElementById('pmodeReveal');
 if (mode === 'hakushi') {
 if (!rv) {
@@ -330,6 +372,15 @@ var pm = page.getAttribute('data-pmode');
 if (pm !== 'akaname') return;
 var el = ev.target.closest('p, ul, ol');
 if (el && page.contains(el)) el.classList.add('is-shown');
+});
+page.addEventListener('click', function(ev){
+var pm = page.getAttribute('data-pmode');
+if (pm !== 'kitsunebi' && pm !== 'yanari') return;
+var el = ev.target.closest('p, ul, ol, h2, h3, li');
+if (!el || !page.contains(el)) return;
+var top = el;
+while (top.parentNode && top.parentNode !== page) top = top.parentNode;
+top.classList.toggle('is-shown');
 });
 page.addEventListener('click', function(ev){
 if (page.getAttribute('data-pmode') !== 'nurikabe') return;
