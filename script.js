@@ -202,6 +202,167 @@ twBlocks.forEach(function(block){ ioType.observe(block); });
 }
 }
 (function(){
+var page = document.getElementById('profilePage');
+var bar = document.getElementById('pmodeBar');
+if (!page || !bar) return;
+var note = document.getElementById('pmodeNote');
+var hint = document.getElementById('pmodeHint');
+var modes = {
+'default': {name:'誰もいない',
+note:'今は誰も憑いていない。普通に読める。',
+hint:''},
+'kamaitachi': {name:'鎌鼬（かまいたち）',
+note:'文字が斜めに切られている。切断面が横にずれているので、上下を目で繋いで読むことになる。',
+hint:'文字が切られています。切り口で上下がずれています'},
+'nurikabe': {name:'塗り壁（ぬりかべ）',
+note:'段落の先に壁が立って、続きが読めない。壁に触れると崩れる。柳田國男の記録では、壁の下の方を棒で叩くと消えるという。',
+hint:'灰色の壁に触れると崩れます'},
+'kitsunebi': {name:'狐火（きつねび）',
+note:'闇の中。読もうとした箇所だけに火がともる。',
+hint:'読みたい段落に触れると、そこだけ火がともります'},
+'yanari': {name:'家鳴（やなり）',
+note:'小鬼が家を揺すっている。文字が絶えず細かく震える。触れているあいだだけ止まる。',
+hint:'揺れが気になる段落に触れると、その段落だけ止まります'},
+'akaname': {name:'垢嘗（あかなめ）',
+note:'文字が舐められて、ほとんど消えている。触れると戻る。',
+hint:'薄くなった段落に触れると戻ります'},
+'mokumokuren': {name:'目目連（もくもくれん）',
+note:'文字の隙間から、無数の目が見ている。読んでいる側が見られている。',
+hint:'読んでいるあいだ、こちらも見られています'},
+'hakushi': {name:'白紙',
+note:'何も書かれていないように見える。どの妖怪の仕業かは分かっていない。',
+hint:'文字を選択（ドラッグ）するか、上のボタンを押すと読めます'}
+};
+var order = ['default','kamaitachi','nurikabe','kitsunebi','yanari','akaname','mokumokuren','hakushi'];
+function buildKama(){
+Array.prototype.forEach.call(page.querySelectorAll('p:not(.pmode-hint), li'), function(el){
+if (el.dataset.kamaDone) return;
+el.dataset.kamaDone = '1';
+var html = el.innerHTML;
+var wrap = document.createElement('span');
+wrap.className = 'kama-wrap';
+wrap.innerHTML =
+'<span class="kama-base">' + html + '</span>' +
+'<span class="kama-a">' + html + '</span>' +
+'<span class="kama-b">' + html + '</span>' +
+'<span class="kama-slash"></span>';
+el.innerHTML = '';
+el.appendChild(wrap);
+});
+}
+function buildWall(){
+var ps = page.querySelectorAll('p:not(.pmode-hint), ul, ol');
+Array.prototype.forEach.call(ps, function(el, i){
+if (i % 3 === 1) el.classList.add('nuri-wall');
+});
+}
+function clearTricks(){
+page.classList.remove('is-revealed');
+Array.prototype.forEach.call(page.querySelectorAll('.kama-wrap'), function(w){
+var base = w.querySelector('.kama-base');
+var host = w.parentNode;
+if (base && host) {
+host.innerHTML = base.innerHTML;
+delete host.dataset.kamaDone;
+}
+});
+Array.prototype.forEach.call(page.querySelectorAll('.is-shown'), function(el){
+el.classList.remove('is-shown');
+});
+Array.prototype.forEach.call(page.querySelectorAll('.nuri-wall'), function(el){
+el.classList.remove('nuri-wall', 'is-broken');
+});
+}
+function apply(mode, remember){
+if (!modes[mode]) mode = 'default';
+clearTricks();
+page.setAttribute('data-pmode', mode);
+if (mode === 'kamaitachi') buildKama();
+if (mode === 'nurikabe') buildWall();
+Array.prototype.forEach.call(bar.querySelectorAll('.pmode-btn'), function(b){
+b.setAttribute('aria-pressed', b.getAttribute('data-pmode') === mode ? 'true' : 'false');
+});
+var m = modes[mode];
+if (note) {
+note.textContent = (mode === 'default')
+? m.note + '（このページには、訪れるたびに違う妖怪がいます）'
+: '今このページには' + m.name + 'がいます。' + m.note;
+}
+if (hint) hint.textContent = m.hint;
+var rv = document.getElementById('pmodeReveal');
+if (mode === 'hakushi') {
+if (!rv) {
+rv = document.createElement('button');
+rv.type = 'button'; rv.id = 'pmodeReveal'; rv.className = 'pmode-btn';
+rv.textContent = 'あきらめて読む';
+rv.addEventListener('click', function(){ page.classList.add('is-revealed'); });
+bar.insertBefore(rv, note);
+}
+rv.style.display = '';
+} else if (rv) {
+rv.style.display = 'none';
+}
+if (remember) {
+try { localStorage.setItem('yokai_pmode', mode); } catch (e) {}
+}
+}
+var saved = null, prev = null;
+try {
+saved = localStorage.getItem('yokai_pmode');
+prev = localStorage.getItem('yokai_pmode_prev');
+} catch (e) {}
+var pick;
+if (saved) {
+pick = saved;   // 前回ボタンで選んだ読ませ方を覚えている
+} else {
+var pool = order.filter(function(m){ return m !== prev; });
+pick = pool[Math.floor(Math.random() * pool.length)];
+try { localStorage.setItem('yokai_pmode_prev', pick); } catch (e) {}
+}
+apply(pick, false);
+Array.prototype.forEach.call(bar.querySelectorAll('.pmode-btn'), function(b){
+b.addEventListener('click', function(){
+apply(b.getAttribute('data-pmode'), true);
+});
+});
+page.addEventListener('click', function(ev){
+var pm = page.getAttribute('data-pmode');
+if (pm !== 'akaname') return;
+var el = ev.target.closest('p, ul, ol');
+if (el && page.contains(el)) el.classList.add('is-shown');
+});
+page.addEventListener('click', function(ev){
+if (page.getAttribute('data-pmode') !== 'nurikabe') return;
+var el = ev.target.closest('.nuri-wall');
+if (el) el.classList.add('is-broken');
+});
+})();
+(function(){
+var block = document.getElementById('featureCreative');
+if (!block) return;
+var note = document.getElementById('featureHueNote');
+var hues = [
+{id:'kitsunebi',   name:'狐火',     desc:'夜の野山にともる、正体の知れない火の色'},
+{id:'hakutaku',    name:'白澤',     desc:'万物に通じる瑞獣。護符に刷られた紙と墨の色'},
+{id:'nekomata',    name:'猫又',     desc:'漆黒に金。行灯の油を舐める、老猫の目の色'},
+{id:'mokumokuren', name:'目目連',   desc:'荒れた家の障子に浮かぶ、無数の目の色'},
+{id:'ushioni',     name:'牛鬼',     desc:'海辺に出る牛鬼。深い朱に、生成りの角の色'},
+{id:'yukionna',    name:'雪女',     desc:'吹雪の向こうに立つ女。雪の白と、薄墨の影'},
+{id:'nurikabe',    name:'ぬりかべ', desc:'夜道をふさぐ壁。色を持たず、輪郭だけがある'},
+{id:'yamabiko',    name:'山びこ',   desc:'声を返す山。深い緑に、若草の差し色'}
+];
+var prev = null;
+try { prev = localStorage.getItem('yokai_hue'); } catch (e) {}
+var pool = hues.filter(function(h){ return h.id !== prev; });
+if (!pool.length) pool = hues;
+var pick = pool[Math.floor(Math.random() * pool.length)];
+block.setAttribute('data-hue', pick.id);
+try { localStorage.setItem('yokai_hue', pick.id); } catch (e) {}
+if (note) {
+note.textContent = 'この区画の色は、訪れるたびに変わります。今回は「' + pick.name + '」。' + pick.desc + '。';
+}
+})();
+(function(){
 var slider = document.getElementById('jrkRate');
 if (!slider) return;
 var crash = document.getElementById('jrkCrash');
