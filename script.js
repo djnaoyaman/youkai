@@ -202,6 +202,117 @@ twBlocks.forEach(function(block){ ioType.observe(block); });
 }
 }
 (function(){
+var slider = document.getElementById('jrkRate');
+if (!slider) return;
+var crash = document.getElementById('jrkCrash');
+var el = {
+val: document.getElementById('jrkRateVal'),
+desc: document.getElementById('jrkRateDesc'),
+rank: document.getElementById('jrkRank'),
+wealth: document.getElementById('jrkWealth'),
+trust: document.getElementById('jrkTrust'),
+pure: document.getElementById('jrkPure'),
+money: document.getElementById('jrkMoney'),
+listeners: document.getElementById('jrkListeners'),
+verdict: document.getElementById('jrkVerdict'),
+chart: document.getElementById('jrkChart')
+};
+function simulate(r, doCrash){
+var rank = 1.0, wealth = 300.0, trust = 1.0;
+var fMoney = 4.0;   // お金でつながる友人（資産に連動）
+var fPure = 16.0;   // 損得なしの友人（信頼に連動）
+var log = [];
+for (var y = 0; y < 40; y++) {
+if (doCrash && y === 35) { wealth *= 0.35; rank *= 0.25; }
+rank += (0.10 + r * 0.22) * (0.55 + trust * 0.45);
+wealth += rank * (38 + r * 16);
+var entropy = r * 0.045;
+if (trust < 0.5) { entropy *= 1.35; }   // アクセルロッド
+trust = Math.max(0, Math.min(1, trust - entropy + (1 - r) * 0.020));
+fMoney = 4.0 + Math.sqrt(wealth) * 0.11 * (0.35 + r * 0.65);
+if (trust < 0.75) { fPure -= (0.75 - trust) * 2.3; }
+fPure += (1 - r) * 0.28;
+fPure = Math.max(0, fPure);
+var listeners = fPure * trust * (1 / (1 + rank * 0.055));
+log.push({age: 25 + y, rank: rank, wealth: wealth, trust: trust,
+fMoney: fMoney, fPure: fPure, listeners: listeners});
+}
+return log;
+}
+function describe(pct){
+if (pct === 0)   return '一度も自分を優先しなかった場合。';
+if (pct <= 20)   return '多くの場面で相手を立てる。';
+if (pct <= 40)   return '譲ることが多い。';
+if (pct <= 55)   return '半々。';
+if (pct <= 70)   return '自分を優先することが多い。';
+if (pct <= 85)   return 'ほとんど譲らない。';
+return '一度も譲らなかった場合。';
+}
+function verdict(d, log, doCrash){
+var oku = (d.wealth / 10000).toFixed(1);
+var s = '65歳時点。資産' + oku + '億、地位' + d.rank.toFixed(1) + '、信頼' + d.trust.toFixed(2) + '。';
+s += '損得なしの友人' + d.fPure.toFixed(1) + '人、お金でつながる友人' + d.fMoney.toFixed(1) + '人。';
+s += '話を最後まで聞いてくれる人は' + d.listeners.toFixed(1) + '人。';
+if (doCrash) {
+var before = log[34];
+var dp = d.fPure - before.fPure;
+var dm = d.fMoney - before.fMoney;
+var dl = d.listeners - before.listeners;
+s += '（失脚の前後で、損得なしの友人が' + (dp >= 0 ? '+' : '') + dp.toFixed(1) + '人、';
+s += 'お金でつながる友人が' + (dm >= 0 ? '+' : '') + dm.toFixed(1) + '人、';
+s += '話を聞いてくれる人が' + (dl >= 0 ? '+' : '') + dl.toFixed(1) + '人）';
+}
+if (d.listeners < 0.5) s += 'この状態を、この台帳では常利己と呼んでいる。';
+return s;
+}
+function drawChart(log){
+var W = 640, H = 260, pad = {l: 40, r: 14, t: 14, b: 26};
+var iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+var maxRank = 11, maxPeople = 30;
+function x(i){ return pad.l + (i / 39) * iw; }
+function yR(v){ return pad.t + ih - (v / maxRank) * ih; }
+function yP(v){ return pad.t + ih - (Math.min(v, maxPeople) / maxPeople) * ih; }
+function path(key, fn){
+return log.map(function(d, i){
+return (i === 0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + fn(d[key]).toFixed(1);
+}).join(' ');
+}
+var s = '';
+s += '<line class="jrk-axis" x1="' + pad.l + '" y1="' + (pad.t + ih) + '" x2="' + (W - pad.r) + '" y2="' + (pad.t + ih) + '"/>';
+[25, 35, 45, 55, 64].forEach(function(age){
+s += '<text class="jrk-tick" x="' + x(age - 25).toFixed(0) + '" y="' + (H - 8) + '" text-anchor="middle">' + age + '歳</text>';
+});
+[0, 10, 20, 30].forEach(function(v){
+s += '<line class="jrk-axis" x1="' + pad.l + '" y1="' + yP(v).toFixed(1) + '" x2="' + (W - pad.r) + '" y2="' + yP(v).toFixed(1) + '" opacity="0.3"/>';
+s += '<text class="jrk-tick" x="' + (pad.l - 6) + '" y="' + (yP(v) + 3).toFixed(1) + '" text-anchor="end">' + v + '人</text>';
+});
+s += '<path class="jrk-line-rank" d="' + path('rank', yR) + '"/>';
+s += '<path class="jrk-line-money" d="' + path('fMoney', yP) + '"/>';
+s += '<path class="jrk-line-friends" d="' + path('fPure', yP) + '"/>';
+s += '<path class="jrk-line-listeners" d="' + path('listeners', yP) + '"/>';
+el.chart.innerHTML = s;
+}
+function update(){
+var pct = parseInt(slider.value, 10);
+var doCrash = crash && crash.checked;
+var log = simulate(pct / 100, doCrash);
+var d = log[log.length - 1];
+el.val.textContent = pct;
+el.desc.textContent = describe(pct);
+el.rank.textContent = d.rank.toFixed(1);
+el.wealth.textContent = Math.round(d.wealth).toLocaleString() + '万';
+el.trust.textContent = d.trust.toFixed(2);
+el.pure.textContent = d.fPure.toFixed(1) + '人';
+el.money.textContent = d.fMoney.toFixed(1) + '人';
+el.listeners.textContent = d.listeners.toFixed(1) + '人';
+el.verdict.textContent = verdict(d, log, doCrash);
+drawChart(log);
+}
+slider.addEventListener('input', update);
+if (crash) crash.addEventListener('change', update);
+update();
+})();
+(function(){
 var btn = document.getElementById('navToggle');
 var drawer = document.getElementById('navDrawer');
 var overlay = document.getElementById('navOverlay');
