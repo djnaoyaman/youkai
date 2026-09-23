@@ -202,6 +202,43 @@ twBlocks.forEach(function(block){ ioType.observe(block); });
 }
 }
 (function(){
+var btn = document.getElementById('navToggle');
+var drawer = document.getElementById('navDrawer');
+var overlay = document.getElementById('navOverlay');
+var closeBtn = document.getElementById('navClose');
+if (!btn || !drawer || !overlay) return;
+function open(){
+drawer.hidden = false; overlay.hidden = false;
+requestAnimationFrame(function(){
+drawer.classList.add('is-open');
+overlay.classList.add('is-open');
+});
+btn.setAttribute('aria-expanded', 'true');
+btn.setAttribute('aria-label', 'メニューを閉じる');
+document.body.classList.add('nav-locked');
+closeBtn.focus();
+}
+function close(){
+drawer.classList.remove('is-open');
+overlay.classList.remove('is-open');
+btn.setAttribute('aria-expanded', 'false');
+btn.setAttribute('aria-label', 'メニューを開く');
+document.body.classList.remove('nav-locked');
+setTimeout(function(){
+if (!drawer.classList.contains('is-open')) { drawer.hidden = true; overlay.hidden = true; }
+}, 400);
+btn.focus();
+}
+btn.addEventListener('click', function(){
+if (btn.getAttribute('aria-expanded') === 'true') { close(); } else { open(); }
+});
+closeBtn.addEventListener('click', close);
+overlay.addEventListener('click', close);
+document.addEventListener('keydown', function(e){
+if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') close();
+});
+})();
+(function(){
 if (reduce) return;  // 動きを減らす設定の人には即時移動のまま
 function nurori(t){
 return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
