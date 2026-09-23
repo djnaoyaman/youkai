@@ -1,0 +1,22 @@
+{
+  "name": "一見坊の【日本妖怪学体系】",
+  "short_name": "日本妖怪学体系",
+  "description": "日本妖怪戸籍簿。47都道府県の妖怪を、伝承・出典・信頼度つきで記録した個人編集の台帳。",
+  "start_url": "/youkai/",
+  "display": "standalone",
+  "background_color": "#FAF8F3",
+  "theme_color": "#1E1B18",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
