@@ -201,6 +201,34 @@ ioType.unobserve(entry.target);
 twBlocks.forEach(function(block){ ioType.observe(block); });
 }
 }
+(function(){
+if (reduce) return;  // 動きを減らす設定の人には即時移動のまま
+function nurori(t){
+return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+}
+var links = document.querySelectorAll('a.sd-link[href^="#"], a[href^="#sec-"], a[href^="#cat-"]');
+links.forEach(function(a){
+a.addEventListener('click', function(e){
+var id = a.getAttribute('href').slice(1);
+var target = document.getElementById(id);
+if (!target) return;
+e.preventDefault();
+var startY = window.scrollY;
+var endY = target.getBoundingClientRect().top + window.scrollY - 80;
+var dist = Math.abs(endY - startY);
+var duration = Math.min(1400, Math.max(600, dist * 0.55));
+var startTime = null;
+function step(ts){
+if (!startTime) startTime = ts;
+var p = Math.min((ts - startTime) / duration, 1);
+window.scrollTo(0, Math.round(startY + (endY - startY) * nurori(p)));
+if (p < 1) { requestAnimationFrame(step); }
+else { history.replaceState(null, '', '#' + id); }
+}
+requestAnimationFrame(step);
+});
+});
+})();
 var topBtn = document.getElementById('yokai-top-btn');
 if (topBtn) {
 var showThreshold = 480;
