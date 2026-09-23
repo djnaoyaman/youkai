@@ -573,6 +573,54 @@ r.addEventListener('change', update);
 update();
 })();
 (function(){
+var nav = document.querySelector('nav.topnav');
+if (!nav) return;
+var mq = window.matchMedia('(max-width:900px)');
+var lastY = window.scrollY;
+var ticking = false;
+var THRESH = 8;        // このピクセル数より小さい動きは無視する（手ぶれ対策）
+var FLOAT_AT = 90;     // これ以上スクロールしたら「浮いている」状態にする
+function setNavHeight(){
+if (mq.matches) {
+var h = Math.round(nav.getBoundingClientRect().height);
+document.documentElement.style.setProperty('--navh', h + 'px');
+} else {
+document.documentElement.style.removeProperty('--navh');
+}
+}
+function update(){
+ticking = false;
+if (!mq.matches) {
+document.body.classList.remove('nav-hidden', 'nav-floating');
+lastY = window.scrollY;
+return;
+}
+var y = window.scrollY;
+var diff = y - lastY;
+var b = document.body;
+b.classList.toggle('nav-floating', y > FLOAT_AT);
+if (b.classList.contains('nav-locked')) { lastY = y; return; }
+if (Math.abs(diff) > THRESH) {
+if (diff > 0 && y > FLOAT_AT) {
+b.classList.add('nav-hidden');      // 下へ進んでいる → 隠す
+} else if (diff < 0) {
+b.classList.remove('nav-hidden');   // 上へ戻っている → 出す
+}
+lastY = y;
+}
+if (y <= FLOAT_AT) b.classList.remove('nav-hidden');
+}
+window.addEventListener('scroll', function(){
+if (!ticking) { ticking = true; requestAnimationFrame(update); }
+}, {passive:true});
+window.addEventListener('resize', function(){
+if (!ticking) { ticking = true; requestAnimationFrame(update); }
+}, {passive:true});
+window.addEventListener('resize', setNavHeight, {passive:true});
+setNavHeight();
+update();
+})();
+(function(){
 var btn = document.getElementById('navToggle');
 var drawer = document.getElementById('navDrawer');
 var overlay = document.getElementById('navOverlay');
