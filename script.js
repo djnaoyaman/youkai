@@ -573,6 +573,39 @@ r.addEventListener('change', update);
 update();
 })();
 (function(){
+var btns = document.querySelectorAll('.share-copy');
+if (!btns.length) return;
+Array.prototype.forEach.call(btns, function(btn){
+var original = btn.innerHTML;
+btn.addEventListener('click', function(){
+var url = btn.getAttribute('data-url');
+function done(){
+btn.classList.add('is-copied');
+btn.innerHTML = original.replace('URLをコピー', 'コピーしました');
+setTimeout(function(){
+btn.classList.remove('is-copied');
+btn.innerHTML = original;
+}, 2000);
+}
+if (navigator.clipboard && window.isSecureContext) {
+navigator.clipboard.writeText(url).then(done).catch(fallback);
+} else {
+fallback();
+}
+function fallback(){
+var ta = document.createElement('textarea');
+ta.value = url;
+ta.style.position = 'fixed';
+ta.style.opacity = '0';
+document.body.appendChild(ta);
+ta.select();
+try { document.execCommand('copy'); done(); } catch (e) {}
+document.body.removeChild(ta);
+}
+});
+});
+})();
+(function(){
 var nav = document.querySelector('nav.topnav');
 if (!nav) return;
 var mq = window.matchMedia('(max-width:900px)');
