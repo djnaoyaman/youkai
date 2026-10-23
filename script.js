@@ -1,3 +1,4 @@
+(function(){'use strict';if(window.NaoyamanAnalytics)return;var schemas={creator_site_visit:['target_site'],quiz_start:['quiz_mode'],quiz_answer:[],quiz_timeout:[],quiz_complete:[],quiz_restart:[],encyclopedia_expand:[],reading_mode_select:['reading_mode'],encyclopedia_navigate:['content_group'],walk_filter:['filter_group'],video_open:[],video_seek_request:['position_seconds'],catalog_filter:['filter_group'],music_play:['item_id'],music_pause:['item_id'],music_complete:['item_id'],music_filter:['filter_group'],art_display_open:[],share:['method','content_type']};window.NaoyamanAnalytics={track:function(name,values){try{if(location.hostname!=='djnaoyaman.github.io'||typeof window.gtag!=='function'||!schemas[name])return;var p={send_to:'G-9ZDWL2GBLG',transport_type:'beacon',page_location:location.origin+location.pathname,page_referrer:document.referrer.split(/[?#]/)[0]};schemas[name].forEach(function(k){var v=(values||{})[k];if(typeof v==='number'&&Number.isFinite(v))p[k]=v;else if(typeof v==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(v))p[k]=v;});window.gtag('event',name,p);}catch(_){}}};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-creator-site]');if(a)window.NaoyamanAnalytics.track('creator_site_visit',{target_site:a.dataset.creatorSite});});})();
 document.addEventListener('DOMContentLoaded', function(){
 (function(){
 var el = document.getElementById('siteCatch');
@@ -42,8 +43,8 @@ var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: re
 if (reduce || !('IntersectionObserver' in window)) {
 revealEls.forEach(function(el){ el.classList.add('is-visible'); });
 revealTextEls.forEach(function(el){ el.classList.add('is-visible'); });
-return;
 }
+if (!reduce && ('IntersectionObserver' in window)) {
 var io = new IntersectionObserver(function(entries){
 entries.forEach(function(entry){
 if (entry.isIntersecting) {
@@ -62,6 +63,7 @@ ioText.unobserve(entry.target);
 });
 }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
 revealTextEls.forEach(function(el){ ioText.observe(el); });
+}
 var slideEls = Array.prototype.slice.call(document.querySelectorAll('.region-slide'));
 if (slideEls.length) {
 if (reduce) {
@@ -782,3 +784,5 @@ window.addEventListener('orientationchange', onParallaxScroll, {passive:true});
 window.addEventListener('load', updateParallax);
 }
 });
+
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.pref-panel-toggle,.pmode-btn');if(b){if(b.matches('.pref-panel-toggle')&&b.getAttribute('aria-expanded')==='true'){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_expand',{});}else if(b.matches('.pmode-btn')){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('reading_mode_select',{reading_mode:b.dataset.pmode});}}var a=e.target.closest&&e.target.closest('a');if(!a||a.dataset.creatorSite)return;try{var u=new URL(a.href);if(u.origin!==location.origin||u.pathname.indexOf('/youkai/')!==0)return;var p=u.pathname.slice('/youkai/'.length),group=p.indexOf('/')<0?p.replace(/\.html$/,'') : p.split('/')[0];if(!group)group='home';window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_navigate',{content_group:group});}catch(_){}});
