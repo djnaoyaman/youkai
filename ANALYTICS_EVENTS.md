@@ -10,3 +10,5 @@ GA4 stream: G-9ZDWL2GBLG. Existing page views remain unchanged.
 Events use gtag event commands, transport_type=beacon, and explicit send_to. Added payloads omit answers, correctness, scores, health/treatment selections, search strings, query parameters, fragments and personal identifiers. Parameters are allowlisted. Measurement failures never block the interaction. Only the public GitHub Pages hostname sends these events.
 
 Verify event receipt with GA4 Realtime/DebugView. Browser tests check forwarding and payloads; they cannot prove GA ingestion. These changes do not mark key events or alter GA property settings.
+
+Additional events: map_filter (filter_key only; no search text) and share (successful copy only, method=copy, content_type=page). Failed copying and selection alone do not count as sharing.

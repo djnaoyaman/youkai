@@ -1,4 +1,4 @@
-(function(){'use strict';if(window.NaoyamanAnalytics)return;var schemas={creator_site_visit:['target_site'],quiz_start:['quiz_mode'],quiz_answer:[],quiz_timeout:[],quiz_complete:[],quiz_restart:[],encyclopedia_expand:[],reading_mode_select:['reading_mode'],encyclopedia_navigate:['content_group'],walk_filter:['filter_group'],video_open:[],video_seek_request:['position_seconds'],catalog_filter:['filter_group'],music_play:['item_id'],music_pause:['item_id'],music_complete:['item_id'],music_filter:['filter_group'],art_display_open:[],share:['method','content_type']};window.NaoyamanAnalytics={track:function(name,values){try{if(location.hostname!=='djnaoyaman.github.io'||typeof window.gtag!=='function'||!schemas[name])return;var p={send_to:'G-9ZDWL2GBLG',transport_type:'beacon',page_location:location.origin+location.pathname,page_referrer:document.referrer.split(/[?#]/)[0]};schemas[name].forEach(function(k){var v=(values||{})[k];if(typeof v==='number'&&Number.isFinite(v))p[k]=v;else if(typeof v==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(v))p[k]=v;});window.gtag('event',name,p);}catch(_){}}};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-creator-site]');if(a)window.NaoyamanAnalytics.track('creator_site_visit',{target_site:a.dataset.creatorSite});});})();
+(function(){'use strict';if(window.NaoyamanAnalytics)return;var schemas={creator_site_visit:['target_site'],quiz_start:['quiz_mode'],quiz_answer:[],quiz_timeout:[],quiz_complete:[],quiz_restart:[],encyclopedia_expand:[],reading_mode_select:['reading_mode'],encyclopedia_navigate:['content_group'],walk_filter:['filter_group'],video_open:[],video_seek_request:['position_seconds'],catalog_filter:['filter_group'],music_play:['item_id'],music_pause:['item_id'],music_complete:['item_id'],music_filter:['filter_group'],art_display_open:[],share:['method','content_type'],map_filter:['filter_key']};window.NaoyamanAnalytics={track:function(name,values){try{if(location.hostname!=='djnaoyaman.github.io'||typeof window.gtag!=='function'||!schemas[name])return;var p={send_to:'G-9ZDWL2GBLG',transport_type:'beacon',page_location:location.origin+location.pathname,page_referrer:document.referrer.split(/[?#]/)[0]};schemas[name].forEach(function(k){var v=(values||{})[k];if(typeof v==='number'&&Number.isFinite(v))p[k]=v;else if(typeof v==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(v))p[k]=v;});window.gtag('event',name,p);}catch(_){}}};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-creator-site]');if(a)window.NaoyamanAnalytics.track('creator_site_visit',{target_site:a.dataset.creatorSite});});})();
 document.addEventListener('DOMContentLoaded', function(){
 (function(){
 var el = document.getElementById('siteCatch');
@@ -582,6 +582,7 @@ var original = btn.innerHTML;
 btn.addEventListener('click', function(){
 var url = btn.getAttribute('data-url');
 function done(){
+window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('share',{method:'copy',content_type:'page'});
 btn.classList.add('is-copied');
 btn.innerHTML = original.replace('URLをコピー', 'コピーしました');
 setTimeout(function(){
@@ -601,7 +602,7 @@ ta.style.position = 'fixed';
 ta.style.opacity = '0';
 document.body.appendChild(ta);
 ta.select();
-try { document.execCommand('copy'); done(); } catch (e) {}
+try { if(document.execCommand('copy'))done(); } catch (e) {}
 document.body.removeChild(ta);
 }
 });
@@ -786,3 +787,5 @@ window.addEventListener('load', updateParallax);
 });
 
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.pref-panel-toggle,.pmode-btn');if(b){if(b.matches('.pref-panel-toggle')&&b.getAttribute('aria-expanded')==='true'){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_expand',{});}else if(b.matches('.pmode-btn')){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('reading_mode_select',{reading_mode:b.dataset.pmode});}}var a=e.target.closest&&e.target.closest('a');if(!a||a.dataset.creatorSite)return;try{var u=new URL(a.href);if(u.origin!==location.origin||u.pathname.indexOf('/youkai/')!==0)return;var p=u.pathname.slice('/youkai/'.length),group=p.indexOf('/')<0?p.replace(/\.html$/,'') : p.split('/')[0];if(!group)group='home';window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_navigate',{content_group:group});}catch(_){}});
+
+document.addEventListener('change',function(e){var el=e.target;if(e.isTrusted&&el&&el.tagName==='SELECT'&&/^yokaiFilter/.test(el.id))window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('map_filter',{filter_key:el.id});});
