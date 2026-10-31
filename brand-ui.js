@@ -36,7 +36,7 @@
       drawer.classList.remove('is-open'); overlay.classList.remove('is-open');
       button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-label', 'メニューを開く');
       inertStates.forEach(function (entry) { entry[0].inert = entry[1]; }); inertStates = [];
-      document.body.classList.remove('nav-locked');
+      document.body.classList.remove('nav-locked', 'nav-hidden');
       document.body.style.position = oldStyle.position; document.body.style.top = oldStyle.top; document.body.style.width = oldStyle.width;
       window.scrollTo(0, scrollY);
       if (restore !== false && previousFocus && previousFocus.isConnected) previousFocus.focus({ preventScroll: true });
