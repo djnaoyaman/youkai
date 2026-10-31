@@ -4,7 +4,6 @@ nav.topnav .brand{display:flex;align-items:center;gap:12px;min-width:0;flex-shri
 .brand-logo{display:block;width:80px;height:80px;flex-shrink:0;padding:7px;background:#FAFAF7;border-radius:50%}
 nav.topnav .brand span{font-family:'Noto Serif JP',serif;font-size:clamp(12px,2vw,18px);letter-spacing:.03em}
 .footer-logo{display:block;width:160px;height:160px;padding:13px;background:#FAFAF7;border-radius:50%}
-.cover-logo{display:block;width:clamp(180px,25vw,240px);height:auto;padding:20px;margin:0 0 28px;background:#FAFAF7;border-radius:50%}
 .nav-toggle{display:none!important;width:48px;height:48px;padding:10px}
 .nav-toggle.is-ready{display:flex!important}
 .nav-close{min-width:44px;min-height:44px}

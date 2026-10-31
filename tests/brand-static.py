@@ -19,5 +19,6 @@ for f in files:
   assert img['alt']=='一見坊の【日本妖怪学体系】',f
   assert (f.parent/img['src']).exists(),(f,img['src'])
  assert '妖怪字' not in s,f
+ assert 'class="cover-logo"' not in s,f
  for attr in ['canonical','og:title','twitter:title']:assert attr in s,(f,attr)
 print('419 pages: logo alt/local assets, menu fallback, unique IDs, metadata verified')
