@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 (async () => {
- const browser = await chromium.launch();
+ const browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH});
  fs.mkdirSync('test-artifacts/profile', { recursive: true });
  const results = [];
  try {

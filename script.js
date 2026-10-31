@@ -63,6 +63,7 @@ ioText.unobserve(entry.target);
 });
 }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
 revealTextEls.forEach(function(el){ ioText.observe(el); });
+document.documentElement.classList.add('reveal-ready');
 }
 var slideEls = Array.prototype.slice.call(document.querySelectorAll('.region-slide'));
 if (slideEls.length) {
@@ -626,6 +627,8 @@ document.documentElement.style.removeProperty('--navh');
 }
 function update(){
 ticking = false;
+// Fixed-body menu locking must not reset the last real reading position.
+if (document.body.classList.contains('nav-locked')) return;
 if (!mq.matches) {
 document.body.classList.remove('nav-hidden', 'nav-floating');
 lastY = window.scrollY;
@@ -635,7 +638,6 @@ var y = window.scrollY;
 var diff = y - lastY;
 var b = document.body;
 b.classList.toggle('nav-floating', y > FLOAT_AT);
-if (b.classList.contains('nav-locked')) { lastY = y; return; }
 if (Math.abs(diff) > THRESH) {
 if (diff > 0 && y > FLOAT_AT) {
 b.classList.add('nav-hidden');      // 下へ進んでいる → 隠す
@@ -655,43 +657,6 @@ if (!ticking) { ticking = true; requestAnimationFrame(update); }
 window.addEventListener('resize', setNavHeight, {passive:true});
 setNavHeight();
 update();
-})();
-(function(){
-var btn = document.getElementById('navToggle');
-var drawer = document.getElementById('navDrawer');
-var overlay = document.getElementById('navOverlay');
-var closeBtn = document.getElementById('navClose');
-if (!btn || !drawer || !overlay) return;
-function open(){
-drawer.hidden = false; overlay.hidden = false;
-requestAnimationFrame(function(){
-drawer.classList.add('is-open');
-overlay.classList.add('is-open');
-});
-btn.setAttribute('aria-expanded', 'true');
-btn.setAttribute('aria-label', 'メニューを閉じる');
-document.body.classList.add('nav-locked');
-closeBtn.focus();
-}
-function close(){
-drawer.classList.remove('is-open');
-overlay.classList.remove('is-open');
-btn.setAttribute('aria-expanded', 'false');
-btn.setAttribute('aria-label', 'メニューを開く');
-document.body.classList.remove('nav-locked');
-setTimeout(function(){
-if (!drawer.classList.contains('is-open')) { drawer.hidden = true; overlay.hidden = true; }
-}, 400);
-btn.focus();
-}
-btn.addEventListener('click', function(){
-if (btn.getAttribute('aria-expanded') === 'true') { close(); } else { open(); }
-});
-closeBtn.addEventListener('click', close);
-overlay.addEventListener('click', close);
-document.addEventListener('keydown', function(e){
-if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') close();
-});
 })();
 (function(){
 if (reduce) return;  // 動きを減らす設定の人には即時移動のまま
