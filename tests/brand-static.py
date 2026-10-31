@@ -1,6 +1,6 @@
 from pathlib import Path
 from html.parser import HTMLParser
-import re
+import re, subprocess
 class Page(HTMLParser):
  def __init__(self): super().__init__();self.ids=[];self.images=[];self.details=0
  def handle_starttag(self,tag,attrs):
@@ -8,7 +8,7 @@ class Page(HTMLParser):
   if 'id' in a:self.ids.append(a['id'])
   if tag=='img' and 'logo' in a.get('class',''):self.images.append(a)
   if tag=='details':self.details+=1
-files=list(Path('.').rglob('*.html'));assert len(files)==419
+files=[Path(p) for p in subprocess.check_output(['git','ls-files','*.html'],text=True).splitlines()];assert len(files)==419
 for f in files:
  s=f.read_text();p=Page();p.feed(s)
  assert len(p.ids)==len(set(p.ids)),f
