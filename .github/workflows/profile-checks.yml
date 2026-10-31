@@ -1,7 +1,7 @@
 name: Author profile browser checks
 on:
   pull_request:
-    paths: ['profile.html', 'index.html', 'style.css', 'script.js', 'brand-ui.js', 'assets/**', '**.html', 'tests/header-name-browser.cjs', 'tests/brand-browser.cjs', 'tests/brand-static.py', 'tests/profile-browser.cjs', '.github/workflows/profile-checks.yml']
+    paths: ['tests/launch-metadata.py', 'profile.html', 'index.html', 'style.css', 'script.js', 'brand-ui.js', 'assets/**', '**.html', 'tests/header-name-browser.cjs', 'tests/brand-browser.cjs', 'tests/brand-static.py', 'tests/profile-browser.cjs', '.github/workflows/profile-checks.yml']
 permissions:
   contents: read
 jobs:
@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - run: python3 tests/launch-metadata.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
