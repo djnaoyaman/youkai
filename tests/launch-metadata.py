@@ -42,3 +42,17 @@ assert image.startswith(bytes([255,216,255]))
 assert home.meta['og:site_name'] == ['一見坊の【日本妖怪学体系】']
 assert (ROOT / 'llms.txt').read_text().startswith('# 一見坊の【日本妖怪学体系】')
 print('PASS: existing sharing card type/alt, canonical, JSON-LD and brand name')
+
+# Keep only the edited homepage release date aligned; historical dates stay independent.
+import re
+import xml.etree.ElementTree as ET
+visible = re.search(r"最終更新日：(\d{4})年(\d{1,2})月(\d{1,2})日（日本時間）", (ROOT / "index.html").read_text())
+assert visible
+release = "{:04d}-{:02d}-{:02d}".format(*map(int, visible.groups()))
+website = next(schema for schema in home.schemas if schema.get("@type") == "WebSite")
+assert website["dateModified"] == release
+ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+urls = ET.parse(ROOT / "sitemap.xml").getroot().findall("s:url", ns)
+home_entry = next(url for url in urls if url.find("s:loc", ns).text == home.canonical[0])
+assert home_entry.find("s:lastmod", ns).text == release
+print("PASS: homepage visible JST date, dateModified and sitemap lastmod agree")
