@@ -14,6 +14,9 @@ const assert = require('node:assert/strict');
    });
    const errors=[]; page.on('pageerror', e=>errors.push(e.message));
    await page.goto('http://127.0.0.1:8765/profile.html', {waitUntil:'networkidle'});
+   // The profile deliberately starts with a random animated yokai mode.
+   // Use its existing dismissal control for reproducible reading-mode layout.
+   await page.locator('button[data-pmode="default"]').click();
    await page.evaluate(async()=>{
     for(let y=0;y<document.body.scrollHeight;y+=500){scrollTo(0,y);await new Promise(r=>setTimeout(r,50));}
     scrollTo(0,0);
