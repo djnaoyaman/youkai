@@ -655,6 +655,7 @@ window.addEventListener('resize', function(){
 if (!ticking) { ticking = true; requestAnimationFrame(update); }
 }, {passive:true});
 window.addEventListener('resize', setNavHeight, {passive:true});
+if ('ResizeObserver' in window) new ResizeObserver(setNavHeight).observe(nav);
 setNavHeight();
 update();
 })();
