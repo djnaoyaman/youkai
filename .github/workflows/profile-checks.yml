@@ -1,7 +1,7 @@
 name: Author profile browser checks
 on:
   pull_request:
-    paths: ['profile.html', 'index.html', 'style.css', 'script.js', 'brand-ui.js', 'assets/**', '**.html', 'tests/brand-browser.cjs', 'tests/brand-static.py', 'tests/profile-browser.cjs', '.github/workflows/profile-checks.yml']
+    paths: ['profile.html', 'index.html', 'style.css', 'script.js', 'brand-ui.js', 'assets/**', '**.html', 'tests/header-name-browser.cjs', 'tests/brand-browser.cjs', 'tests/brand-static.py', 'tests/profile-browser.cjs', '.github/workflows/profile-checks.yml']
 permissions:
   contents: read
 jobs:
@@ -20,6 +20,7 @@ jobs:
       - run: |
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/profile-http.log 2>&1 &
           python3 tests/brand-static.py
+          node tests/header-name-browser.cjs
           node tests/brand-browser.cjs
           node tests/profile-browser.cjs
       - uses: actions/upload-artifact@v4
