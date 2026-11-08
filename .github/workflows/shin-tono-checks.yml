@@ -1,0 +1,24 @@
+name: Shiwa stories and dependent files
+on:
+  push:
+    branches: [main]
+    paths: ['shin-tono-data.json', 'shin-tono-editorial.cjs', 'build-shin-tono.cjs', 'shin-tono/**', 'shin-tono.html', 'index.html', 'sitemap.xml', 'llms.txt', 'tests/shin-tono.cjs', 'source-materials/**', 'AGENTS.md', '.github/workflows/shin-tono-checks.yml']
+  pull_request:
+    paths: ['shin-tono-data.json', 'shin-tono-editorial.cjs', 'build-shin-tono.cjs', 'shin-tono/**', 'shin-tono.html', 'index.html', 'sitemap.xml', 'llms.txt', 'tests/shin-tono.cjs', 'source-materials/**', 'AGENTS.md', '.github/workflows/shin-tono-checks.yml']
+permissions:
+  contents: read
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node build-shin-tono.cjs
+      - run: node tests/shin-tono.cjs
+      - run: python3 tests/launch-metadata.py
+      - run: git diff --exit-code

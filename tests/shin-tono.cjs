@@ -24,9 +24,56 @@ for(const p of files){
  }
 }
 const stories=JSON.parse(read('shin-tono-data.json'));
-assert.equal(stories.length,5);
-for(const story of stories){
- const body=story.paragraphs.map(p=>`<p>${p}</p>`).join('\n');
- assert(read(`shin-tono/${story.slug}.html`).includes(`<article class="tono-reading" aria-label="${story.title} 本文">${body}</article>`),`${story.title}: published prose matches source data`);
+const {plain,readings,glossary,annotate,renderParagraphs,validDate}=require('../shin-tono-editorial.cjs');
+assert(stories.length>=5,'the five complete stories remain present');
+const home=read('index.html'),entry=read('shin-tono.html'),sources=plain(read('shin-tono/sources.html'));
+const announcement=home.match(/<a\b[^>]*id="serialAnnouncement"[\s\S]*?<\/a>/)[0];
+assert(announcement.includes(`全${stories.length}話を読む`),'homepage accessible announcement has current count');
+assert(announcement.includes(`全${stories.length}話を掲載`),'homepage visible announcement has current count');
+const cards=[...entry.matchAll(/<a class="tono-card"[\s\S]*?<\/a>/g)].map(m=>m[0]);
+assert.equal(cards.length,stories.length,'one collection card per story');
+const urls=[...read('sitemap.xml').matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>[\s\S]*?<\/url>/g)];
+const llms=read('llms.txt');
+assert(llms.includes(`現代の創作、全${stories.length}話`),'reader/AI guide has current count');
+const baseUrl='https://djnaoyaman.github.io/youkai/';
+function sitemapDate(file,date){
+ const matches=urls.filter(m=>m[1]===baseUrl+file);
+ assert.equal(matches.length,1,`${file}: one sitemap entry`);
+ assert.equal(matches[0][2],date,`${file}: sitemap date agrees`);
 }
-console.log('PASS: original text preserved, 119 chapters, 5 stories, local links and anchors, unique ids.');
+const collectionDate=stories.map(s=>validDate(s.updatedAt)).sort().at(-1);
+sitemapDate('shin-tono.html',collectionDate);
+sitemapDate('shin-tono/sources.html',collectionDate);
+sitemapDate('shin-tono/original.html','2026-11-08');
+for(const [i,story] of stories.entries()){
+ validDate(story.updatedAt);validDate(story.sourceCheckedAt);
+ const file=`shin-tono/${story.slug}.html`,html=read(file);
+ const body=html.match(/<article class="tono-reading"[^>]*>([\s\S]*?)<\/article>/)[1];
+ assert.equal(plain(body),plain(story.paragraphs.map(p=>`<p>${p}</p>`).join('\n')),`${story.title}: ruby preserves all prose`);
+ assert.equal(body,renderParagraphs(story.paragraphs),`${story.title}: readings are current`);
+ const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+ assert.equal(schema.dateModified,story.updatedAt,`${story.title}: metadata date agrees`);
+ assert.equal(schema.name,story.title,`${story.title}: metadata keeps a plain title`);
+ assert(plain(cards[i]).includes(story.title)&&plain(cards[i]).includes(plain(story.lead)),`${story.title}: card text is current`);
+ assert(sources.includes(plain(story.invented))&&sources.includes(plain(story.evidence)),`${story.title}: source notes are current`);
+ const navigation=html.match(/<nav class="tono-next"[^>]*>([\s\S]*?)<\/nav>/)[1];
+ assert(navigation.includes(`href="${i?stories[i-1].slug+'.html':'../shin-tono.html'}"`),`${story.title}: previous story`);
+ assert(navigation.includes(`href="${i<stories.length-1?stories[i+1].slug+'.html':'../shin-tono.html'}"`),`${story.title}: next story`);
+ sitemapDate(file,story.updatedAt);
+ assert(llms.includes(baseUrl+file),`${story.title}: listed in reader/AI guide`);
+ for(const [term,reading] of Object.entries(readings)){
+  if(!plain(body).includes(term))continue;
+  // A longer compound can contain the same characters, so require at most one standalone ruby.
+  const expected=`<ruby>${term}<rt>${reading}</rt></ruby>`;
+  assert(body.split(expected).length-1<=1,`${story.title}: ${term} annotated only at first use`);
+ }
+ for(const term of Object.keys(glossary))if(plain(body).includes(term))assert(html.includes('ことばの補足')&&plain(html).includes(glossary[term]),`${story.title}: ${term} has a short explanation`);
+ for(const quote of plain(body).matchAll(/「([^「」]+)」/g))assert(!/(?:ますか|ですか|だろうか|何時にする|いつ帰ってくる|誰の田|鍵は|お母さんは|その前|かね)$/.test(quote[1]),`${story.title}: direct question needs ？: ${quote[1]}`);
+}
+assert(read('shin-tono/mizu-no-junban.html').includes('「下って、誰の田？」'));
+assert(read('shin-tono/togi-dai.html').includes('<ruby>鉈<rt>なた</rt></ruby>'));
+assert(read('shin-tono/togi-dai.html').includes('<ruby>砥石<rt>といし</rt></ruby>'));
+assert(read('shin-tono/mizu-no-junban.html').includes('<ruby>取水口<rt>しゅすいこう</rt></ruby>'));
+assert.equal(annotate(annotate('鉈と砥石')),annotate('鉈と砥石'),'annotation is idempotent');
+for(const file of files)assert(!/<ruby\b[^>]*>(?:(?!<\/ruby>)[\s\S])*<ruby\b/.test(read(file)),`${file}: no nested ruby`);
+console.log(`PASS: original preserved; ${stories.length} stories, questions/readings, glossary, cards, navigation, source notes, dates, sitemap and guide agree.`);

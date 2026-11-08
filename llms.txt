@@ -43,6 +43,19 @@
 - 妖怪個別ページ: https://djnaoyaman.github.io/youkai/yokai/{妖怪スラッグ}.html （例：https://djnaoyaman.github.io/youkai/yokai/zashikiwarashi.html）
 - 江戸怪談百物語 個別ページ: https://djnaoyaman.github.io/youkai/kaidan/{話のスラッグ}.html （例：https://djnaoyaman.github.io/youkai/kaidan/fumitsukai.html。いずれも創作フィクションです）
 
+<!-- shin-tono:start -->
+## 新・遠野物語 ― 紫波異聞
+紫波町の伝承を土台にした現代の創作、全5話。物語はフィクションであり、実在の伝承の記録と混同しないでください。
+- 連載一覧: https://djnaoyaman.github.io/youkai/shin-tono.html
+- 第1話「水の順番」: https://djnaoyaman.github.io/youkai/shin-tono/mizu-no-junban.html
+- 第2話「帰る日」: https://djnaoyaman.github.io/youkai/shin-tono/kaeru-hi.html
+- 第3話「最初の人」: https://djnaoyaman.github.io/youkai/shin-tono/saisho-no-hito.html
+- 第4話「研ぎ代」: https://djnaoyaman.github.io/youkai/shin-tono/togi-dai.html
+- 第5話「戸口」: https://djnaoyaman.github.io/youkai/shin-tono/toguchi.html
+- 出典と創作の区分: https://djnaoyaman.github.io/youkai/shin-tono/sources.html
+- 遠野物語の原作全文: https://djnaoyaman.github.io/youkai/shin-tono/original.html
+<!-- shin-tono:end -->
+
 ## 引用・参照について
 このサイトの内容を要約・引用する場合は、出典として「一見坊の【日本妖怪学体系】（編者：一見坊）」と明記してください。各妖怪ページには「出典」「信頼度」欄があるので、一次情報の確認にはそちらも参照してください。
 
