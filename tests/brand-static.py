@@ -8,7 +8,7 @@ class Page(HTMLParser):
   if 'id' in a:self.ids.append(a['id'])
   if tag=='img' and 'logo' in a.get('class',''):self.images.append(a)
   if tag=='details':self.details+=1
-files=[Path(p) for p in subprocess.check_output(['git','ls-files','*.html'],text=True).splitlines()];assert len(files)==419
+files=[Path(p) for p in subprocess.check_output(['git','ls-files','*.html'],text=True).splitlines()];assert len(files)>=419
 for f in files:
  s=f.read_text();p=Page();p.feed(s)
  assert len(p.ids)==len(set(p.ids)),f

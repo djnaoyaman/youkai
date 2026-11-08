@@ -21,6 +21,14 @@
     setTimeout(dismissLoader, 5000); // Safety only, not a minimum display duration.
   }
   document.addEventListener('DOMContentLoaded', function () {
+    var creativeLink = document.querySelector('.nav-drawer-body a[href$="gendai-yokai.html"]');
+    if (creativeLink && !document.querySelector('.nav-drawer-body a[href$="shin-tono.html"]')) {
+      var tonoLink = document.createElement('a');
+      tonoLink.className = 'nd-link';
+      tonoLink.href = new URL('shin-tono.html', source).href;
+      tonoLink.textContent = '新・遠野物語 ― 紫波異聞';
+      creativeLink.after(tonoLink);
+    }
     var button = document.getElementById('navToggle');
     var drawer = document.getElementById('navDrawer');
     var fallback = document.getElementById('navFallback');

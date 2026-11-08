@@ -30,6 +30,18 @@ body:not(.nav-enhanced) nav.topnav{position:static;transform:none}
 body.nav-hidden nav.topnav:focus-within{transform:translateY(0)!important}
 
 /* Keep the author's prefix and the complete book title as meaningful units. */
+.serial-announcement{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:24px;margin:0 0 40px;padding:24px clamp(20px,4vw,36px);border:1px solid var(--hanko);border-left:5px solid var(--hanko);background:#c1272d05;color:var(--ink)}
+.serial-announcement{scroll-margin-top:145px}
+.serial-announcement-status{display:inline-block;align-self:start;padding:5px 12px;background:var(--hanko);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:.12em;white-space:nowrap}
+.serial-announcement-body{display:flex;flex-direction:column;gap:7px;min-width:0}
+.serial-announcement-title{font-family:'Noto Serif JP','Yu Mincho',serif;font-weight:700;font-size:clamp(22px,3vw,30px);line-height:1.6}
+.serial-announcement-title>span{display:inline-block;font-size:.7em}
+.serial-announcement-desc{font-size:14px;line-height:1.9}.serial-announcement-progress{font-size:12px;color:var(--ink-soft);line-height:1.9}
+.serial-announcement-action{font-size:13px;font-weight:700;color:var(--hanko);white-space:nowrap}
+.serial-announcement:hover{background:#c1272d0c}.serial-announcement:focus-visible{outline:3px solid var(--hanko);outline-offset:5px}
+#featureCreative .feature-creative-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#featureCreative .feature-tile{min-width:0;overflow-wrap:anywhere}
+@media(max-width:700px){.serial-announcement{grid-template-columns:minmax(0,1fr);gap:14px;padding:22px 20px}.serial-announcement-status{justify-self:start}.serial-announcement-action{justify-self:end}#featureCreative .feature-creative-grid{grid-template-columns:minmax(0,1fr)}#featureCreative .feature-tile{padding-right:0;border-right:0}}
 nav.topnav .brand .brand-prefix,nav.topnav .brand .brand-title{display:inline-block;white-space:nowrap;font:inherit;letter-spacing:inherit}
 nav.topnav .brand .brand-name{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;max-width:100%;line-height:1.6}
 @media(max-width:900px){nav.topnav .brand{flex:1 1 0}nav.topnav .nav-toggle{align-self:flex-start}}
