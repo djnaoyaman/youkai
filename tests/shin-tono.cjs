@@ -23,5 +23,10 @@ for(const p of files){
   if(fragment)assert(fs.readFileSync(full,'utf8').includes(`id="${fragment}"`),`${p}: ${fragment} exists`);
  }
 }
-assert.equal(JSON.parse(read('shin-tono-data.json')).length,3);
-console.log('PASS: original text preserved, 119 chapters, 6 pages, local links and anchors, unique ids.');
+const stories=JSON.parse(read('shin-tono-data.json'));
+assert.equal(stories.length,5);
+for(const story of stories){
+ const body=story.paragraphs.map(p=>`<p>${p}</p>`).join('\n');
+ assert(read(`shin-tono/${story.slug}.html`).includes(`<article class="tono-reading" aria-label="${story.title} 本文">${body}</article>`),`${story.title}: published prose matches source data`);
+}
+console.log('PASS: original text preserved, 119 chapters, 5 stories, local links and anchors, unique ids.');
