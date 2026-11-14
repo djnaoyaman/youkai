@@ -8,7 +8,8 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
   await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
   await page.goto('http://127.0.0.1:8765/joriko.html');
   assert.notEqual(await page.locator('#jrk-wealth').innerText(),'—');
-  assert.equal(await page.locator('#jrk-wins-row').isDisabled(),true);
+  await page.screenshot({path:`/tmp/joriko-qa/initial-${width}.png`,fullPage:true});
+  assert.equal(await page.locator('#jrk-wins-row input').first().isDisabled(),true);
   assert.equal(await page.locator('#jrk-charts svg').count(),3);
   assert.equal(await page.locator('#jrk-charts tbody tr').count(),41);
   const initial=await page.locator('#jrk-trust').innerText();
@@ -19,7 +20,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
   const before=await page.locator('#jrk-repair-body tr').nth(1).locator('td').allTextContents();
   assert.ok(Number(before[1])>Number(before[0]));
   await page.locator('[name="jrkCareer"][value="founder"]').check();
-  assert.equal(await page.locator('#jrk-wins-row').isDisabled(),false);
+  assert.equal(await page.locator('#jrk-wins-row input').first().isDisabled(),false);
   await page.locator('[name="jrkWins"][value="5"]').check();await page.locator('#jrk-crash').check();
   assert.equal(await page.locator('#jrk-crash-comparison').isVisible(),true);
   assert.equal(await page.locator('#jrk-charts svg path').count(),16);
