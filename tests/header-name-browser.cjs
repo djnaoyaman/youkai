@@ -5,6 +5,7 @@ try{for(const width of [320,375,390,402,430,768,1280]){for(const scale of [1,2])
  const page=await browser.newPage({viewport:{width,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
  await page.goto('http://127.0.0.1:8765/index.html');
+ await page.locator('.brand-loading').waitFor({state:'detached'});
  if(scale===2)await page.locator('nav.topnav, nav.topnav *').evaluateAll(els=>{const sizes=els.map(el=>parseFloat(getComputedStyle(el).fontSize));els.forEach((el,i)=>el.style.fontSize=(sizes[i]*2)+'px');});
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  const geometry=await page.evaluate(()=>{
