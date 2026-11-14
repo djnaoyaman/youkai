@@ -26,3 +26,9 @@ These are persistent project instructions requested by the user. A content edit 
 | Actual edit or source recheck date | Corresponding JSON date field, page JSON-LD/footer, sitemap; never manufacture source recheck dates |
 
 These checks apply to future revisions as well as the present five stories. For other content, identify and update the equivalent indexes, previews, navigation, source notes and discovery metadata before publishing.
+
+## 近現代妖怪
+
+- 妖怪と人間は別の存在。人そのものを妖怪の名前で呼ばず、妖怪が取り憑くことでその人の言動や判断が変わる、という文脈で書く。途中で妖怪と憑かれた人の主語を混同しない。
+- 場所に棲むことと、そこに来た人へ一時的に取り憑くことは両立する。物や場所に作用する妖怪も、人そのものとは区別する。
+- 個別ページの本文を変えたら、一覧の検索用 `data-body`、大妖怪紹介、メタ情報、構造化データ、サイトマップ、`llms.txt` の関連説明も整合させる。追加日時と既存の掲載順は保つ。
