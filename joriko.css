@@ -14,3 +14,51 @@
 .jrk-sim{background:transparent;color:var(--ink);padding:24px 0;border-top:2px solid var(--ink)}.jrk-control label{color:var(--ink)}.jrk-control .jrk-check{display:flex}.jrk-grid{background:var(--line)}.jrk-cell{background:var(--paper)}.jrk-label,.jrk-sub{color:var(--ink-soft)}.jrk-verdict{background:rgba(184,114,44,.06)}.jrk-result{border-color:var(--line)}
 
 @media(max-width:600px){.jrk-chart-panel svg text{font-size:19px}}
+
+/* Restore the original charcoal simulator; the v2 model and controls stay intact. */
+.jrk-sim{
+  --paper:#1E1B18;--ink:#EDE6D6;--ink-soft:rgba(237,230,214,.72);
+  --line:rgba(237,230,214,.22);--hanko:#C85A5A;
+  color-scheme:dark;background:var(--paper);color:var(--ink);
+  margin:30px 0 40px;padding:26px clamp(16px,4vw,30px);border-top:0;
+}
+.jrk-sim .jrk-heading{font-size:clamp(18px,2.5vw,23px);margin-bottom:14px}
+.jrk-sim .jrk-slider{padding:14px 0}.jrk-sim .jrk-slider label{font-size:13px;line-height:1.7}
+.jrk-sim .jrk-slider output{font-family:'Noto Serif JP',serif;font-weight:900;font-size:clamp(28px,5vw,38px);line-height:1.1}
+.jrk-sim .jrk-slider p{font-size:12px;margin:6px 0 8px}
+.jrk-sim .jrk-control input[type=range]{min-height:30px;margin:2px 0}
+.jrk-sim .jrk-control fieldset{margin:16px 0;padding:10px 12px}
+.jrk-sim .jrk-control fieldset:disabled{opacity:.6}
+.jrk-sim .jrk-presets button{background:rgba(237,230,214,.04)}
+.jrk-sim .jrk-presets button:hover{background:rgba(200,90,90,.12)}
+.jrk-sim .jrk-control .jrk-check{margin-top:16px;font-size:12.5px}
+.jrk-sim .jrk-help{font-size:11.5px;margin:8px 0 14px}
+.jrk-sim .jrk-result{margin:22px 0;padding-top:20px}
+.jrk-sim .jrk-cell{padding:16px 14px}.jrk-sim .jrk-val{font-size:clamp(22px,4vw,27px);margin:6px 0 2px}
+.jrk-sim .jrk-label{font-size:10.5px;color:rgba(237,230,214,.72)}
+.jrk-sim .jrk-sub{font-size:10px;color:rgba(237,230,214,.6)}
+.jrk-sim .jrk-cell:has(#jrk-listeners){background:rgba(200,90,90,.12)}
+.jrk-sim #jrk-listeners{color:#F0A0A0}
+.jrk-sim .jrk-cell:has(#jrk-support50){background:rgba(143,184,201,.12)}
+.jrk-sim #jrk-support50{color:#A8CFDE}
+.jrk-sim .jrk-verdict{background:rgba(237,230,214,.06);font-size:13px}
+.jrk-sim .jrk-comparison,.jrk-sim .jrk-charts,.jrk-sim .jrk-findings{margin:26px 0}
+.jrk-sim .jrk-table-scroll thead th{background:rgba(237,230,214,.07)}
+.jrk-sim .jrk-chart-panel{padding:14px 10px;margin:18px 0;border-color:rgba(237,230,214,.16)}
+.jrk-sim .jrk-chart-panel:nth-of-type(1) path{stroke:#8FB8C9}
+.jrk-sim .jrk-chart-panel:nth-of-type(1) .jrk-chart-key i{background:#8FB8C9!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) path[stroke="#9b392f"]{stroke:#EDE6D6}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) path[stroke="#8b6509"]{stroke:#C9A86A}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) path[stroke="#27635e"]{stroke:#9C8B6E}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) path[stroke="#475397"]{stroke:#F0A0A0}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) .jrk-chart-key span:nth-child(1) i{background:#EDE6D6!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) .jrk-chart-key span:nth-child(2) i{background:#C9A86A!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) .jrk-chart-key span:nth-child(3) i{background:#9C8B6E!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(2) .jrk-chart-key span:nth-child(4) i{background:#F0A0A0!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) path[stroke="#9b392f"]{stroke:#EDE6D6}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) path[stroke="#27635e"]{stroke:#8FB8C9}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) path[stroke="#475397"]{stroke:#F0A0A0}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) .jrk-chart-key span:nth-child(1) i{background:#EDE6D6!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) .jrk-chart-key span:nth-child(2) i{background:#8FB8C9!important}
+.jrk-sim .jrk-chart-panel:nth-of-type(3) .jrk-chart-key span:nth-child(3) i{background:#F0A0A0!important}
+@media(max-width:420px){.jrk-sim .jrk-control{padding:0}.jrk-sim .jrk-cell{padding:14px 10px}.jrk-sim .jrk-slider label{font-size:12px}}
