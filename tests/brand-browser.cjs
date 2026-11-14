@@ -32,10 +32,46 @@ try{
   assert.equal(await page.locator('.reveal').first().evaluate(el=>getComputedStyle(el).opacity),'1');await page.screenshot({animations:'disabled',path:`test-artifacts/brand/fallback-${javaScriptEnabled}.png`});await context.close();
  }
  for(const reducedMotion of ['reduce','no-preference']){
-  const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion});const page=await context.newPage();let release;const hold=new Promise(r=>release=r);
-  await page.route('**/*',async r=>{if(new URL(r.request().url()).hostname!=='127.0.0.1')return r.abort();if(r.request().url().endsWith('parallax-beach.jpg'))await hold;return r.continue();});
-  await page.goto('http://127.0.0.1:8765/index.html',{waitUntil:'domcontentloaded'});assert.equal(await page.locator('.brand-loading').count(),1);assert.equal(await page.locator('.brand-loading').getAttribute('aria-hidden'),'true');assert.equal(await page.locator('.brand-loading').evaluate(el=>getComputedStyle(el).pointerEvents),'none');
-  assert.equal(await page.locator('.brand-loading').evaluate(el=>getComputedStyle(el).animationName),reducedMotion==='reduce'?'none':'brand-breathe');await page.locator('.brand-loading img').evaluate(img=>img.decode());const cdp=await context.newCDPSession(page);fs.writeFileSync(`test-artifacts/brand/loading-${reducedMotion}.png`,Buffer.from((await cdp.send('Page.captureScreenshot',{format:'png'})).data,'base64'));await cdp.detach();if(reducedMotion==='reduce'){await page.waitForTimeout(5200);assert.equal(await page.locator('.brand-loading').count(),0,'timeout safety');}release();await page.waitForLoadState('load');assert.equal(await page.locator('.brand-loading').count(),0);await context.close();
+  for(const slowPage of [false,true]){
+   const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion});const page=await context.newPage();let release;const hold=new Promise(r=>release=r);
+   await page.addInitScript(()=>{
+    window.introTimes={};
+    new MutationObserver(()=>{
+     const visible=!!document.querySelector('.brand-loading');
+     if(visible&&introTimes.start===undefined)introTimes.start=performance.now();
+     if(!visible&&introTimes.start!==undefined&&introTimes.end===undefined)introTimes.end=performance.now();
+    }).observe(document,{childList:true,subtree:true});
+   });
+   await page.route('**/*',async r=>{if(new URL(r.request().url()).hostname!=='127.0.0.1')return r.abort();if(slowPage&&r.request().url().endsWith('parallax-beach.jpg'))await hold;return r.continue();});
+   await page.goto('http://127.0.0.1:8765/index.html',{waitUntil:'domcontentloaded'});
+   assert.equal(await page.locator('.brand-loading').count(),1);
+   assert.equal(await page.locator('.brand-loading').getAttribute('aria-hidden'),'true');
+   const cover=await page.locator('.brand-loading').evaluate(el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return {x:r.x,y:r.y,w:r.width,h:r.height,pointer:s.pointerEvents,bg:s.backgroundColor};});
+   assert.deepEqual(cover,{x:0,y:0,w:390,h:844,pointer:'auto',bg:'rgb(250, 250, 247)'});
+   assert.equal(await page.locator('.topnav').evaluate(el=>getComputedStyle(el).visibility),'hidden');
+   assert.equal(await page.locator('.brand-loading img').evaluate(el=>getComputedStyle(el).animationName),reducedMotion==='reduce'?'none':'brand-breathe');
+   await page.locator('.brand-loading img').evaluate(img=>img.decode());
+   const cdp=await context.newCDPSession(page);fs.writeFileSync(`test-artifacts/brand/loading-${reducedMotion}-${slowPage}.png`,Buffer.from((await cdp.send('Page.captureScreenshot',{format:'png'})).data,'base64'));await cdp.detach();
+   // Inputs, including a programmatic menu click, must not shorten the intro.
+   await page.evaluate(()=>{dispatchEvent(new Event('pointerdown'));dispatchEvent(new Event('scroll'));dispatchEvent(new KeyboardEvent('keydown',{key:'Escape'}));document.getElementById('navToggle').click();});
+   await page.waitForTimeout(1000);assert.equal(await page.locator('.brand-loading').count(),1,'intro survives load and input');
+   await page.locator('.brand-loading').waitFor({state:'detached',timeout:5000});
+   const elapsed=await page.evaluate(()=>introTimes.end-introTimes.start);assert.ok(elapsed>=2000&&elapsed<4000,`intro lasted ${elapsed}ms`);
+   assert.equal(await page.locator('.topnav').evaluate(el=>getComputedStyle(el).visibility),'visible');
+   assert.equal(await page.locator('#navToggle').getAttribute('aria-expanded'),'false');
+   if(slowPage)assert.notEqual(await page.evaluate(()=>document.readyState),'complete','intro ends without waiting for the page');
+   release();await page.waitForLoadState('load');
+   await page.reload();assert.equal(await page.locator('.brand-loading').count(),0,'reload in the same session does not replay');
+   if(!slowPage){
+    // A ready/cached document must still play the full intro in a fresh session.
+    await page.evaluate(()=>sessionStorage.removeItem('youkai-brand-seen'));
+    await page.addScriptTag({url:'http://127.0.0.1:8765/brand-ui.js?ready-document'});
+    assert.equal(await page.locator('.brand-loading').count(),1,'ready document still plays intro');
+    await page.waitForTimeout(1000);assert.equal(await page.locator('.brand-loading').count(),1);
+    await page.locator('.brand-loading').waitFor({state:'detached',timeout:5000});
+   }
+   await context.close();
+  }
  }
- fs.writeFileSync('test-artifacts/brand/results.json',JSON.stringify(results,null,2));console.log('Brand, menu, fallback, reduced-motion and genuine-load tests passed',results);
+ fs.writeFileSync('test-artifacts/brand/results.json',JSON.stringify(results,null,2));console.log('Brand, menu, fallback, reduced-motion and two-second session-intro tests passed',results);
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

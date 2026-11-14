@@ -23,3 +23,8 @@ for f in files:
  assert '<span class="brand-prefix">一見坊の</span><span class="brand-title">【日本妖怪学体系】</span>' in s,f
  for attr in ['canonical','og:title','twitter:title']:assert attr in s,(f,attr)
 print('419 pages: logo alt/local assets, menu fallback, unique IDs, metadata verified')
+
+# The immediate intro logo must stay identical to the shared brand asset.
+import json
+intro = re.search(r"var introLogo = (.+);", Path("brand-ui.js").read_text())
+assert intro and json.loads(intro[1]) == Path("assets/youkai-logo-09.svg").read_text()
