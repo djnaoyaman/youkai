@@ -12,7 +12,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
   assert.equal(await page.locator('#jrk-charts svg').count(),3);
   assert.equal(await page.locator('#jrk-charts tbody tr').count(),41);
   const initial=await page.locator('#jrk-trust').innerText();
-  await page.locator('#jrk-agency').fill('100');await page.locator('#jrk-agency').dispatchEvent('input');
+  await page.locator('#jrk-agency').evaluate(el=>{el.value='100';el.dispatchEvent(new Event('input',{bubbles:true}));});
   assert.equal(await page.locator('#jrk-trust').innerText(),initial);
   await page.locator('[data-preset="burden"]').click();await page.locator('#jrk-repair').check();
   assert.equal(await page.locator('#jrk-repair-comparison').isVisible(),true);
