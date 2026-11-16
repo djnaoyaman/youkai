@@ -68,6 +68,7 @@ def build():
   local_search=re.sub(r'<div class="gendai-search-filters">.*?</div>','<select id="gendaiFilterEra" hidden aria-label="現在のカテゴリ"><option value="">'+label+'</option></select>',search,flags=re.S)
   local_search=local_search.replace('妖怪名・かな・性質で検索（例：忘れ、電池、いてほしい）','このカテゴリの妖怪を検索')
   tail=suffix.replace(BASE+'gendai-yokai.html',url).replace(quote(BASE+'gendai-yokai.html',safe=''),quote(url,safe='')).replace(quote('近現代妖怪（完全創作）',safe=''),quote(label+'（近現代妖怪）',safe=''))
+  tail=tail.replace('entry/s/djnaoyaman.github.io/youkai/gendai-yokai.html','entry/s/djnaoyaman.github.io/youkai/'+path)
   body='<div class="stance-box"><p>'+desc+'</p><p><a href="gendai-yokai.html">← 近現代妖怪の総合索引へ</a></p></div>\n'+local_search+'<section id="gendaiResults" aria-label="'+label+'の一覧"><h2>'+label+'の一覧</h2><p>追加が新しい順に掲載しています。</p><div class="gendai-card-grid" id="gendaiCardGrid">\n'+'\n'.join(subset)+'\n</div></section>\n'+pagination.group()+'\n'
   (ROOT/path).write_text(head+body+tail)
  for _,a in cards:
