@@ -32,3 +32,9 @@ These checks apply to future revisions as well as the present five stories. For 
 - 妖怪と人間は別の存在。人そのものを妖怪の名前で呼ばず、妖怪が取り憑くことでその人の言動や判断が変わる、という文脈で書く。途中で妖怪と憑かれた人の主語を混同しない。
 - 場所に棲むことと、そこに来た人へ一時的に取り憑くことは両立する。物や場所に作用する妖怪も、人そのものとは区別する。
 - 個別ページの本文を変えたら、一覧の検索用 `data-body`、大妖怪紹介、メタ情報、構造化データ、サイトマップ、`llms.txt` の関連説明も整合させる。追加日時と既存の掲載順は保つ。
+
+### カテゴリ別索引
+
+- 既存のカテゴリ名と所属は `gendai-yokai.html` の選択肢・カードを基準にする。`build-gendai-categories.py` は、この一覧から16カテゴリと「大妖怪のみ」の17索引を生成する。
+- 妖怪の追加・分類変更・カード内容更新後は `python3 build-gendai-categories.py` を実行し、生成された `gendai-category-*.html`、各妖怪のカテゴリ導線、`sitemap.xml`、`llms.txt` をまとめて更新する。追加日時と掲載順を保つ。
+- `python3 tests/gendai-categories.py`、`python3 tests/launch-metadata.py`、`python3 tests/brand-static.py` を実行する。索引のレイアウトは `gendai-categories.css` で調整し、既存のサイトデザインを引き継ぐ。

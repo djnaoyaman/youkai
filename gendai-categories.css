@@ -1,0 +1,11 @@
+/* Existing paper, ink and creative-work accent colors are inherited. */
+.gendai-category-nav{margin:28px 0 36px}
+.gendai-category-nav h2{font-size:20px;margin:0 0 14px}
+.gendai-category-nav summary{cursor:pointer;font-weight:700;padding:14px 0;color:var(--hanko)}
+.gendai-category-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.gendai-category-links a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink);font-size:13px;line-height:1.7;text-decoration:none;overflow-wrap:anywhere}
+.gendai-category-links a span{white-space:nowrap;color:var(--ink-soft);font-size:11px;font-weight:400}
+.gendai-category-links a:hover,.gendai-category-links a[aria-current=page]{background:rgba(184,114,44,.08);color:var(--hanko)}
+.gendai-category-links a:focus-visible{outline:2px solid var(--hanko);outline-offset:-3px}
+.gendai-category-return{margin-top:24px;line-height:1.9}
+@media(max-width:600px){.gendai-category-links{grid-template-columns:repeat(2,minmax(0,1fr))}.gendai-category-links a{padding:13px 10px;align-items:flex-start;flex-direction:column;gap:4px}.pref-head h1{overflow-wrap:anywhere}}

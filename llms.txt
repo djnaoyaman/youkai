@@ -65,3 +65,25 @@
 ## 常利己の計算 v2
 - /joriko.html — 2026-11-14更新。自己決定・相手への負担・関係への手間を独立させた架空の思考実験。25〜65歳、41時点。45歳からの関係修復と60歳の失脚を比較。幸福・健康の予測ではない。
 - /joriko-story.html — 旧モデルから着想した独立した創作。作中の数値は現行モデルの計算結果ではない。
+
+<!-- GENDAI CATEGORIES -->
+## 近現代妖怪のカテゴリ別索引
+既存の16カテゴリと大妖怪の一覧。各索引は完全な創作であり、実在の伝承ではありません。
+- 大妖怪のみ（9体） https://djnaoyaman.github.io/youkai/gendai-category-daiyokai.html
+- 産業革命（3体） https://djnaoyaman.github.io/youkai/gendai-category-sangyo.html
+- モータリゼーション（3体） https://djnaoyaman.github.io/youkai/gendai-category-motorization.html
+- IT革命（3体） https://djnaoyaman.github.io/youkai/gendai-category-it.html
+- 職場にいる妖怪（14体） https://djnaoyaman.github.io/youkai/gendai-category-shokuba.html
+- 人と人の関係を邪魔する妖怪（12体） https://djnaoyaman.github.io/youkai/gendai-category-ningen.html
+- みんなの場所にいる妖怪（6体） https://djnaoyaman.github.io/youkai/gendai-category-kokyo.html
+- 終末妖怪（1体） https://djnaoyaman.github.io/youkai/gendai-category-shumatsu.html
+- 温浴施設とサウナにいる妖怪（10体） https://djnaoyaman.github.io/youkai/gendai-category-sauna.html
+- AI革命（3体） https://djnaoyaman.github.io/youkai/gendai-category-ai.html
+- 戦争（3体） https://djnaoyaman.github.io/youkai/gendai-category-senso.html
+- いてほしい妖怪（12体） https://djnaoyaman.github.io/youkai/gendai-category-itehoshii.html
+- 家と暮らしにいる妖怪（9体） https://djnaoyaman.github.io/youkai/gendai-category-kurashi.html
+- 学校と学びにいる妖怪（9体） https://djnaoyaman.github.io/youkai/gendai-category-gakko.html
+- お金と商いにいる妖怪（9体） https://djnaoyaman.github.io/youkai/gendai-category-okane.html
+- 体と心にいる妖怪（10体） https://djnaoyaman.github.io/youkai/gendai-category-karada.html
+- 旅と道にいる妖怪（5体） https://djnaoyaman.github.io/youkai/gendai-category-tabi.html
+<!-- /GENDAI CATEGORIES -->

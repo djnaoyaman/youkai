@@ -1,0 +1,18 @@
+name: Modern yokai category indexes
+on:
+  push:
+    branches: [main]
+    paths: ['gendai-yokai.html', 'gendai/**', 'gendai-category-*.html', 'gendai-categories.css', 'build-gendai-categories.py', 'tests/gendai-categories.py', '.github/workflows/gendai-categories.yml']
+  pull_request:
+    paths: ['gendai-yokai.html', 'gendai/**', 'gendai-category-*.html', 'gendai-categories.css', 'build-gendai-categories.py', 'tests/gendai-categories.py', '.github/workflows/gendai-categories.yml']
+permissions:
+  contents: read
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tests/gendai-categories.py
+      - run: python3 tests/launch-metadata.py
+      - run: python3 tests/brand-static.py
+      - run: git diff --exit-code
