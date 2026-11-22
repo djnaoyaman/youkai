@@ -7,6 +7,7 @@ const {chromium}=require('playwright');const assert=require('node:assert/strict'
   page.on('pageerror',e=>errors.push(e.message));
   await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
   await page.goto('http://127.0.0.1:8765/joriko.html');
+  await page.locator('.brand-loading').waitFor({state:'hidden'});
   assert.notEqual(await page.locator('#jrk-wealth').innerText(),'—');
   await page.screenshot({path:`/tmp/joriko-qa/initial-${width}.png`,fullPage:true});
   assert.equal(await page.locator('#jrk-wins-row input').first().isDisabled(),true);
