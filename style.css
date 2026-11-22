@@ -48,3 +48,8 @@ nav.topnav .brand .brand-prefix,nav.topnav .brand .brand-title{display:inline-bl
 nav.topnav .brand .brand-name{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;max-width:100%;line-height:1.6}
 @media(max-width:900px){nav.topnav .brand{flex:1 1 0}nav.topnav .nav-toggle{align-self:flex-start}}
 @media(max-width:480px){nav.topnav{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}nav.topnav .brand .brand-name{max-width:min(10em,100%)}}
+
+/* Preserve the narrative compositions of the approved sauna paintings. */
+.sauna-parallax{height:auto;min-height:0;aspect-ratio:16/9}
+.sauna-parallax .parallax-img{top:-6%;height:112%}
+@media(prefers-reduced-motion:reduce){.sauna-parallax .parallax-img{top:0;height:100%;will-change:auto}}

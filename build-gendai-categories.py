@@ -6,6 +6,10 @@ from urllib.parse import quote
 import re, json
 ROOT = Path(__file__).resolve().parent
 BASE = 'https://djnaoyaman.github.io/youkai/'
+SAUNA_ARTWORK = {
+ 'mizu-moguri', 'isu-gui', 'neppa-jizou', 'loyly-mugenbou', 'asefurashi',
+ 'kerorinpa', 'ashi-nure', 'samesi-rounin', 'tamuroh', 'bichonse'
+}
 CATEGORIES = [
  ('__DAI__','daiyokai','大妖怪のみ'),('産業革命','sangyo','産業革命'),
  ('モータリゼーション','motorization','モータリゼーション'),('IT革命','it','IT革命'),
@@ -24,6 +28,12 @@ def attrs(s):
  p=Attrs();p.feed(s);return p.attrs
 
 def filename(slug): return 'gendai-category-'+slug+'.html'
+def artwork_card(card):
+ slug=Path(attrs(card)['href']).stem
+ if slug not in SAUNA_ARTWORK: return card
+ preview='<span class="gendai-card-art"><img src="parallax-'+slug+'.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async"></span>'
+ return re.sub(r'(<a\b[^>]*>)',lambda m:m[1]+preview,card,count=1)
+
 def build():
  index=ROOT/'gendai-yokai.html'
  source=index.read_text()
@@ -53,6 +63,7 @@ def build():
  for key,slug,label in CATEGORIES:
   path=filename(slug);url=BASE+path;title=label+' ｜ 近現代妖怪 ｜ 一見坊の【日本妖怪学体系】'
   subset=[s for s,a in cards if (a['data-dai']=='1' if key=='__DAI__' else a['data-era']==key)]
+  if slug=='sauna': subset=[artwork_card(s) for s in subset]
   desc=f'近現代妖怪の「{label}」{len(subset)}体を、追加が新しい順に紹介するカテゴリ別索引。一見坊による完全な創作です。妖怪と人間は別の存在として描いています。'
   head=re.sub(r'<!-- GENDAI CATEGORY NAV START -->.*?<!-- GENDAI CATEGORY NAV END -->',nav(key),prefix,flags=re.S)
   head=head.replace('<h1>近現代妖怪</h1>','<h1>'+label+'</h1>')
@@ -70,6 +81,7 @@ def build():
   tail=suffix.replace(BASE+'gendai-yokai.html',url).replace(quote(BASE+'gendai-yokai.html',safe=''),quote(url,safe='')).replace(quote('近現代妖怪（完全創作）',safe=''),quote(label+'（近現代妖怪）',safe=''))
   tail=tail.replace('entry/s/djnaoyaman.github.io/youkai/gendai-yokai.html','entry/s/djnaoyaman.github.io/youkai/'+path)
   body='<div class="stance-box"><p>'+desc+'</p><p><a href="gendai-yokai.html">← 近現代妖怪の総合索引へ</a></p></div>\n'+local_search+'<section id="gendaiResults" aria-label="'+label+'の一覧"><h2>'+label+'の一覧</h2><p>追加が新しい順に掲載しています。</p><div class="gendai-card-grid" id="gendaiCardGrid">\n'+'\n'.join(subset)+'\n</div></section>\n'+pagination.group()+'\n'
+  if slug=='sauna': body=body.replace('class="gendai-card-grid"','class="gendai-card-grid gendai-art-grid"')
   (ROOT/path).write_text(head+body+tail)
  for _,a in cards:
   p=ROOT/a['href'];s=p.read_text();key=a['data-era'];slug=next(sl for k,sl,_ in CATEGORIES if k==key)
@@ -85,7 +97,7 @@ def build():
  s=re.sub(r'  <url><loc>'+re.escape(BASE)+r'gendai-category-[^\r\n]*</url>\r?\n','',s)
  anchor='  <url><loc>'+BASE+'shin-tono.html'
  if anchor not in s: anchor='</urlset>'
- s=s.replace(anchor,''.join('  <url><loc>'+BASE+filename(slug)+'</loc><lastmod>2026-11-16</lastmod><priority>0.6</priority></url>\n' for _,slug,_ in CATEGORIES)+anchor,1)
+ s=s.replace(anchor,''.join('  <url><loc>'+BASE+filename(slug)+'</loc><lastmod>'+('2026-11-23' if slug=='sauna' else '2026-11-16')+'</lastmod><priority>0.6</priority></url>\n' for _,slug,_ in CATEGORIES)+anchor,1)
  sitemap.write_bytes(s.encode())
  llms=ROOT/'llms.txt';s=llms.read_text();s=re.sub(r'\n<!-- GENDAI CATEGORIES -->.*?<!-- /GENDAI CATEGORIES -->\n','\n',s,flags=re.S)
  s=s.rstrip()+'\n\n<!-- GENDAI CATEGORIES -->\n## 近現代妖怪のカテゴリ別索引\n既存の16カテゴリと大妖怪の一覧。各索引は完全な創作であり、実在の伝承ではありません。\n'+''.join('- '+label+f'（{counts[key]}体） '+BASE+filename(slug)+'\n' for key,slug,label in CATEGORIES)+'<!-- /GENDAI CATEGORIES -->\n';llms.write_text(s)

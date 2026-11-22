@@ -8,4 +8,9 @@
 .gendai-category-links a:hover,.gendai-category-links a[aria-current=page]{background:rgba(184,114,44,.08);color:var(--hanko)}
 .gendai-category-links a:focus-visible{outline:2px solid var(--hanko);outline-offset:-3px}
 .gendai-category-return{margin-top:24px;line-height:1.9}
+.gendai-art-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.gendai-card-art{display:block;aspect-ratio:16/9;margin:-20px -18px 8px;overflow:hidden;background:#1a1a1a;border-bottom:1px solid var(--line)}
+.gendai-card-art img{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:900px){.gendai-art-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.gendai-art-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.gendai-category-links{grid-template-columns:repeat(2,minmax(0,1fr))}.gendai-category-links a{padding:13px 10px;align-items:flex-start;flex-direction:column;gap:4px}.pref-head h1{overflow-wrap:anywhere}}

@@ -569,7 +569,7 @@ var rect = container.getBoundingClientRect();
 if (rect.bottom < -300 || rect.top > winH + 300) { return; }
 if (reduce) { img.style.transform = 'translateY(0)'; return; }
 var overflowPx = img.offsetHeight - container.offsetHeight;
-var maxOffset = Math.max(overflowPx / 2, 40);
+var maxOffset = Math.max(overflowPx / 2, container.classList.contains('sauna-parallax') ? 0 : 40);
 var totalTravel = winH + rect.height;
 var traveled = winH - rect.top;
 var progress = traveled / totalTravel;
