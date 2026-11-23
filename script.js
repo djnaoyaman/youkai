@@ -1,4 +1,4 @@
-(function(){'use strict';if(window.NaoyamanAnalytics)return;var schemas={creator_site_visit:['target_site'],quiz_start:['quiz_mode'],quiz_answer:[],quiz_timeout:[],quiz_complete:[],quiz_restart:[],encyclopedia_expand:[],reading_mode_select:['reading_mode'],encyclopedia_navigate:['content_group'],walk_filter:['filter_group'],video_open:[],video_seek_request:['position_seconds'],catalog_filter:['filter_group'],music_play:['item_id'],music_pause:['item_id'],music_complete:['item_id'],music_filter:['filter_group'],art_display_open:[],share:['method','content_type'],map_filter:['filter_key']};window.NaoyamanAnalytics={track:function(name,values){try{if(location.hostname!=='djnaoyaman.github.io'||typeof window.gtag!=='function'||!schemas[name])return;var p={send_to:'G-9ZDWL2GBLG',transport_type:'beacon',page_location:location.origin+location.pathname,page_referrer:document.referrer.split(/[?#]/)[0]};schemas[name].forEach(function(k){var v=(values||{})[k];if(typeof v==='number'&&Number.isFinite(v))p[k]=v;else if(typeof v==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(v))p[k]=v;});window.gtag('event',name,p);}catch(_){}}};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-creator-site]');if(a)window.NaoyamanAnalytics.track('creator_site_visit',{target_site:a.dataset.creatorSite});});})();
+(function(){'use strict';if(window.NaoyamanAnalytics)return;var schemas={creator_site_visit:['target_site'],quiz_start:['quiz_mode'],quiz_answer:[],quiz_timeout:[],quiz_complete:[],quiz_restart:[],encyclopedia_expand:[],reading_mode_select:['reading_mode'],encyclopedia_navigate:['content_group','content_id','selection_source'],youkai_category_select:['category_id','selection_source'],walk_filter:['filter_group'],video_open:[],video_seek_request:['position_seconds'],catalog_filter:['filter_group'],music_play:['item_id'],music_pause:['item_id'],music_complete:['item_id'],music_filter:['filter_group'],art_display_open:[],share:['method','content_type'],map_filter:['filter_key']};window.NaoyamanAnalytics={track:function(name,values){try{if(location.hostname!=='djnaoyaman.github.io'||window['ga-disable-G-9ZDWL2GBLG']||typeof window.gtag!=='function'||!schemas[name])return;var p={send_to:'G-9ZDWL2GBLG',transport_type:'beacon',page_location:location.origin+location.pathname,page_referrer:document.referrer.split(/[?#]/)[0]};schemas[name].forEach(function(k){var v=(values||{})[k];if(typeof v==='number'&&Number.isFinite(v))p[k]=v;else if(typeof v==='string'&&/^[a-zA-Z0-9_-]{1,80}$/.test(v))p[k]=v;});window.gtag('event',name,p);}catch(_){}}};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[data-creator-site]');if(a)window.NaoyamanAnalytics.track('creator_site_visit',{target_site:a.dataset.creatorSite});});})();
 document.addEventListener('DOMContentLoaded', function(){
 (function(){
 var el = document.getElementById('siteCatch');
@@ -525,6 +525,10 @@ if (p < 1) { requestAnimationFrame(step); }
 else { history.replaceState(null, '', '#' + id); }
 }
 requestAnimationFrame(step);
+if(!e.__youkaiCategoryTracked&&/\/youkai\/category\.html$/.test(location.pathname)&&/^cat-(nature|deity|shrine|human|animal|household|boundary|urban|visitor|mystery)$/.test(id)){
+  e.__youkaiCategoryTracked=true;
+  window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('youkai_category_select',{category_id:id.slice(4),selection_source:'category_section'});
+}
 });
 });
 })();
@@ -593,6 +597,67 @@ window.addEventListener('load', updateParallax);
 }
 });
 
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.pref-panel-toggle,.pmode-btn');if(b){if(b.matches('.pref-panel-toggle')&&b.getAttribute('aria-expanded')==='true'){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_expand',{});}else if(b.matches('.pmode-btn')){window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('reading_mode_select',{reading_mode:b.dataset.pmode});}}var a=e.target.closest&&e.target.closest('a');if(!a||a.dataset.creatorSite)return;try{var u=new URL(a.href);if(u.origin!==location.origin||u.pathname.indexOf('/youkai/')!==0)return;var p=u.pathname.slice('/youkai/'.length),group=p.indexOf('/')<0?p.replace(/\.html$/,'') : p.split('/')[0];if(!group)group='home';window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('encyclopedia_navigate',{content_group:group});}catch(_){}});
-
-document.addEventListener('change',function(e){var el=e.target;if(e.isTrusted&&el&&el.tagName==='SELECT'&&/^yokaiFilter/.test(el.id))window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track('map_filter',{filter_key:el.id});});
+(function(){
+'use strict';
+if(window.__youkaiNavigationEventsBound)return;
+window.__youkaiNavigationEventsBound=true;
+var categoryIds={
+  '':'all','__DAI__':'daiyokai','産業革命':'sangyo','モータリゼーション':'motorization',
+  'IT革命':'it','職場にいる妖怪':'shokuba','人と人の関係を邪魔する妖怪':'ningen',
+  'みんなの場所にいる妖怪':'kokyo','終末妖怪':'shumatsu','温浴施設とサウナにいる妖怪':'sauna',
+  'AI革命':'ai','戦争':'senso','いてほしい妖怪':'itehoshii','家と暮らしにいる妖怪':'kurashi',
+  '学校と学びにいる妖怪':'gakko','お金と商いにいる妖怪':'okane','体と心にいる妖怪':'karada',
+  '旅と道にいる妖怪':'tabi'
+};
+var categoryFilter=document.getElementById('gendaiFilterEra');
+var previousCategory=categoryFilter?categoryFilter.value:null;
+function track(name,params){
+  if(window['ga-disable-G-9ZDWL2GBLG'])return;
+  window.NaoyamanAnalytics&&window.NaoyamanAnalytics.track(name,params);
+}
+document.addEventListener('click',function(e){
+  if(e.defaultPrevented)return;
+  var b=e.target.closest&&e.target.closest('.pref-panel-toggle,.pmode-btn');
+  if(b){
+    if(b.matches('.pref-panel-toggle')&&b.getAttribute('aria-expanded')==='true')track('encyclopedia_expand',{});
+    else if(b.matches('.pmode-btn'))track('reading_mode_select',{reading_mode:b.dataset.pmode});
+  }
+  var a=e.target.closest&&e.target.closest('a[href]');
+  if(!a||a.dataset.creatorSite||a.hasAttribute('download')||a.getAttribute('aria-current')==='page')return;
+  try{
+    var u=new URL(a.getAttribute('href'),document.baseURI||location.href);
+    if(u.origin!==location.origin||u.pathname.indexOf('/youkai/')!==0)return;
+    var p=u.pathname.slice('/youkai/'.length);
+    var category=p.match(/^gendai-category-([a-z-]+)\.html$/);
+    if(category&&Object.keys(categoryIds).some(function(k){return categoryIds[k]===category[1];})){
+      if(u.pathname!==location.pathname)track('youkai_category_select',{category_id:category[1],selection_source:'category_link'});
+      return;
+    }
+    var section=u.hash.match(/^#cat-(nature|deity|shrine|human|animal|household|boundary|urban|visitor|mystery)$/);
+    if(section&&p==='category.html'){
+      track('youkai_category_select',{category_id:section[1],selection_source:'category_section'});
+      return;
+    }
+    if(u.pathname===location.pathname)return;
+    if(p&&!/^(?:[a-z0-9_-]+\/)*(?:[a-z0-9_-]+\.html)?$/.test(p))return;
+    var parts=p.replace(/\.html$/,'').replace(/\/$/,'').split('/');
+    var group=parts.length>1?parts[0]:parts[0]||'home';
+    var id=parts[parts.length-1]||'home';
+    track('encyclopedia_navigate',{
+      content_group:group,content_id:id,
+      selection_source:a.closest('nav,#navDrawer')?'navigation':'content'
+    });
+  }catch(_){}
+});
+document.addEventListener('change',function(e){
+  var el=e.target;
+  if(!e.isTrusted||!el||el.tagName!=='SELECT')return;
+  if(el.id==='gendaiFilterEra'){
+    if(el.value===previousCategory)return;
+    previousCategory=el.value;
+    if(Object.prototype.hasOwnProperty.call(categoryIds,el.value)){
+      track('youkai_category_select',{category_id:categoryIds[el.value],selection_source:'category_filter'});
+    }
+  }else if(/^yokaiFilter/.test(el.id))track('map_filter',{filter_key:el.id});
+});
+}());
