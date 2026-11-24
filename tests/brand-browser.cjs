@@ -74,37 +74,56 @@ try{
    await context.close();
   }
  }
- // Illustration releases must preserve the story seams and decode their own real WebP
- // on a phone; additionally sample the first and newest at narrow/desktop widths.
- const artFiles=fs.existsSync('assets/kaidan')?fs.readdirSync('assets/kaidan').filter(name=>/^\d{3}-[a-z]+\.webp$/.test(name)).sort():[];
- for(const filename of artFiles){
-  const slug=filename.slice(4,-5);
-  const sampleLayouts=filename===artFiles[0]||filename===artFiles.at(-1);
-  for(const width of sampleLayouts?[320,390,1280]:[390]){
-   const context=await browser.newContext({viewport:{width,height:820},reducedMotion:'reduce'});
-   try{
-    const page=await context.newPage();
-    await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
-    const imageResponse=page.waitForResponse(res=>res.url().endsWith('/'+filename));
-    await page.goto('http://127.0.0.1:8765/kaidan/'+slug+'.html',{waitUntil:'domcontentloaded'});
-    const figure=page.locator('figure.kaidan-illustration');
-    assert.equal(await figure.count(),1);
-    await figure.scrollIntoViewIfNeeded();
-    const response=await imageResponse;
-    assert.equal(response.status(),200);
-    assert.match(response.headers()['content-type'],/^image\/webp(?:$|;)/);
-    const dimensions=await figure.evaluate(async (el)=>{
-     const img=el.querySelector('img');await img.decode();const box=img.getBoundingClientRect();
-     return {native:[img.naturalWidth,img.naturalHeight],hint:[img.width,img.height],
-      box:[box.left,box.right,box.width,box.height],head:el.previousElementSibling.className,
-      body:el.nextElementSibling.className,viewport:innerWidth};
-    });
-    assert.ok(dimensions.box[0]>=0&&dimensions.box[1]<=dimensions.viewport);
-    assert.ok(Math.abs(dimensions.box[2]/dimensions.box[3]-4/3)<0.01);
-    assert.ok(Math.abs(dimensions.native[0]/dimensions.native[1]-4/3)<0.01);
-    assert.equal(dimensions.head,'record-head');assert.equal(dimensions.body,'record-body');
-    if(width===390&&sampleLayouts)await figure.screenshot({path:'test-artifacts/brand/kaidan-'+slug+'.png'});
-   }finally{await context.close();}
+ // Fetch and decode each illustration in a mobile viewport. For the first and
+ // newest in each format, also check narrow/desktop layout and the reserved space.
+ const formats=[
+  {dir:'kaidan',klass:'kaidan-illustration',suffix:'',aspect:4/3,maxWidth:760},
+  {dir:'kaidan-scenes',klass:'kaidan-scene',suffix:'-scene',aspect:9/16,maxWidth:320},
+ ];
+ for(const mode of formats){
+  const dir='assets/'+mode.dir;
+  const pattern=new RegExp('^\\d{3}-[a-z]+'+mode.suffix+'\\.webp$');
+  const artFiles=fs.existsSync(dir)?fs.readdirSync(dir).filter(name=>pattern.test(name)).sort():[];
+  for(const filename of artFiles){
+   const slug=filename.slice(4,-5-mode.suffix.length);
+   const sampleLayouts=filename===artFiles[0]||filename===artFiles.at(-1);
+   for(const width of sampleLayouts?[320,390,1280]:[390]){
+    const context=await browser.newContext({viewport:{width,height:820},reducedMotion:'reduce'});
+    try{
+     const page=await context.newPage();
+     await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
+     const imageResponse=page.waitForResponse(res=>res.url().endsWith('/'+mode.dir+'/'+filename));
+     await page.goto('http://127.0.0.1:8765/kaidan/'+slug+'.html',{waitUntil:'domcontentloaded'});
+     const figure=page.locator('figure.'+mode.klass);
+     assert.equal(await figure.count(),1);
+     const initialSize=await figure.locator('img').evaluate(img=>img.getBoundingClientRect().height);
+     await figure.scrollIntoViewIfNeeded();
+     const response=await imageResponse;
+     assert.equal(response.status(),200);
+     assert.match(response.headers()['content-type'],/^image\/webp(?:$|;)/);
+     const dimensions=await figure.evaluate(async el=>{
+      const img=el.querySelector('img');await img.decode();const box=img.getBoundingClientRect();
+      return {native:[img.naturalWidth,img.naturalHeight],hint:[Number(img.getAttribute('width')),Number(img.getAttribute('height'))],
+       box:[box.left,box.right,box.width,box.height],head:el.previousElementSibling?.className,
+       body:el.nextElementSibling?.className,prevTag:el.previousElementSibling?.tagName,nextTag:el.nextElementSibling?.tagName,
+       parent:el.parentElement.className,atPara:[...el.parentElement.children].slice(0,[...el.parentElement.children].indexOf(el)).filter(node=>node.tagName==='P').length,
+       viewport:innerWidth};
+     });
+     assert.ok(dimensions.box[0]>=0&&dimensions.box[1]<=dimensions.viewport);
+     assert.ok(dimensions.box[2]<=mode.maxWidth+0.5);
+     assert.ok(Math.abs(dimensions.box[2]/dimensions.box[3]-mode.aspect)<0.01);
+     assert.ok(Math.abs(dimensions.box[3]-initialSize)<=1,'Image dimensions reserve space before decoding');
+     assert.deepEqual(dimensions.native,dimensions.hint);
+     if(dimensions.parent==='record-body'){
+      assert.equal(dimensions.prevTag,'P');assert.equal(dimensions.nextTag,'P');
+      if(mode.klass==='kaidan-scene'&&slug==='fumitsukai')assert.equal(dimensions.atPara,3);
+     }else{
+      assert.equal(mode.klass,'kaidan-illustration');
+      assert.equal(dimensions.head,'record-head');assert.equal(dimensions.body,'record-body');
+     }
+     if(width===390&&sampleLayouts)await figure.screenshot({path:'test-artifacts/brand/'+mode.klass+'-'+slug+'.png'});
+    }finally{await context.close();}
+   }
   }
  }
  fs.writeFileSync('test-artifacts/brand/results.json',JSON.stringify(results,null,2));console.log('Brand, menu, fallback, reduced-motion and two-second session-intro tests passed',results);
