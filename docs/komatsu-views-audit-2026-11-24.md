@@ -25,17 +25,17 @@
 | 座敷童子 | 小松執筆『世界大百科事典』「座敷童子」 | https://kotobank.jp/word/%E5%BA%A7%E6%95%B7%E7%AB%A5%E5%AD%90-837716 | 直接言及 |
 | 山姥 | 小松執筆『世界大百科事典』「山姥」 | https://kotobank.jp/word/%E5%B1%B1%E5%A7%A5-144009 | 直接言及 |
 | 天邪鬼 | 小松執筆『世界大百科事典』「瓜子姫」 | https://kotobank.jp/word/%E7%93%9C%E5%AD%90%E5%A7%AB-35412 | 関連物語で直接言及 |
-| 天狗 | 小松講演「妖怪の魅力はどこにあるのか？」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
+| 天狗 | 小松執筆『世界大百科事典』「妖怪」で山の民・山伏との関連を指摘 | https://kotobank.jp/word/%E5%A6%96%E6%80%AA-145561 | 確認済み |
 | 酒呑童子 | 小松執筆『世界大百科事典』「鬼」、山伏・山賊・田楽師のイメージ | https://kotobank.jp/word/%E9%AC%BC-40829 | 直接言及 |
-| 夜刀神 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
-| 八岐大蛇 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
-| 玉藻前 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
-| 土蜘蛛 | 同資料収録の討論「妖怪空間」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演・討論内で言及 |
-| 付喪神 | 小松著『憑霊信仰論』収録「器物の妖怪」 | https://www.hanmoto.com/bd/isbn/9784061591158 | 書誌・章名が明示 |
-| 茨木童子 | 小松論文「怪物退治と異類婚姻」 | https://www.jstage.jst.go.jp/article/nihonbungaku/26/2/26_KJ00010002761/_article/-char/ja/ | 論文本人執筆、解釈は後続研究でも照合 |
+| 夜刀神 | 小松講演「妖怪の魅力はどこにあるのか？」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で直接言及 |
+| 八岐大蛇 | 小松講演「妖怪の魅力はどこにあるのか？」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で直接言及 |
+| 玉藻前 | 小松講演「妖怪の魅力はどこにあるのか？」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で直接言及 |
+| 土蜘蛛 | 小松講演で土蜘蛛草子絵巻の巨大化表現と恐怖を解説 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演本文を照合 |
+| 付喪神 | 小松著『憑霊信仰論』収録「器物の妖怪」 | https://www.kodansha.co.jp/book/products/0000150716 | 著書の出版社目次を確認。本文未照合 |
+| 茨木童子 | 小松著『鬼と日本人』に「茨木童子と渡辺綱」章 | https://www.kadokawa.co.jp/product/321802000149/ | 出版社の目次を確認。本文未照合 |
 | 橋姫 | 小松執筆『世界大百科事典』「鬼」 | https://kotobank.jp/word/%E9%AC%BC-40829 | 辞典項目内で直接言及 |
 | 黒塚 | 小松論文「二つの『一つ家』―国芳と芳年の『安達ケ原』をめぐって」 | https://www.nichibun.ac.jp/ja/research/staff/s014/ | 研究題材は確認。論文本文に基づく細部は未確認の旨も本文に併記 |
-| なまはげ | 小松著『鬼と日本人』 | https://www.kadokawa.co.jp/product/321802000164/ | 本人の著書が事例として扱うことを確認 |
+| なまはげ | 小松著『鬼と日本人』 | https://www.kadokawa.co.jp/product/321802000164/ | 出版社の紹介文で言及確認。個別の解釈は未照合 |
 
 ## 以後の編集ルール
 
