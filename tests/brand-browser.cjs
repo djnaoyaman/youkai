@@ -116,7 +116,7 @@ try{
      assert.deepEqual(dimensions.native,dimensions.hint);
      if(dimensions.parent==='record-body'){
       assert.equal(dimensions.prevTag,'P');
-      const reviewedCoda=mode.klass==='kaidan-illustration'&&['tanmononoyukue','toushinnotsuzuki','miyazakinohi'].includes(slug)&&!dimensions.nextTag;
+      const reviewedCoda=!dimensions.nextTag&&((mode.klass==='kaidan-illustration'&&['tanmononoyukue','toushinnotsuzuki','miyazakinohi'].includes(slug))||(mode.klass==='kaidan-scene'&&slug==='egusashi'));
       if(reviewedCoda)assert.equal(dimensions.afterParent,'omake');
       else assert.equal(dimensions.nextTag,'P');
       if(mode.klass==='kaidan-scene'&&slug==='fumitsukai')assert.equal(dimensions.atPara,3);
