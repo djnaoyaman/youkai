@@ -39,7 +39,7 @@ FIGURE = re.compile(r'<figure class="(kaidan-illustration|kaidan-scene)">\s*(.*?
 PARAGRAPH = re.compile(r'<p(?: [^>]*)?>.*?</p>', re.S)
 BODY_OPEN = '<div class="record-body">'
 # Reviewed manuscript codas, not a fallback for a misplaced figure.
-HORIZONTAL_CODAS = {'tanmononoyukue.html', 'toushinnotsuzuki.html', 'miyazakinohi.html', 'wasuremono.html'}
+HORIZONTAL_CODAS = {'miyazakinohi.html', 'tanmononoyukue.html', 'toushinnotsuzuki.html', 'wasuremono.html'}
 
 
 def adjacent_paragraph_indices(body, figure, paragraphs, *, terminal=False):
@@ -84,7 +84,7 @@ def main():
                     assert not text[figure.end():].strip(), slug
                 else:
                     afterword = afterbody.lstrip().startswith('<div class="omake">')
-                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'egusashi.html', 'ryousainokyaku.html', 'noumennoonna.html', 'kageboushinoshakkin.html', 'kuranonakanokoe.html', 'yanaginoshitanootoko.html', 'kubinashijizou.html', 'momoyogayoi.html', 'yomenaifumi.html', 'kagamishinoigon.html'}))
+                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'egusashi.html', 'henshin.html', 'kagamishinoigon.html', 'kageboushinoshakkin.html', 'kitsunenoyomeiri.html', 'kubinashijizou.html', 'kuranonakanokoe.html', 'momoyogayoi.html', 'mushinooto.html', 'noumennoonna.html', 'okenonakanokao.html', 'rashoumonnoato.html', 'ryousainokyaku.html', 'sanninshimai.html', 'senryoubako.html', 'tsujigirinoie.html', 'yanaginoshitanootoko.html', 'yomenaifumi.html'}))
                     boundary = adjacent_paragraph_indices(body, figure, paragraphs, terminal=terminal)
                     assert boundary not in used_boundaries, (slug, boundary)
                     used_boundaries.add(boundary)
