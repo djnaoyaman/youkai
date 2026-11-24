@@ -101,3 +101,9 @@ body.ktk-dark :focus-visible{outline:2px solid #df7771;outline-offset:5px}
 .ktk-dark .ktk-reading .ktk-series{max-width:220px;margin-bottom:clamp(24px,5vw,40px)}
 .ktk-dark .ktk-reading .ktk-series a{display:block}
 @media(max-width:760px){.ktk-hub .ktk-hub-masthead-text h1{max-width:290px;margin-inline:auto}.ktk-hub .ktk-hub-masthead-text .ktk-eyebrow{text-align:center}.ktk-feature .ktk-heading{max-width:270px}.ktk-dark .ktk-reading .ktk-series{max-width:190px}}
+
+/* Dates indicate the fictional story's setting, not its publication date. */
+.ktk-reading .ktk-date{color:var(--ink-soft);font-size:12px;line-height:1.7;letter-spacing:.05em;margin:0 0 12px}
+.ktk-reading .ktk-inline-cover{margin:2.2em 0 2.4em}
+.ktk-hub-episode + .ktk-hub-episode{margin-top:22px}
+.ktk-reading .ktk-footer .ktk-next{color:var(--ink)}
