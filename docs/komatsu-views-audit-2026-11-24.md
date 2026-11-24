@@ -7,25 +7,26 @@
 ## 現状
 
 - 調査開始時、126ページすべての「小松和彦の見解」が「この妖怪について具体的に言及した記述は確認できていない」であった。
-- 本ブランチでは19ページを一次情報または検証可能な関連文献に基づく日本語要約と出典リンクに差し替えた。
-- 残り107ページの本文は無理に補完せず、調査継続対象とする。
+- 本ブランチでは20ページを一次情報または検証可能な関連文献に基づく日本語要約と出典リンクに差し替えた。
+- 残り106ページの本文は無理に補完せず、調査継続対象とする。
 - 執筆者本人による論考・辞典項目・講演と、編著・責任編集・監修書は区別する。後者の掲載だけでは本人の見解とは認定しない。
 - 要約は執筆者の原文を長く転載せず、編者の言葉で言い換える。見解の範囲を当該原典より拡大しない。
 
-## 今回の補完（19件）
+## 今回の補完（20件）
 
 | 妖怪 | 確認できた根拠 | 原典・公開先 | 備考 |
 |---|---|---|---|
 | 猿猴 | 小松の講演で関東の「河童」と四国の「猿猴」の地域呼称を対比 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 直接言及 |
 | 小豆洗い | 小松講演で柳田『妖怪談義』の妖怪名の例として紹介 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 起源や性質の個別解説ではない |
 | ろくろ首 | 小松本人の寄稿「井上円了の妖怪学とそれ以後」 | https://sites.google.com/toyo.jp/enryo-textdb/no21/6 | 直接言及 |
+| 一つ目小僧 | 小松執筆『世界大百科事典』「妖怪」で、よく知られた妖怪の例として挙げる | https://kotobank.jp/word/%E5%A6%96%E6%80%AA-145561 | 起源に関する個別説の確認ではない |
 | 河童 | 小松執筆『世界大百科事典』「河童」 | https://kotobank.jp/word/%E6%B2%B3%E7%AB%A5-45345 | 直接言及 |
 | 犬神 | 小松執筆『世界大百科事典』「犬神」 | https://kotobank.jp/word/%E7%8A%AC%E7%A5%9E-31878 | 直接言及 |
 | 座敷童子 | 小松執筆『世界大百科事典』「座敷童子」 | https://kotobank.jp/word/%E5%BA%A7%E6%95%B7%E7%AB%A5%E5%AD%90-837716 | 直接言及 |
 | 山姥 | 小松執筆『世界大百科事典』「山姥」 | https://kotobank.jp/word/%E5%B1%B1%E5%A7%A5-144009 | 直接言及 |
 | 天邪鬼 | 小松執筆『世界大百科事典』「瓜子姫」 | https://kotobank.jp/word/%E7%93%9C%E5%AD%90%E5%A7%AB-35412 | 関連物語で直接言及 |
 | 天狗 | 小松講演「妖怪の魅力はどこにあるのか？」 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
-| 酒呑童子 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
+| 酒呑童子 | 小松執筆『世界大百科事典』「鬼」、山伏・山賊・田楽師のイメージ | https://kotobank.jp/word/%E9%AC%BC-40829 | 直接言及 |
 | 夜刀神 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
 | 八岐大蛇 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
 | 玉藻前 | 同上 | https://www.nihu.jp/files/publication/archive/ningen27.pdf | 講演内で言及 |
