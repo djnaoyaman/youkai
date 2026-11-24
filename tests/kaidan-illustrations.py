@@ -38,15 +38,19 @@ def webp_size(path):
 FIGURE = re.compile(r'<figure class="(kaidan-illustration|kaidan-scene)">\s*(.*?)\s*</figure>', re.S)
 PARAGRAPH = re.compile(r'<p(?: [^>]*)?>.*?</p>', re.S)
 BODY_OPEN = '<div class="record-body">'
+# Reviewed manuscript codas, not a fallback for a misplaced figure.
+HORIZONTAL_CODAS = {'tanmononoyukue.html', 'toushinnotsuzuki.html', 'miyazakinohi.html'}
 
 
-def adjacent_paragraph_indices(body, figure, paragraphs):
+def adjacent_paragraph_indices(body, figure, paragraphs, *, terminal=False):
     """A figure is valid only in whitespace between two complete consecutive paragraphs."""
     for i, (left, right) in enumerate(zip(paragraphs, paragraphs[1:]), 1):
         if left.end() <= figure.start() < figure.end() <= right.start():
             if not (body[left.end():figure.start()] + body[figure.end():right.start()]).strip():
                 return i
-    raise AssertionError('Illustration is not between complete consecutive paragraphs')
+    if terminal and not (body[paragraphs[-1].end():figure.start()] + body[figure.end():]).strip() and paragraphs[-1].end() <= figure.start():
+        return len(paragraphs)
+    raise AssertionError('Illustration is not at a permitted complete paragraph boundary')
 
 
 def main():
@@ -64,7 +68,7 @@ def main():
         html = (ROOT / 'kaidan' / slug).read_text()
         assert html.count('<div class="record-head">') == html.count(BODY_OPEN) == 1, slug
         head = html.split('<div class="record-head">', 1)[1].split(BODY_OPEN, 1)[0]
-        body = html.split(BODY_OPEN, 1)[1].split('\n  </div>', 1)[0]
+        body, afterbody = html.split(BODY_OPEN, 1)[1].split('\n  </div>', 1)
         paragraphs = list(PARAGRAPH.finditer(body))
         assert paragraphs, slug
         counts = {name: 0 for name in formats}
@@ -79,7 +83,9 @@ def main():
                     assert text[:figure.start()].rstrip().endswith('</div>')
                     assert not text[figure.end():].strip(), slug
                 else:
-                    boundary = adjacent_paragraph_indices(body, figure, paragraphs)
+                    afterword = afterbody.lstrip().startswith('<div class="omake">')
+                    terminal = afterword and kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS
+                    boundary = adjacent_paragraph_indices(body, figure, paragraphs, terminal=terminal)
                     assert boundary not in used_boundaries, (slug, boundary)
                     used_boundaries.add(boundary)
                     if slug == 'fumitsukai.html' and kind == 'kaidan-scene':

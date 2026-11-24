@@ -106,7 +106,7 @@ try{
       return {native:[img.naturalWidth,img.naturalHeight],hint:[Number(img.getAttribute('width')),Number(img.getAttribute('height'))],
        box:[box.left,box.right,box.width,box.height],head:el.previousElementSibling?.className,
        body:el.nextElementSibling?.className,prevTag:el.previousElementSibling?.tagName,nextTag:el.nextElementSibling?.tagName,
-       parent:el.parentElement.className,atPara:[...el.parentElement.children].slice(0,[...el.parentElement.children].indexOf(el)).filter(node=>node.tagName==='P').length,
+       parent:el.parentElement.className,afterParent:el.parentElement.nextElementSibling?.className,atPara:[...el.parentElement.children].slice(0,[...el.parentElement.children].indexOf(el)).filter(node=>node.tagName==='P').length,
        viewport:innerWidth};
      });
      assert.ok(dimensions.box[0]>=0&&dimensions.box[1]<=dimensions.viewport);
@@ -115,7 +115,10 @@ try{
      assert.ok(Math.abs(dimensions.box[3]-initialSize)<=1,'Image dimensions reserve space before decoding');
      assert.deepEqual(dimensions.native,dimensions.hint);
      if(dimensions.parent==='record-body'){
-      assert.equal(dimensions.prevTag,'P');assert.equal(dimensions.nextTag,'P');
+      assert.equal(dimensions.prevTag,'P');
+      const reviewedCoda=mode.klass==='kaidan-illustration'&&['tanmononoyukue','toushinnotsuzuki','miyazakinohi'].includes(slug)&&!dimensions.nextTag;
+      if(reviewedCoda)assert.equal(dimensions.afterParent,'omake');
+      else assert.equal(dimensions.nextTag,'P');
       if(mode.klass==='kaidan-scene'&&slug==='fumitsukai')assert.equal(dimensions.atPara,3);
      }else{
       assert.equal(mode.klass,'kaidan-illustration');
