@@ -75,11 +75,12 @@ try{
   }
  }
  // Illustration releases must preserve the story seams and decode their own real WebP
- // in phone and desktop layouts. Check the first and newest published story.
+ // on a phone; additionally sample the first and newest at narrow/desktop widths.
  const artFiles=fs.existsSync('assets/kaidan')?fs.readdirSync('assets/kaidan').filter(name=>/^\d{3}-[a-z]+\.webp$/.test(name)).sort():[];
- for(const filename of new Set(artFiles.length?[artFiles[0],artFiles.at(-1)]:[])){
+ for(const filename of artFiles){
   const slug=filename.slice(4,-5);
-  for(const width of [320,390,1280]){
+  const sampleLayouts=filename===artFiles[0]||filename===artFiles.at(-1);
+  for(const width of sampleLayouts?[320,390,1280]:[390]){
    const context=await browser.newContext({viewport:{width,height:820},reducedMotion:'reduce'});
    try{
     const page=await context.newPage();
@@ -102,7 +103,7 @@ try{
     assert.ok(Math.abs(dimensions.box[2]/dimensions.box[3]-4/3)<0.01);
     assert.ok(Math.abs(dimensions.native[0]/dimensions.native[1]-4/3)<0.01);
     assert.equal(dimensions.head,'record-head');assert.equal(dimensions.body,'record-body');
-    if(width===390)await figure.screenshot({path:'test-artifacts/brand/kaidan-'+slug+'.png'});
+    if(width===390&&sampleLayouts)await figure.screenshot({path:'test-artifacts/brand/kaidan-'+slug+'.png'});
    }finally{await context.close();}
   }
  }
