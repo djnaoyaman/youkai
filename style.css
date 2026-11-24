@@ -56,3 +56,6 @@ nav.topnav .brand .brand-name{display:flex;flex-wrap:wrap;align-items:baseline;m
 
 body.creative-work .record > .kaidan-illustration{max-width:760px;margin:clamp(20px,4vw,32px) 0 0}
 body.creative-work .record > .kaidan-illustration img{display:block;width:100%;height:auto}
+body.creative-work .record-body > .kaidan-illustration{max-width:760px;margin:clamp(20px,4vw,32px) auto}
+body.creative-work .record-body > .kaidan-scene{max-width:320px;margin:clamp(24px,5vw,36px) auto}
+body.creative-work .record-body > .kaidan-illustration img,body.creative-work .record-body > .kaidan-scene img{display:block;width:100%;height:auto}

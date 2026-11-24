@@ -35,38 +35,79 @@ def webp_size(path):
     raise AssertionError(f'{path}: WebP dimensions cannot be parsed')
 
 
+FIGURE = re.compile(r'<figure class="(kaidan-illustration|kaidan-scene)">\s*(.*?)\s*</figure>', re.S)
+PARAGRAPH = re.compile(r'<p(?: [^>]*)?>.*?</p>', re.S)
+BODY_OPEN = '<div class="record-body">'
+
+
+def adjacent_paragraph_indices(body, figure, paragraphs):
+    """A figure is valid only in whitespace between two complete consecutive paragraphs."""
+    for i, (left, right) in enumerate(zip(paragraphs, paragraphs[1:]), 1):
+        if left.end() <= figure.start() < figure.end() <= right.start():
+            if not (body[left.end():figure.start()] + body[figure.end():right.start()]).strip():
+                return i
+    raise AssertionError('Illustration is not between complete consecutive paragraphs')
+
+
 def main():
     index = (ROOT / 'hyakumonogatari.html').read_text()
     stories = re.findall(r'href="kaidan/([a-z]+\.html)"><span class="entry-name">第(\d+)夜', index)
     assert [int(number) for _, number in stories] == list(range(1, 100)), stories
     assert len({slug for slug, _ in stories}) == 99
     assert set(x for x, _ in stories) == {p.name for p in (ROOT / 'kaidan').glob('*.html')}
-    assets = ROOT / 'assets/kaidan'
-    actual_assets = {p.name for p in assets.iterdir() if p.is_file()} if assets.exists() else set()
-    referenced = set()
+    formats = {
+        'kaidan-illustration': ('kaidan', '', 4, 3, range(1300, 1551)),
+        'kaidan-scene': ('kaidan-scenes', '-scene', 9, 16, range(720, 1201)),
+    }
+    referenced = {name: set() for name in formats}
     for slug, number in stories:
         html = (ROOT / 'kaidan' / slug).read_text()
-        assert html.count('<div class="record-head">') == html.count('<div class="record-body">') == 1, slug
-        between = html.split('<div class="record-head">', 1)[1].split('<div class="record-body">', 1)[0]
-        figures = re.findall(r'<figure class="kaidan-illustration">\s*(.*?)\s*</figure>', between, re.S)
-        assert len(figures) == html.count('class="kaidan-illustration"') <= 1, slug
-        if not figures:
-            continue
-        picture = Picture(figures[0]).elements
-        assert len(picture) == 1 and picture[0][0] == 'img', slug
-        attrs = picture[0][1]
-        expected = f'{int(number):03d}-{Path(slug).stem}.webp'
-        assert expected not in referenced and attrs.get('src') == f'../assets/kaidan/{expected}', slug
-        assert attrs.get('loading') == 'lazy' and attrs.get('decoding') == 'async', slug
-        assert len(attrs.get('alt', '').strip()) >= 8, slug
-        width, height = webp_size(assets / expected)
-        assert width == int(attrs['width']) and height == int(attrs['height']), slug
-        assert abs(width / height - 4/3) < 0.002 and 1300 <= width <= 1550, slug
-        referenced.add(expected)
-    assert referenced == actual_assets, (referenced - actual_assets, actual_assets - referenced)
+        assert html.count('<div class="record-head">') == html.count(BODY_OPEN) == 1, slug
+        head = html.split('<div class="record-head">', 1)[1].split(BODY_OPEN, 1)[0]
+        body = html.split(BODY_OPEN, 1)[1].split('\n  </div>', 1)[0]
+        paragraphs = list(PARAGRAPH.finditer(body))
+        assert paragraphs, slug
+        counts = {name: 0 for name in formats}
+        used_boundaries = set()
+        for section, text in (('opening', head), ('body', body)):
+            for figure in FIGURE.finditer(text):
+                kind, img = figure.groups()
+                counts[kind] += 1
+                assert counts[kind] == 1, (slug, kind)
+                if section == 'opening':
+                    assert kind == 'kaidan-illustration', (slug, kind)
+                    assert text[:figure.start()].rstrip().endswith('</div>')
+                    assert not text[figure.end():].strip(), slug
+                else:
+                    boundary = adjacent_paragraph_indices(body, figure, paragraphs)
+                    assert boundary not in used_boundaries, (slug, boundary)
+                    used_boundaries.add(boundary)
+                    if slug == 'fumitsukai.html' and kind == 'kaidan-scene':
+                        assert boundary == 3, 'The handover scene belongs after paragraph three'
+                picture = Picture(img).elements
+                assert len(picture) == 1 and picture[0][0] == 'img', slug
+                attrs = picture[0][1]
+                directory, suffix, ax, ay, widths = formats[kind]
+                expected = f'{int(number):03d}-{Path(slug).stem}{suffix}.webp'
+                assert expected not in referenced[kind] and attrs.get('src') == f'../assets/{directory}/{expected}', slug
+                assert attrs.get('loading') == 'lazy' and attrs.get('decoding') == 'async', slug
+                assert len(attrs.get('alt', '').strip()) >= 8, slug
+                width, height = webp_size(ROOT / 'assets' / directory / expected)
+                assert width == int(attrs['width']) and height == int(attrs['height']), slug
+                assert abs(width / height - ax / ay) < 0.002 and width in widths, slug
+                referenced[kind].add(expected)
+        for kind, count in counts.items():
+            assert count == html.count(f'class="{kind}"') <= 1, (slug, kind)
+        if counts['kaidan-scene']:
+            assert counts['kaidan-illustration'], slug
+    for kind, (directory, *_rest) in formats.items():
+        assets = ROOT / 'assets' / directory
+        actual_assets = {p.name for p in assets.iterdir() if p.is_file()} if assets.exists() else set()
+        assert referenced[kind] == actual_assets, (kind, referenced[kind] - actual_assets, actual_assets - referenced[kind])
     if '--complete' in sys.argv:
-        assert len(referenced) == 99, 'Full deployment requires 99 illustrations'
-    print(f'百物語: 99 stories, {len(referenced)} illustrations, assets and placement match.')
+        assert len(referenced['kaidan-illustration']) == 99, 'Full deployment requires 99 horizontal illustrations'
+    print(f"百物語: 99 stories, {len(referenced['kaidan-illustration'])} horizontal illustrations "
+          f"and {len(referenced['kaidan-scene'])} inline scenes; placement and assets match.")
 
 
 if __name__ == '__main__':
