@@ -8,16 +8,25 @@ class Page(HTMLParser):
   if 'id' in a:self.ids.append(a['id'])
   if tag=='img' and 'logo' in a.get('class',''):self.images.append(a)
   if tag=='details':self.details+=1
+def verify_logos(f, images):
+ n={'brand-logo':0,'footer-logo':0,'ktk-official-logo':0}
+ for img in images:
+  tags=set(img['class'].split()) & n.keys()
+  assert len(tags)==1,(f,img)
+  role=tags.pop(); n[role]+=1
+  alt,asset=('鎌倉タクシー怪談','assets/kaidan-logo-I.jpg') if role=='ktk-official-logo' else ('一見坊の【日本妖怪学体系】','assets/youkai-logo-09.svg')
+  path=(f.parent/img['src']).resolve()
+  assert img['alt']==alt and path==Path(asset).resolve() and path.is_file(),(f,img)
+ assert n['brand-logo']==n['footer-logo']==1,(f,n)
+ taxi=f.parent==Path('.') and (f.name=='kamakura.html' or re.fullmatch(r'kamakura-taxi-kaidan(?:-[0-9]{2})?\.html',f.name))
+ assert n['ktk-official-logo']==int(bool(taxi)),(f,n)
 files=[Path(p) for p in subprocess.check_output(['git','ls-files','*.html'],text=True).splitlines()];assert len(files)>=419
 for f in files:
  s=f.read_text();p=Page();p.feed(s)
  assert len(p.ids)==len(set(p.ids)),f
  assert p.details>=1,f
  assert 'id="navFallback"' in s and 'brand-ui.js' in s,f
- assert len(p.images)>=2,f
- for img in p.images:
-  assert img['alt']=='一見坊の【日本妖怪学体系】',f
-  assert (f.parent/img['src']).exists(),(f,img['src'])
+ verify_logos(f,p.images)
  assert '妖怪字' not in s,f
  assert 'class="cover-logo"' not in s,f
  assert '<span class="brand-prefix">一見坊の</span><span class="brand-title">【日本妖怪学体系】</span>' in s,f
