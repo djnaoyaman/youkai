@@ -84,8 +84,19 @@ def main():
                     assert not text[figure.end():].strip(), slug
                 else:
                     afterword = afterbody.lstrip().startswith('<div class="omake">')
-                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'egusashi.html', 'henshin.html', 'hotarunoshuku.html', 'kagamishinoigon.html', 'kageboushinoshakkin.html', 'kamadononakanokoe.html', 'karasunoigon.html', 'katatsumurinoshisha.html', 'kietahanayome.html', 'kikunoyakusoku.html', 'kitsunenoyomeiri.html', 'kodamanoshukudai.html', 'kubinashijizou.html', 'kujinomura.html', 'kuranonakanokoe.html', 'momoyogayoi.html', 'morinonakanoutagai.html', 'mushinooto.html', 'noumennoonna.html', 'obochigainokateikyoushi.html', 'okenonakanokao.html', 'rashoumonnoato.html', 'ryousainokyaku.html', 'sanninshimai.html', 'seminoyadogae.html', 'senryoubako.html', 'shinkiroonomise.html', 'tsujigirinoie.html', 'yanaginoshitanootoko.html', 'yomenaifumi.html', 'yoseatsumenoningyou.html'}))
-                    boundary = adjacent_paragraph_indices(body, figure, paragraphs, terminal=terminal)
+                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'akazunoma.html', 'chounoigon.html', 'egusashi.html', 'henshin.html', 'hotarunoshuku.html', 'kagamishinoigon.html', 'kageboushinoshakkin.html', 'kagononakanokoe.html', 'kamadononakanokoe.html', 'karasunoigon.html', 'katatsumurinoshisha.html', 'kietahanayome.html', 'kikunoyakusoku.html', 'kingyonome.html', 'kitsunenoyomeiri.html', 'kodamanoshukudai.html', 'kubinashijizou.html', 'kujinomura.html', 'kuranonakanokoe.html', 'momijinotayori.html', 'momoyogayoi.html', 'morinonakanoutagai.html', 'mushinooto.html', 'noumennoonna.html', 'obochigainokateikyoushi.html', 'okenonakanokao.html', 'rashoumonnoato.html', 'ryousainokyaku.html', 'sanninshimai.html', 'seminoyadogae.html', 'senryoubako.html', 'shinkiroonomise.html', 'tsujigirinoie.html', 'yanaginoshitanootoko.html', 'yomenaifumi.html', 'yoseatsumenoningyou.html'}))
+                    letter = None
+                    if slug == 'tanmononoyukue.html' and kind == 'kaidan-scene':
+                        letter = re.match(r'\s*<div class="kaidan-letter"><span class="kaidan-letter-tag">書簡二</span>', body[figure.end():])
+                    if letter:
+                        left = next((p for p in reversed(paragraphs) if p.end() <= figure.start()), None)
+                        assert left and not body[left.end():figure.start()].strip(), slug
+                        preceding = body[:figure.start()]
+                        direct = re.sub(r'<div class="kaidan-letter">.*?</div>', '', preceding, flags=re.S)
+                        assert len(PARAGRAPH.findall(direct)) == 3, slug
+                        boundary = 3
+                    else:
+                        boundary = adjacent_paragraph_indices(body, figure, paragraphs, terminal=terminal)
                     assert boundary not in used_boundaries, (slug, boundary)
                     used_boundaries.add(boundary)
                     if slug == 'fumitsukai.html' and kind == 'kaidan-scene':
