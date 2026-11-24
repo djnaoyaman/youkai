@@ -116,7 +116,7 @@ try{
      assert.deepEqual(dimensions.native,dimensions.hint);
      if(dimensions.parent==='record-body'){
       assert.equal(dimensions.prevTag,'P');
-      const reviewedCoda=!dimensions.nextTag&&((mode.klass==='kaidan-illustration'&&['miyazakinohi', 'tanmononoyukue', 'toushinnotsuzuki', 'wasuremono'].includes(slug))||(mode.klass==='kaidan-scene'&&['egusashi', 'henshin', 'kagamishinoigon', 'kageboushinoshakkin', 'kitsunenoyomeiri', 'kubinashijizou', 'kuranonakanokoe', 'momoyogayoi', 'mushinooto', 'noumennoonna', 'okenonakanokao', 'rashoumonnoato', 'ryousainokyaku', 'sanninshimai', 'senryoubako', 'tsujigirinoie', 'yanaginoshitanootoko', 'yomenaifumi'].includes(slug)));
+      const reviewedCoda=!dimensions.nextTag&&((mode.klass==='kaidan-illustration'&&['miyazakinohi', 'tanmononoyukue', 'toushinnotsuzuki', 'wasuremono'].includes(slug))||(mode.klass==='kaidan-scene'&&['egusashi', 'henshin', 'hotarunoshuku', 'kagamishinoigon', 'kageboushinoshakkin', 'kamadononakanokoe', 'karasunoigon', 'kietahanayome', 'kikunoyakusoku', 'kitsunenoyomeiri', 'kubinashijizou', 'kujinomura', 'kuranonakanokoe', 'momoyogayoi', 'morinonakanoutagai', 'mushinooto', 'noumennoonna', 'obochigainokateikyoushi', 'okenonakanokao', 'rashoumonnoato', 'ryousainokyaku', 'sanninshimai', 'senryoubako', 'tsujigirinoie', 'yanaginoshitanootoko', 'yomenaifumi', 'yoseatsumenoningyou'].includes(slug)));
       if(reviewedCoda)assert.equal(dimensions.afterParent,'omake');
       else assert.equal(dimensions.nextTag,'P');
       if(mode.klass==='kaidan-scene'&&slug==='fumitsukai')assert.equal(dimensions.atPara,3);
