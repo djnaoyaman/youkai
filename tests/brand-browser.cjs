@@ -132,5 +132,30 @@ try{
    }
   }
  }
+
+ // Furigana must leave the readable base text unchanged and remain legible across widths.
+ const rubyCases=[["fumitsukai", "寛永通宝", 20, "d1eba7de418df93c2d827c8f61211765ea2058f91c178bd5afe7a3b1a5946ec4"], ["shamisen", "三味線", 11, "879ce8021d8501010eee1e6aea56cff6f6bbf791323d985cc28957df34a49f8f"], ["yuya", "湯女", 12, "0fbb48b8d97868e76794a1d702307b74528f9b60f782a2553b2bc30c32138a46"]];
+ for(const [slug,base,count,sha] of rubyCases){
+  for(const [width,scale] of [[320,1],[390,2],[1280,1]]){
+   const context=await browser.newContext({viewport:{width,height:850},reducedMotion:'reduce'});
+   try{
+    const page=await context.newPage();
+    await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
+    await page.goto('http://127.0.0.1:8765/kaidan/'+slug+'.html',{waitUntil:'load'});
+    if(scale===2)await page.locator('.record-body').evaluate(el=>{el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*2)+'px'});
+    const observed=await page.locator('.record-body').evaluate((body,base)=>{
+     const rubies=[...body.querySelectorAll('ruby')];
+     const plain=el=>{const copy=el.cloneNode(true);copy.querySelectorAll('rt,rp').forEach(n=>n.remove());return copy.textContent};
+     const hasRuby=rubies.some(el=>plain(el)===base&&Boolean(el.querySelector(':scope > rt')?.textContent));
+     const fits=rubies.every(el=>[el,...el.querySelectorAll(':scope > rt')].every(part=>[...part.getClientRects()].every(r=>r.left>=-1&&r.right<=window.innerWidth+1&&r.height>0)));
+     const valid=rubies.every(el=>el.querySelectorAll(':scope > rt').length===1&&!el.querySelector('ruby'));
+     return {count:rubies.length,hasRuby,fits,valid,plain:[...body.querySelectorAll(':scope > p')].map(plain).join('\u0000')};
+    },base);
+    assert.equal(observed.count,count,slug);
+    assert.ok(observed.hasRuby&&observed.fits&&observed.valid,slug+' '+width+' '+scale);
+    assert.equal(require('node:crypto').createHash('sha256').update(observed.plain).digest('hex'),sha,slug);
+   }finally{await context.close();}
+  }
+ }
  fs.writeFileSync('test-artifacts/brand/results.json',JSON.stringify(results,null,2));console.log('Brand, menu, fallback, reduced-motion and two-second session-intro tests passed',results);
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
