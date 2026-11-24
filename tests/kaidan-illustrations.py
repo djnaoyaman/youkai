@@ -84,7 +84,7 @@ def main():
                     assert not text[figure.end():].strip(), slug
                 else:
                     afterword = afterbody.lstrip().startswith('<div class="omake">')
-                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'egusashi.html', 'ryousainokyaku.html', 'noumennoonna.html'}))
+                    terminal = afterword and ((kind == 'kaidan-illustration' and slug in HORIZONTAL_CODAS) or (kind == 'kaidan-scene' and slug in {'egusashi.html', 'ryousainokyaku.html', 'noumennoonna.html', 'kageboushinoshakkin.html', 'kuranonakanokoe.html', 'yanaginoshitanootoko.html', 'kubinashijizou.html', 'momoyogayoi.html', 'yomenaifumi.html', 'kagamishinoigon.html'}))
                     boundary = adjacent_paragraph_indices(body, figure, paragraphs, terminal=terminal)
                     assert boundary not in used_boundaries, (slug, boundary)
                     used_boundaries.add(boundary)
