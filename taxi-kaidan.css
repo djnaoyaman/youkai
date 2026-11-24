@@ -1,0 +1,41 @@
+
+/* Kamakura Taxi Kaidan — independent feature and episode pages */
+.ktk-feature,.ktk-reading{--ktk-serif:'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',serif;--ktk-red:#c1272d}
+.ktk-feature{margin:clamp(64px,10vw,108px) 0 48px;scroll-margin-top:112px;background:#171717;color:#f3f1eb;padding:clamp(23px,5vw,60px);border-top:3px solid var(--ktk-red);overflow:hidden}
+.ktk-feature .ktk-kicker,.ktk-reading .ktk-number{font-size:11px;letter-spacing:.18em;font-weight:700;color:#c1272d;margin:0 0 9px}
+.ktk-feature .ktk-kicker{color:#e8a4a1}
+.ktk-feature .ktk-heading{font-family:var(--ktk-serif);font-size:clamp(28px,5.5vw,48px);font-weight:900;line-height:1.4;letter-spacing:.025em;margin:0 0 22px}
+.ktk-feature .ktk-intro{max-width:700px;font-size:15px;line-height:2}
+.ktk-feature .ktk-intro p{margin:0 0 14px}
+.ktk-feature .ktk-disclosure{font-size:12px;line-height:1.8;color:#bcbab3;border-left:1px solid #817c72;padding-left:13px;margin:24px 0 36px;max-width:700px}
+.ktk-feature .ktk-index-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px solid #66635f;padding:19px 0}
+.ktk-feature .ktk-index-head h3{font-size:15px;margin:0;letter-spacing:.13em}
+.ktk-feature .ktk-index-head span{font-size:11px;color:#c9c6bf;letter-spacing:.08em}
+.ktk-feature .ktk-index{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.ktk-feature .ktk-card{display:grid;grid-template-columns:minmax(0,1fr);max-width:470px;background:#242424;border:1px solid #494744;transition:border-color .2s,background .2s;color:inherit;text-decoration:none;overflow:hidden}
+.ktk-feature .ktk-card:hover,.ktk-feature .ktk-card:focus-visible{background:#303030;border-color:#d5c6b7}
+.ktk-feature .ktk-card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.ktk-feature .ktk-card-body{padding:18px 20px 20px}
+.ktk-feature .ktk-card-number{font-size:11px;color:#e8a4a1;letter-spacing:.12em}
+.ktk-feature .ktk-card-title{display:block;font-family:var(--ktk-serif);font-size:clamp(23px,4vw,29px);font-weight:700;line-height:1.5;margin:5px 0 8px}
+.ktk-feature .ktk-card-link{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#d2cec5}
+.ktk-feature .ktk-continuation{font-size:12px;color:#c9c6bf;letter-spacing:.08em;margin:22px 0 0}
+.ktk-reading{max-width:760px;margin:0 auto}
+.ktk-reading .ktk-back,.ktk-reading .ktk-bottom-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;text-decoration:underline;text-underline-offset:4px;color:var(--ink-soft)}
+.ktk-reading .ktk-back{margin:clamp(28px,5vw,48px) 0 28px}
+.ktk-reading .ktk-series{font-size:12px;font-weight:700;letter-spacing:.12em;margin:0 0 10px;color:var(--ink-soft)}
+.ktk-reading .ktk-title{font-family:var(--ktk-serif);font-weight:900;font-size:clamp(34px,7vw,50px);line-height:1.4;margin:0 0 24px}
+.ktk-reading .ktk-cover,.ktk-reading .ktk-scene{margin:0;padding:0}
+.ktk-reading .ktk-cover{margin:0 0 clamp(34px,7vw,54px)}
+.ktk-reading .ktk-cover img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.ktk-reading .ktk-prose{font-family:var(--ktk-serif);font-size:clamp(16px,2.5vw,17px);line-height:2.1;letter-spacing:.025em;max-width:42em;margin:0 auto}
+.ktk-reading .ktk-prose p{margin:0 0 1em;overflow-wrap:break-word}
+.ktk-reading .ktk-prose .ktk-turn,.ktk-reading .ktk-prose .ktk-last{margin-top:1.7em}
+.ktk-reading .ktk-scene{width:min(100%,270px);margin:2em auto 2.1em}
+.ktk-reading .ktk-scene img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover}
+.ktk-reading .ktk-consideration{max-width:42em;margin:clamp(55px,9vw,85px) auto 0;padding:24px 0 0;border-top:1px solid var(--line)}
+.ktk-reading .ktk-consideration h2{font-size:13px;letter-spacing:.15em;color:var(--ktk-red);margin:0 0 20px}
+.ktk-reading .ktk-consideration p{font-size:15px;line-height:2;margin:0 0 12px}
+.ktk-reading .ktk-footer{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px 20px}
+.ktk-reading .ktk-footer span{font-size:12px;color:var(--ink-soft)}
+@media(max-width:600px){.ktk-feature{padding:22px 18px}.ktk-feature .ktk-intro{font-size:14px}.ktk-reading .ktk-prose{line-height:2.02}.ktk-reading .ktk-scene{width:min(78%,270px)}}
