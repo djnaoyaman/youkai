@@ -2,6 +2,17 @@
 
 These are persistent project instructions requested by the user. A content edit is complete only after its dependent files are updated, checked, and—when requested—deployed and verified. Do not treat a generated HTML edit alone as the finished work.
 
+## 江戸怪談百物語 — 文芸校正と掲載の約束
+
+- 正本は `hyakumonogatari.html` の第1〜99夜一覧と `kaidan/*.html` の99話。作品名、既存スラッグ、並び順、各話の前後リンクを変えるときは必ず全体を照合する。
+- 99話までで最後の灯芯を残し、百話目は語らない。各話に百話目を語った逸話が出てくる場合は、別の座敷の言い伝えなどとして区別し、この連作自体が完結したように見せない。
+- 文章は自然な日本語で、読む速度を妨げる読点の多用、単語を機械的に区切る短文、説明調の結末、繰り返される「〜と思うようになった」「〜かもしれない」に頼らない。場面・音・匂い・人物の所作によって読者に想像の余白を残す。
+- 一方で、手控え・図録・証言・書簡・往来手形・日記といった各話固有の形式や意図的な反復は一律に均さない。声の違いを守り、怪異を合理的に説明しきらない。
+- 新たな描写を加える際は年齢、親族関係、婚姻、経過年数、人物の移動、灯芯の本数、持ち物の所在、江戸期の地理・生活道具と矛盾しないか確認する。実在地名や当時の制度については調査し、確定できないものは無理に断定しない。
+- 「編者の後書き」も作品の一部。「〇〇という構成にした」「〇〇の文体を試みた」といった一律の制作技法説明で埋めず、物語固有の手触りを短く記す。本文の解釈を一つに固定しない。
+- 伝承ではなくオリジナル創作であること、杉浦日向子『百物語』に着想を得たこと、創作の注記は維持する。実在の怪異記録と誤認させない。
+- 本文や後書きの変更後は `hyakumonogatari.html` の紹介、99件の一覧リンク、各話の前後導線、ルビの `<ruby>/<rt>`、HTML段落の整合とページメタ情報を必ず確認し、公開時はデプロイ成功と代表的な公開ページを検証する。
+
 ## 新・遠野物語 ― 紫波異聞
 
 - Edit `shin-tono-data.json` as the source of truth for the five stories. It holds titles, leads, paragraphs, source records, the boundary between tradition and fiction, and retellings. Keep the existing story slugs stable.
