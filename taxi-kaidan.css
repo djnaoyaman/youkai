@@ -92,3 +92,12 @@ body.ktk-dark :focus-visible{outline:2px solid #df7771;outline-offset:5px}
 .ktk-archive-status{font-size:10px;letter-spacing:.06em}
 @media(max-width:760px){.ktk-hub-masthead,.ktk-hub-episode{grid-template-columns:1fr}.ktk-hub-masthead-photo{min-height:0;aspect-ratio:16/9}.ktk-hub-masthead-text{padding:25px 22px}.ktk-unpublished{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px}.ktk-dark .ktk-reading .ktk-prose{line-height:2.06}.ktk-dark .ktk-reading .ktk-scene{width:min(82%,300px)}}
 @media(max-width:380px){.ktk-unpublished{grid-template-columns:1fr}}
+
+/* Official series identity: original proposal I, retained without redrawing. */
+.ktk-official-logo{display:block;width:100%;height:auto;mix-blend-mode:screen;object-fit:contain}
+.ktk-feature .ktk-heading{max-width:320px;margin:12px 0 25px}
+.ktk-feature .ktk-heading a{display:block;color:inherit}
+.ktk-hub .ktk-hub-masthead-text h1{max-width:370px}
+.ktk-dark .ktk-reading .ktk-series{max-width:220px;margin-bottom:clamp(24px,5vw,40px)}
+.ktk-dark .ktk-reading .ktk-series a{display:block}
+@media(max-width:760px){.ktk-hub .ktk-hub-masthead-text h1{max-width:290px;margin-inline:auto}.ktk-hub .ktk-hub-masthead-text .ktk-eyebrow{text-align:center}.ktk-feature .ktk-heading{max-width:270px}.ktk-dark .ktk-reading .ktk-series{max-width:190px}}
