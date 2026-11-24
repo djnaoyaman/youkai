@@ -1,5 +1,6 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict'); const fs=require('node:fs');
+require('node:child_process').execFileSync('python3',['tests/kaidan-illustrations.py'],{stdio:'inherit'});
 (async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH});fs.mkdirSync('test-artifacts/brand',{recursive:true});const results=[];
 try{
  for(const [width,height] of [[320,780],[390,844],[768,1024],[1280,900],[844,390]]){
@@ -71,6 +72,38 @@ try{
     await page.locator('.brand-loading').waitFor({state:'detached',timeout:5000});
    }
    await context.close();
+  }
+ }
+ // Illustration releases must preserve the story seams and decode their own real WebP
+ // in phone and desktop layouts. Check the first and newest published story.
+ const artFiles=fs.existsSync('assets/kaidan')?fs.readdirSync('assets/kaidan').filter(name=>/^\d{3}-[a-z]+\.webp$/.test(name)).sort():[];
+ for(const filename of new Set(artFiles.length?[artFiles[0],artFiles.at(-1)]:[])){
+  const slug=filename.slice(4,-5);
+  for(const width of [320,390,1280]){
+   const context=await browser.newContext({viewport:{width,height:820},reducedMotion:'reduce'});
+   try{
+    const page=await context.newPage();
+    await page.route('**/*',r=>new URL(r.request().url()).hostname==='127.0.0.1'?r.continue():r.abort());
+    const imageResponse=page.waitForResponse(res=>res.url().endsWith('/'+filename));
+    await page.goto('http://127.0.0.1:8765/kaidan/'+slug+'.html',{waitUntil:'domcontentloaded'});
+    const figure=page.locator('figure.kaidan-illustration');
+    assert.equal(await figure.count(),1);
+    await figure.scrollIntoViewIfNeeded();
+    const response=await imageResponse;
+    assert.equal(response.status(),200);
+    assert.match(response.headers()['content-type'],/^image\/webp(?:$|;)/);
+    const dimensions=await figure.evaluate(async (el)=>{
+     const img=el.querySelector('img');await img.decode();const box=img.getBoundingClientRect();
+     return {native:[img.naturalWidth,img.naturalHeight],hint:[img.width,img.height],
+      box:[box.left,box.right,box.width,box.height],head:el.previousElementSibling.className,
+      body:el.nextElementSibling.className,viewport:innerWidth};
+    });
+    assert.ok(dimensions.box[0]>=0&&dimensions.box[1]<=dimensions.viewport);
+    assert.ok(Math.abs(dimensions.box[2]/dimensions.box[3]-4/3)<0.01);
+    assert.ok(Math.abs(dimensions.native[0]/dimensions.native[1]-4/3)<0.01);
+    assert.equal(dimensions.head,'record-head');assert.equal(dimensions.body,'record-body');
+    if(width===390)await figure.screenshot({path:'test-artifacts/brand/kaidan-'+slug+'.png'});
+   }finally{await context.close();}
   }
  }
  fs.writeFileSync('test-artifacts/brand/results.json',JSON.stringify(results,null,2));console.log('Brand, menu, fallback, reduced-motion and two-second session-intro tests passed',results);

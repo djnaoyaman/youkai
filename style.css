@@ -53,3 +53,6 @@ nav.topnav .brand .brand-name{display:flex;flex-wrap:wrap;align-items:baseline;m
 .sauna-parallax{height:auto;min-height:0;aspect-ratio:16/9}
 .sauna-parallax .parallax-img{top:-6%;height:112%}
 @media(prefers-reduced-motion:reduce){.sauna-parallax .parallax-img{top:0;height:100%;will-change:auto}}
+
+body.creative-work .record > .kaidan-illustration{max-width:760px;margin:clamp(20px,4vw,32px) 0 0}
+body.creative-work .record > .kaidan-illustration img{display:block;width:100%;height:auto}
