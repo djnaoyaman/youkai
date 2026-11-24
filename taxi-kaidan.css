@@ -107,3 +107,65 @@ body.ktk-dark :focus-visible{outline:2px solid #df7771;outline-offset:5px}
 .ktk-reading .ktk-inline-cover{margin:2.2em 0 2.4em}
 .ktk-hub-episode + .ktk-hub-episode{margin-top:22px}
 .ktk-reading .ktk-footer .ktk-next{color:var(--ink)}
+
+/* Series image geometry: preserve every photograph's intrinsic aspect ratio.
+   Cover images are 16:9, scene images 9:16, and the logo keeps its native ratio. */
+.ktk-feature .ktk-card img,
+.ktk-hub .ktk-hub-episode img,
+.ktk-hub .ktk-hub-masthead-photo img,
+.ktk-reading .ktk-cover img,
+.ktk-reading .ktk-scene img{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  max-height:none;
+  min-height:0;
+  aspect-ratio:auto;
+  object-fit:contain;
+  object-position:center;
+}
+.ktk-reading .ktk-cover,.ktk-reading .ktk-scene{
+  max-width:100%;
+  min-width:0;
+  height:auto;
+}
+.ktk-feature .ktk-card,.ktk-hub .ktk-hub-episode{min-width:0}
+.ktk-feature .ktk-card img{align-self:start}
+.ktk-hub .ktk-hub-masthead{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+.ktk-hub .ktk-hub-masthead-photo{
+  height:auto;
+  min-height:0;
+  min-width:0;
+  aspect-ratio:auto;
+  align-self:center;
+}
+.ktk-hub .ktk-hub-masthead-photo img{width:100%;height:auto}
+.ktk-hub .ktk-hub-episode{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.ktk-hub .ktk-hub-episode-text{min-width:0}
+.ktk-feature .ktk-official-logo,.ktk-hub .ktk-official-logo,.ktk-reading .ktk-official-logo{
+  width:100%;max-width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;
+}
+@media(max-width:760px){
+  .ktk-hub .ktk-hub-masthead,.ktk-hub .ktk-hub-episode{grid-template-columns:minmax(0,1fr)}
+  .ktk-hub .ktk-hub-masthead-photo{height:auto;min-height:0;aspect-ratio:auto}
+}
+
+/* One-time, restrained cinematic reveal. Images remain visible without JS.
+   No flash, zoom, audio, looping movement, or scroll-linked text effects. */
+@keyframes ktk-develop-photo{
+  0%{opacity:.58;filter:brightness(.70)}
+  100%{opacity:1;filter:brightness(1)}
+}
+@keyframes ktk-develop-logo{
+  0%{opacity:.70}
+  100%{opacity:1}
+}
+@media(prefers-reduced-motion:no-preference){
+  .ktk-motion-ready [data-ktk-motion="photo"].ktk-motion-seen{animation:ktk-develop-photo 1.65s cubic-bezier(.22,.55,.24,1) both}
+  .ktk-motion-ready [data-ktk-motion="logo"].ktk-motion-seen{animation:ktk-develop-logo 1.15s ease-out both}
+}
+@media(prefers-reduced-motion:reduce){
+  .ktk-motion-ready [data-ktk-motion]{animation:none!important;opacity:1!important;filter:none!important}
+}
