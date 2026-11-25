@@ -34,6 +34,12 @@
     window.addEventListener('pageshow', function (event) { if (event.persisted) dismissLoader(); });
   }
   document.addEventListener('DOMContentLoaded', function () {
+    // Keep the Kamakura feature title consistent across existing static menus.
+    document.querySelectorAll('.nav-drawer-body a[href$="kamakura.html"]').forEach(function (link) {
+      if (link.textContent.indexOf('なぜ古都に妖怪が少ないのか') !== -1) {
+        link.textContent = link.textContent.replace('なぜ古都に妖怪が少ないのか', 'なぜ鎌倉に妖怪が少ないのか');
+      }
+    });
     var creativeLink = document.querySelector('.nav-drawer-body a[href$="gendai-yokai.html"]');
     if (creativeLink && !document.querySelector('.nav-drawer-body a[href$="shin-tono.html"]')) {
       var tonoLink = document.createElement('a');
