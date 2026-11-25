@@ -43,6 +43,8 @@
 /* Dark reading experience, scoped to the dedicated serial pages. */
 body.ktk-dark{--paper:#111110;--ink:#ece9e2;--ink-soft:#aaa79e;--line:#383733;--hanko:#df7771;background:var(--paper);color:var(--ink);color-scheme:dark}
 body.ktk-dark nav.topnav{border-bottom-color:var(--line)}
+/* Reverse the black ink on dark serial pages without a white circular backing. */
+body.ktk-dark .brand-logo,body.ktk-dark .footer-logo{background:transparent;border-radius:0}
 body.ktk-dark .nav-drawer,body.ktk-dark .nav-drawer-head,body.ktk-dark .site-footer-bottom,body.ktk-dark footer.sitefoot{border-color:var(--line)}
 body.ktk-dark .share-box,body.ktk-dark .site-footer-bottom,body.ktk-dark footer.sitefoot{max-width:760px;margin-left:auto;margin-right:auto}
 body.ktk-dark :focus-visible{outline:2px solid #df7771;outline-offset:5px}

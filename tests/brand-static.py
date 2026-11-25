@@ -14,7 +14,9 @@ def verify_logos(f, images):
   tags=set(img['class'].split()) & n.keys()
   assert len(tags)==1,(f,img)
   role=tags.pop(); n[role]+=1
-  alt,asset=('鎌倉タクシー怪談','assets/kaidan-logo-I.jpg') if role=='ktk-official-logo' else ('一見坊の【日本妖怪学体系】','assets/youkai-logo-09.svg')
+  dark_serial=f.parent==Path('.') and bool(re.fullmatch(r'kamakura-taxi-kaidan(?:-[0-9]{2})?\.html',f.name))
+  common_asset='assets/youkai-logo-09-reverse.svg' if dark_serial else 'assets/youkai-logo-09.svg'
+  alt,asset=('鎌倉タクシー怪談','assets/kaidan-logo-I.jpg') if role=='ktk-official-logo' else ('一見坊の【日本妖怪学体系】',common_asset)
   path=(f.parent/img['src']).resolve()
   assert img['alt']==alt and path==Path(asset).resolve() and path.is_file(),(f,img)
  assert n['brand-logo']==n['footer-logo']==1,(f,n)
@@ -37,3 +39,7 @@ print('419 pages: logo alt/local assets, menu fallback, unique IDs, metadata ver
 import json
 intro = re.search(r"var introLogo = (.+);", Path("brand-ui.js").read_text())
 assert intro and json.loads(intro[1]) == Path("assets/youkai-logo-09.svg").read_text()
+
+# The reverse mark changes only ink; the red ring and vector geometry are identical.
+assert Path('assets/youkai-logo-09-reverse.svg').read_text() == Path('assets/youkai-logo-09.svg').read_text().replace('#111111','#FFFFFF')
+assert 'body.ktk-dark .brand-logo,body.ktk-dark .footer-logo{background:transparent;border-radius:0}' in Path('taxi-kaidan.css').read_text()
