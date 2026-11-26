@@ -56,3 +56,7 @@ urls = ET.parse(ROOT / "sitemap.xml").getroot().findall("s:url", ns)
 home_entry = next(url for url in urls if url.find("s:loc", ns).text == home.canonical[0])
 assert home_entry.find("s:lastmod", ns).text == release
 print("PASS: homepage visible JST date, dateModified and sitemap lastmod agree")
+
+# Run the complete SEO contract in the existing launch-check workflow.
+import runpy
+runpy.run_path(str(ROOT / "tests" / "site-seo.py"), run_name="__main__")

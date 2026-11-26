@@ -34,6 +34,22 @@
     window.addEventListener('pageshow', function (event) { if (event.persisted) dismissLoader(); });
   }
   document.addEventListener('DOMContentLoaded', function () {
+    // Keyboard users can bypass the repeated site navigation on every template.
+    var content = document.querySelector('main, [role="main"]') || document.querySelector('h1');
+    if (content && !document.querySelector('.content-skip-link')) {
+      if (!content.id) {
+        var contentId = 'page-main-content';
+        while (document.getElementById(contentId)) contentId += '-target';
+        content.id = contentId;
+      }
+      content.classList.add('content-skip-target');
+      if (!content.hasAttribute('tabindex')) content.tabIndex = -1;
+      var skip = document.createElement('a');
+      skip.href = '#' + content.id;
+      skip.className = 'content-skip-link';
+      skip.textContent = '本文へ移動';
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
     // Keep the Kamakura feature title consistent across existing static menus.
     document.querySelectorAll('.nav-drawer-body a[href$="kamakura.html"]').forEach(function (link) {
       if (link.textContent.indexOf('なぜ古都に妖怪が少ないのか') !== -1) {
