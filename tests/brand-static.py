@@ -33,7 +33,7 @@ for f in files:
  assert 'class="cover-logo"' not in s,f
  assert '<span class="brand-prefix">一見坊の</span><span class="brand-title">【日本妖怪学体系】</span>' in s,f
  for attr in ['canonical','og:title','twitter:title']:assert attr in s,(f,attr)
-print('419 pages: logo alt/local assets, menu fallback, unique IDs, metadata verified')
+print(f'{len(files)} pages: logo alt/local assets, menu fallback, unique IDs, metadata verified')
 
 # The immediate intro logo must stay identical to the shared brand asset.
 import json

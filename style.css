@@ -79,3 +79,38 @@ body.creative-work .record-body > .kaidan-illustration img,body.creative-work .r
     padding-inline: 64px;
   }
 }
+
+/* A keyboard-only link over the persistent navigation. */
+.content-skip-link{position:fixed;inset:12px auto auto 12px;z-index:2147483000;padding:8px 16px;background:#111;color:#fff;border:2px solid #fff;text-decoration:underline;font-weight:700}
+.content-skip-link:not(:focus){clip-path:inset(50%);width:1px;height:1px;padding:0;border:0;overflow:hidden;white-space:nowrap}
+.content-skip-link:focus{outline:2px solid #111;outline-offset:2px}
+.content-skip-target{scroll-margin-block-start:calc(var(--navh,58px) + 12px)}
+
+@media screen and (min-width:900px){
+  /* Detective-style records may keep the full-width image while their text reads like a column. */
+  body > .wrap > .record:not(:has(.kaidan-illustration)) > :is(.record-head,.record-body,.record-footer),
+  body > .wrap > .record:not(:has(.kaidan-illustration)) > .omake{
+    max-width:760px;
+    margin-inline:auto;
+  }
+  .yokai-method-essay > :is(.pref-head,.stance-box,.pref-intro,footer.sitefoot){
+    max-width:760px;
+    margin-inline:auto;
+  }
+}
+
+.yokai-framework{margin:28px 0 34px;padding:clamp(16px,3vw,26px);background:#f3efe6;border-block:1px solid #c9bfaf;color:#231f1b}
+.yokai-framework figcaption{display:grid;gap:3px;margin-bottom:16px;font-size:1rem}
+.yokai-framework figcaption span,.yokai-framework small{color:#5e5350;font-size:.81rem}
+.yokai-framework ol{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:0;margin:0 0 14px;list-style:none}
+.yokai-framework-step{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:5px;background:#fffdf8;padding:14px;border:1px solid #d8cfc1}
+.yokai-framework-step svg{width:36px;height:36px;fill:none;stroke:#9c292f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.yokai-framework-kind{color:#8b2026;font-weight:700;font-size:.82rem}
+.yokai-framework-step strong{font-size:1rem;line-height:1.55}
+.yokai-framework .yokai-framework-step p{margin:0;font-size:.9rem;line-height:1.65}
+.yokai-framework small{display:block;line-height:1.65}
+@media(max-width:580px){
+  .yokai-framework ol{grid-template-columns:1fr}
+  .yokai-framework-step{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;row-gap:3px}
+  .yokai-framework-step svg{grid-row:1 / 4;align-self:center}
+}
