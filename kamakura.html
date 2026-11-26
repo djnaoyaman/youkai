@@ -59,6 +59,30 @@
 @media(max-width:560px){.kp-crosslink{grid-template-columns:1fr;gap:14px;margin:20px 0 28px;padding:20px}.kp-crosslink-brand{padding:0 0 13px;border-right:0;border-bottom:1px solid #d1cabd;gap:4px}.kp-crosslink-brand img{max-width:180px}.kp-crosslink-title{font-size:19px}.kp-crosslink-action{margin-top:9px}}
 @media(prefers-reduced-motion:reduce){.kp-crosslink{transition:none}}
 </style>
+<style id="kamakura-reading-style">
+/* Keep the essay centered without narrowing the separate episode gallery. */
+@media screen and (min-width:900px){
+  .kamakura-special{--kamakura-reading-width:760px}
+  .kamakura-special > .pref-head,
+  .kamakura-special > .stance-box,
+  .kamakura-special > .pref-intro,
+  .kamakura-special > footer.sitefoot{
+    max-width:var(--kamakura-reading-width);
+    margin-inline:auto;
+  }
+  .kamakura-special > .pref-intro{font-size:17px;line-height:1.95}
+  .kamakura-special > .pref-intro > p{margin-bottom:1em}
+  .kamakura-special .essay-h2{margin-top:clamp(42px,5vw,60px);padding-top:24px}
+  .kamakura-special > .pref-intro > .kamakura-opening-beat{
+    margin-block:1.05em 1.45em;
+    font-family:'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',serif;
+    font-size:clamp(22px,2vw,28px);
+    font-weight:700;
+    line-height:1.65;
+  }
+  .kamakura-special > footer.sitefoot{margin-top:clamp(34px,5vw,52px)}
+}
+</style>
 </head>
 <body>
 <script src="brand-ui.js"></script>
@@ -82,7 +106,7 @@
   <div class="nav-drawer-foot">一見坊の【日本妖怪学体系】</div>
 </aside>
 </details>
-<div class="wrap">
+<div class="wrap kamakura-special">
 
 <div class="pref-head">
   <div class="region-tag">SPECIAL</div>
@@ -107,7 +131,7 @@
 
 <p class="reveal-text">そこで、鎌倉の妖怪を台帳に追加しようと思い、改めて調べ始めた。日本で最初に武家政権が置かれた土地である。合戦があり、処刑場があり、山ひとつ分の墓がある。妖怪の一つや二つ、いくらでも出てくるだろうと踏んでいた。</p>
 
-<p class="reveal-text">出てこなかった。</p>
+<p class="reveal-text kamakura-opening-beat">出てこなかった。</p>
 
 <h2 class="essay-h2">数字で見ると、はっきり少ない</h2>
 
