@@ -114,3 +114,20 @@ body.creative-work .record-body > .kaidan-illustration img,body.creative-work .r
   .yokai-framework-step{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;row-gap:3px}
   .yokai-framework-step svg{grid-row:1 / 4;align-self:center}
 }
+
+/* Compact, text-readable diagrams for the individual researcher essays. */
+.research-viz{max-width:760px;margin:0 0 clamp(28px,5vw,48px);padding:clamp(15px,3vw,24px);background:#f3efe6;border-block:1px solid #c9bfaf;color:#231f1b;scroll-margin-block-start:calc(var(--navh,58px) + 16px)}
+.research-viz figcaption{display:grid;gap:.25rem;margin:0 0 1rem;line-height:1.55}
+.research-viz figcaption span{font-size:.8125rem;font-weight:700;color:#8c252b;letter-spacing:.02em}
+.research-viz figcaption strong{font-family:'Noto Serif JP','Yu Mincho',serif;font-size:clamp(18px,3vw,24px)}
+.research-viz-nodes{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 14px;padding:0}
+.research-viz--sequence .research-viz-nodes,.research-viz--axes .research-viz-nodes{grid-template-columns:repeat(3,minmax(0,1fr))}
+.research-viz-nodes>li{min-width:0;background:#fffdf8;border:1px solid #d8cfc1;padding:12px;display:grid;align-content:start;gap:6px}
+.research-viz-node-title{display:flex;align-items:center;gap:7px;font-size:.9375rem;line-height:1.5}
+.research-viz svg{width:28px;height:28px;flex:none;fill:none;stroke:#9c292f;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.research-viz p,.research-viz dd{margin:0;font-size:.875rem;line-height:1.7}
+.research-viz dl{margin:6px 0 0;padding-left:10px;border-left:2px solid #9c292f;display:grid;gap:.65rem}
+.research-viz dt{font-size:.875rem;font-weight:700}
+.research-viz small{display:block;font-size:.8125rem;line-height:1.65;color:#5e5350}
+.research-viz small a{color:#8c252b;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:580px){.research-viz .research-viz-nodes{grid-template-columns:1fr}}
