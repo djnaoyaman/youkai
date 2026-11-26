@@ -73,7 +73,7 @@ body.creative-work .record-body > .kaidan-illustration img,body.creative-work .r
 
 /* Edo stories: center a readable column on desktop, preserving the mobile layout. */
 @media screen and (min-width: 900px) {
-  body.creative-work .wrap:has(> .record > .kaidan-illustration):has(> .kaidan-prevnext),
+  body.creative-work .wrap:has(> .record .kaidan-illustration):has(> .kaidan-prevnext),
   body.creative-work .wrap:has(> .pref-head):has(> .entry-row > a[href^="kaidan/"]) {
     max-width: 888px; /* 760px reading column + two 64px gutters */
     padding-inline: 64px;
