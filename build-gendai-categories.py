@@ -35,6 +35,7 @@ def artwork_card(card):
  return re.sub(r'(<a\b[^>]*>)',lambda m:m[1]+preview,card,count=1)
 
 def build():
+ share_cards=json.loads((ROOT/'ogp-editorial.json').read_text())
  index=ROOT/'gendai-yokai.html'
  source=index.read_text()
  cards=[(s,attrs(s)) for s in re.findall(r'<a class="gendai-card\b.*?</a>',source,re.S)]
@@ -72,6 +73,23 @@ def build():
   head=re.sub(r'(<meta (?:name|property)="(?:description|og:description|twitter:description)" content=")[^"]*',lambda m:m[1]+escape(desc,quote=True),head)
   head=re.sub(r'(<meta (?:name|property)="(?:og:title|twitter:title)" content=")[^"]*',lambda m:m[1]+title,head)
   head=head.replace(BASE+'gendai-yokai.html',url)
+  # Category cards are independent of the landing page card copied into the template.
+  share=share_cards.get(path)
+  image=BASE+(share['image'] if share else 'og-gendai.png')
+  head=re.sub(r'(<meta (?:property|name)="(?:og:image|twitter:image)" content=")[^"]*',lambda m:m[1]+image,head)
+  for name in ('og:image:type','og:image:alt','twitter:image:alt'):
+   value=('image/jpeg' if name=='og:image:type' else share['alt']) if share else None
+   key=('property' if name.startswith('og:') else 'name')
+   pattern=r'<meta '+key+'="'+name+r'" content="[^"]*">\n'
+   count=len(re.findall(pattern,head))
+   if count:
+    markup='<meta '+key+'="'+name+'" content="'+escape(value,quote=True)+'">\n' if value else ''
+    head=re.sub(pattern,lambda _:markup,head)
+   elif value:
+    parent=name.rsplit(':',1)[0]
+    anchor=rf'<meta {key}="{parent}" content="[^"]*">'
+    markup='\n<meta '+key+'="'+name+'" content="'+escape(value,quote=True)+'">'
+    head=re.sub(anchor,lambda m:m[0]+markup,head,count=1)
   head=re.sub(r'<script type="application/ld\+json">.*?</script>','',head,flags=re.S)
   breadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':i+1,'name':name,'item':u} for i,(name,u) in enumerate([('日本妖怪学体系',BASE),('近現代妖怪',BASE+'gendai-yokai.html'),(label,url)])]}
   collection={'@context':'https://schema.org','@type':'CollectionPage','name':label,'url':url,'description':desc,'mainEntity':{'@type':'ItemList','numberOfItems':len(subset),'itemListElement':[{'@type':'ListItem','position':i+1,'url':BASE+attrs(s)['href'],'name':attrs(s)['data-name']} for i,s in enumerate(subset)]}}
@@ -94,10 +112,13 @@ def build():
   assert marker in s,p
   s=s.replace(marker,back+marker,1);p.write_text(s)
  sitemap=ROOT/'sitemap.xml';s=sitemap.read_bytes().decode()
- s=re.sub(r'  <url><loc>'+re.escape(BASE)+r'gendai-category-[^\r\n]*</url>\r?\n','',s)
+ rows={slug:'  <url><loc>'+BASE+filename(slug)+'</loc><lastmod>'+('2026-11-23' if slug=='sauna' else '2026-11-16')+'</lastmod><priority>0.6</priority></url>\n' for _,slug,_ in CATEGORIES}
+ def keep_category_position(match):
+  return rows.pop(match[1],'')
+ s=re.sub(r'  <url><loc>'+re.escape(BASE)+r'gendai-category-([a-z0-9-]+)\.html</loc>[^\r\n]*</url>\r?\n',keep_category_position,s)
  anchor='  <url><loc>'+BASE+'shin-tono.html'
  if anchor not in s: anchor='</urlset>'
- s=s.replace(anchor,''.join('  <url><loc>'+BASE+filename(slug)+'</loc><lastmod>'+('2026-11-23' if slug=='sauna' else '2026-11-16')+'</lastmod><priority>0.6</priority></url>\n' for _,slug,_ in CATEGORIES)+anchor,1)
+ s=s.replace(anchor,''.join(rows.values())+anchor,1)
  sitemap.write_bytes(s.encode())
  llms=ROOT/'llms.txt';s=llms.read_text();s=re.sub(r'\n<!-- GENDAI CATEGORIES -->.*?<!-- /GENDAI CATEGORIES -->\n','\n',s,flags=re.S)
  s=s.rstrip()+'\n\n<!-- GENDAI CATEGORIES -->\n## 近現代妖怪のカテゴリ別索引\n既存の16カテゴリと大妖怪の一覧。各索引は完全な創作であり、実在の伝承ではありません。\n'+''.join('- '+label+f'（{counts[key]}体） '+BASE+filename(slug)+'\n' for key,slug,label in CATEGORIES)+'<!-- /GENDAI CATEGORIES -->\n';llms.write_text(s)
