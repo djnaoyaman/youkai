@@ -21,7 +21,10 @@ const saved = (page) => page.locator('.edo-read-notice');
     );
     const list = await context.newPage();
     const story = await context.newPage();
-    const go = (page, path) => page.goto(new URL(path, base).href, {waitUntil: 'domcontentloaded'});
+    const go = async (page, path) => {
+      await page.goto(new URL(path, base).href, {waitUntil: 'domcontentloaded'});
+      await page.locator('.brand-loading').waitFor({state: 'hidden'});
+    };
     await go(list, index);
     assert.equal(await list.locator('.edo-read-mark').count(), 99);
     assert.equal(await list.locator('.edo-read-mark:visible').count(), 0);
@@ -61,14 +64,18 @@ const saved = (page) => page.locator('.edo-read-notice');
 
     if (!process.env.TEST_BASE) {
       const results = await list.evaluate(async (paths) => {
-        return Promise.all(paths.map(async (path) => {
-          const response = await fetch(path);
-          const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
-          return response.ok && doc.querySelectorAll('.record > .record-head').length === 1 &&
-            doc.querySelectorAll('.record + .kaidan-prevnext').length === 1 &&
-            doc.querySelectorAll('.kaidan-alllist-row.is-current').length === 1 &&
-            doc.querySelectorAll('script[src="../script.js"]').length === 1;
-        }));
+        const valid = [];
+        for (let i = 0; i < paths.length; i += 6) {
+          valid.push(...await Promise.all(paths.slice(i, i + 6).map(async (path) => {
+            const response = await fetch(path);
+            const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+            return response.ok && doc.querySelectorAll('.record > .record-head').length === 1 &&
+              doc.querySelectorAll('.record + .kaidan-prevnext').length === 1 &&
+              doc.querySelectorAll('.kaidan-alllist-row.is-current').length === 1 &&
+              doc.querySelectorAll('script[src="../script.js"]').length === 1;
+          })));
+        }
+        return valid;
       }, links);
       assert.equal(results.filter(Boolean).length, 99);
     }
