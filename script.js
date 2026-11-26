@@ -661,3 +661,100 @@ document.addEventListener('change',function(e){
   }else if(/^yokaiFilter/.test(el.id))track('map_filter',{filter_key:el.id});
 });
 }());
+
+// 江戸怪談百物語: explicit read marks, private to this browser.
+(function () {
+  'use strict';
+  var path = location.pathname;
+  var storyMatch = path.match(/\/kaidan\/([a-z0-9_-]+)\.html$/);
+  var isIndex = /\/hyakumonogatari\.html$/.test(path);
+  var current = document.querySelector('.kaidan-alllist-row.is-current');
+  if (!isIndex && !(storyMatch && current)) return;
+
+  var scope = path.replace(/(?:kaidan\/[^/]+|hyakumonogatari)\.html$/, '');
+  var prefix = 'youkai:' + scope + 'hyakumonogatari:read:v1:';
+  var currentId = storyMatch && storyMatch[1];
+  var marks = [];
+  var button;
+  var notice;
+
+  function make(tag, name, value) {
+    var element = document.createElement(tag);
+    element.className = name;
+    if (value) element.textContent = value;
+    return element;
+  }
+
+  function addMark(parent, id, header) {
+    if (!parent || !id) return;
+    var badge = make('span', 'edo-read-mark' + (header ? ' edo-read-mark--header' : ''), '読了済み');
+    badge.hidden = true;
+    parent.appendChild(badge);
+    marks.push({ id: id, badge: badge });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(isIndex ?
+    '.entry-row > a[href^="kaidan/"]' : '.kaidan-alllist a.kaidan-alllist-row'), function (link) {
+    var target = link.getAttribute('href').match(/^(?:kaidan\/)?([a-z0-9_-]+)\.html$/);
+    if (target) addMark(link.querySelector(isIndex ? '.entry-name' : '.kaidan-alllist-name'), target[1]);
+  });
+
+  function read(id) {
+    try { return localStorage.getItem(prefix + id) === '1'; }
+    catch (_) { return false; }
+  }
+
+  function render(updatedId) {
+    var states = Object.create(null);
+    function isRead(id) {
+      if (!(id in states)) states[id] = read(id);
+      return states[id];
+    }
+    marks.forEach(function (mark) {
+      if (!updatedId || mark.id === updatedId) mark.badge.hidden = !isRead(mark.id);
+    });
+    if (button && (!updatedId || updatedId === currentId)) {
+      button.textContent = isRead(currentId) ? '読了を取り消す' : '読んだ';
+    }
+  }
+
+  if (currentId) {
+    var end = document.querySelector('.kaidan-prevnext');
+    var header = document.querySelector('.record-head');
+    addMark(header, currentId, true);
+    addMark(current.querySelector('.kaidan-alllist-name'), currentId);
+    if (end) {
+      var control = make('div', 'edo-read-control');
+      button = make('button', 'edo-read-button');
+      button.type = 'button';
+      button.setAttribute('aria-describedby', 'edo-read-hint');
+      var hint = make('span', 'edo-read-hint', '読了の記録は、このブラウザに保存されます。');
+      hint.id = 'edo-read-hint';
+      notice = make('span', 'edo-read-notice');
+      notice.setAttribute('role', 'status');
+      control.appendChild(button);
+      control.appendChild(hint);
+      control.appendChild(notice);
+      end.parentNode.insertBefore(control, end);
+      button.addEventListener('click', function () {
+        var wasRead = read(currentId);
+        try {
+          if (wasRead) localStorage.removeItem(prefix + currentId);
+          else localStorage.setItem(prefix + currentId, '1');
+        } catch (_) {
+          notice.textContent = 'このブラウザでは読了の記録を保存できません。';
+          return;
+        }
+        render(currentId);
+        notice.textContent = wasRead ? '読了を取り消しました。' : '読了として記録しました。';
+      });
+    }
+  }
+
+  render();
+  window.addEventListener('pageshow', function () { render(); });
+  window.addEventListener('storage', function (event) {
+    if (event.key === null) render();
+    else if (event.key.indexOf(prefix) === 0) render(event.key.slice(prefix.length));
+  });
+}());

@@ -59,3 +59,14 @@ body.creative-work .record > .kaidan-illustration img{display:block;width:100%;h
 body.creative-work .record-body > .kaidan-illustration{max-width:760px;margin:clamp(20px,4vw,32px) auto}
 body.creative-work .record-body > .kaidan-scene{max-width:320px;margin:clamp(24px,5vw,36px) auto}
 body.creative-work .record-body > .kaidan-illustration img,body.creative-work .record-body > .kaidan-scene img{display:block;width:100%;height:auto}
+
+/* 江戸怪談百物語の読了印 */
+.edo-read-mark{display:inline-block;vertical-align:middle;margin-inline-start:.6em;padding:.1em .45em;border:1px solid currentColor;border-radius:2px;color:#74381f;font-family:'Noto Sans JP',sans-serif;font-size:.72em;font-weight:700;line-height:1.35;white-space:nowrap}
+.edo-read-mark[hidden]{display:none}
+.edo-read-mark--header{margin:12px 0 0;font-size:.8rem}
+.kaidan-alllist-row.is-current .edo-read-mark{background:#fbf7ef;border-color:#fbf7ef}
+.edo-read-control{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:24px 0 0;padding:0 0 4px;color:var(--ink);font-family:'Noto Sans JP',sans-serif}
+.edo-read-button{min-height:44px;padding:8px 20px;background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:2px;font:inherit;font-size:.875rem;font-weight:700;cursor:pointer}
+.edo-read-button:focus-visible{outline:2px solid #74381f;outline-offset:3px}
+.edo-read-hint,.edo-read-notice{font-size:.78rem;line-height:1.6;color:var(--ink-soft)}
+.edo-read-notice:not(:empty){flex-basis:100%;color:var(--ink)}
