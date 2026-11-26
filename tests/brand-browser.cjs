@@ -95,6 +95,10 @@ try{
    assert.equal(await page.locator('#yokai-three-levels ol').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length),width<=580?1:3);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   }
+  await page.goto('http://127.0.0.1:8765/komatsu-kazuhiko.html',{waitUntil:'domcontentloaded'});
+  await page.locator('a[href="essay.html#yokai-three-levels"]').click();
+  await page.waitForURL('**/essay.html#yokai-three-levels');
+  await page.waitForFunction(()=>document.querySelector('#yokai-three-levels').getBoundingClientRect().top >= document.querySelector('nav.topnav').getBoundingClientRect().bottom);
   await context.close();
  }
  // Fetch and decode each illustration in a mobile viewport. For the first and
