@@ -70,5 +70,33 @@
   "gendai-category-senso.html": {
     "image": "assets/ogp/editorial-202611/gendai-category-senso-52350a536d.jpg",
     "alt": "戦争、近現代妖怪｜創作。サイレンが止んだあとに続く短い鳥の声の波形"
+  },
+  "shin-tono.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-2677eeef4f.jpg",
+    "alt": "新・遠野物語紫波異聞、作品の入口。水路、戸口、研ぎ道具を並べた図"
+  },
+  "shin-tono/original.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-original-ead507cf52.jpg",
+    "alt": "遠野物語柳田国男、原作全文｜青空文庫版。話番号と原文の列を示す、開いた本の図"
+  },
+  "shin-tono/sources.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-sources-b0ae7ebbac.jpg",
+    "alt": "紫波異聞の出典と編集方針、資料と編集。原作、再話、創作を重ねずに並べた三枚の紙"
+  },
+  "shin-tono/kaeru-hi.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-kaeru-hi-d0ffcde64f.jpg",
+    "alt": "帰る日、第2話｜片寄・滝名川｜創作。台所の卵焼きと廊下のスーツケースの車輪"
+  },
+  "shin-tono/saisho-no-hito.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-saisho-no-hito-4885e7a95b.jpg",
+    "alt": "最初の人、第3話｜山屋・山屋川｜創作。浅瀬から頭を出す丸い石と雨の波紋"
+  },
+  "shin-tono/togi-dai.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-togi-dai-70461e59d2.jpg",
+    "alt": "研ぎ代、第4話｜東長岡｜創作。閉店前の店で新聞紙に置かれた研ぎ物の鉈"
+  },
+  "shin-tono/toguchi.html": {
+    "image": "assets/ogp/editorial-202611/shin-tono-toguchi-06ea7ce74b.jpg",
+    "alt": "戸口、第5話｜桜町・大坪川｜創作。灯りの薄い窓とコンロに置かれたやかん"
   }
 }
